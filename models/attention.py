@@ -8,7 +8,7 @@ class AttentionLayer(nn.Module):
     Attention layer that combines state embeddings (customers) and
     memory embeddings (vehicles) to determine node probabilities.
     """
-    
+
     def __init__(self, embedding_dim):
         """
         Args:
