@@ -1,5 +1,57 @@
 import numpy as np
 import torch
+import os
+
+
+def create_random_customer_positions(batch_size, num_nodes, depot = [0.5, 0.5], device='cpu'):
+    
+        # Node 0 is depot at "depot", rest are random positions
+        print("Generating customer positions for batch size:", batch_size, "and num nodes:", num_nodes)
+        customer_positions = torch.zeros(batch_size, num_nodes, 2, device=device)
+        print("Customer positions at first:", customer_positions)
+        
+        # Set depot position
+        customer_positions[:, 0] = torch.tensor(depot, device=device)  # Depot position
+        print("Customer positions with depot position in (0.5, 0.5):", customer_positions)
+        
+        # Generate random positions for customers
+        for b in range(batch_size):
+            for i in range(1, num_nodes):
+                customer_positions[b, i] = torch.rand(2, device=device)  # Random in [0,1]
+                print(f"Customer {i} position for batch {b} added:", customer_positions[b, i])
+        
+        return customer_positions
+
+def load_customer_positions_from_txt(file_name, batch_size, num_nodes, depot = [0.5, 0.5], device='cpu'):
+    """
+    Carga posiciones de clientes desde un archivo .txt y las replica para un batch.
+
+    Args:
+        file_name (str): Nombre del archivo con las posiciones (una línea por cliente, formato: x y).
+        batch_size (int): Número de escenarios.
+        num_nodes (int): Número total de nodos (clientes + 1 depósito).
+        depot (list): Posición del depósito, e.g., [0.5, 0.5].
+        device (str): 'cpu' o 'cuda'.
+
+    Returns:
+        torch.Tensor: Tensor de shape [batch_size, num_nodes, 2]
+    """
+    path = os.path.join(os.path.dirname(__file__), file_name)
+
+    positions = []
+    with open(path, 'r') as f:
+        for line in f:
+            x, y = map(float, line.strip().split())
+            positions.append([x, y])
+
+    if len(positions) != num_nodes - 1:
+        raise ValueError(f"Se esperaban {num_nodes - 1} posiciones, pero se encontraron {len(positions)}")
+
+    full_positions = [depot] + positions  # Incluye el depósito al inicio
+    base_tensor = torch.tensor(full_positions, dtype=torch.float32, device=device)
+    customer_positions = base_tensor.unsqueeze(0).repeat(batch_size, 1, 1)
+
+    return customer_positions
 
 
 class WeatherSimulation:
@@ -53,18 +105,20 @@ class WeatherSimulation:
         if fixed_customers and self.fixed_customer_positions is not None:
             customer_positions = self.fixed_customer_positions.repeat(batch_size, 1, 1)
         else:
-            # Node 0 is depot at (0.5, 0.5), rest are random positions
-            customer_positions = torch.zeros(batch_size, num_nodes, 2, device=device)
-            customer_positions[:, 0] = torch.tensor([0.5, 0.5], device=device)  # Depot position
-            
-            # Generate random positions for customers
-            for b in range(batch_size):
-                for i in range(1, num_nodes):
-                    customer_positions[b, i] = torch.rand(2, device=device)  # Random in [0,1]
+            # Create random customer positions with depot at (0.5, 0.5)
+            depot = [0.5, 0.5]  # Fixed depot position
+            # customer_positions = create_random_customer_positions(batch_size, num_nodes, depot, device)
+            customer_positions = load_customer_positions_from_txt("positions.txt", batch_size, num_nodes, depot)
+
+
+            print("Customer positions:", customer_positions)
+            print("Shape of customer positions:", customer_positions.shape)
+            print("Customer_positions type:", type(customer_positions))
             
             # Save positions if fixed_customers
             if fixed_customers:
                 self.fixed_customer_positions = customer_positions[0].unsqueeze(0)
+                print("Fixed customer positions set for future use:", self.fixed_customer_positions)
         
         # Generate demands (node 0 is depot, has no demand)
         demands = torch.zeros(batch_size, num_nodes, device=device)
