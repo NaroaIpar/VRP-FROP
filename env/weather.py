@@ -48,8 +48,7 @@ def load_customer_positions_from_txt(file_name, batch_size, num_nodes, depot = [
         raise ValueError(f"Se esperaban {num_nodes - 1} posiciones, pero se encontraron {len(positions)}")
 
     full_positions = [depot] + positions  # Incluye el depósito al inicio
-    base_tensor = torch.tensor(full_positions, dtype=torch.float32, device=device)
-    customer_positions = base_tensor.unsqueeze(0).repeat(batch_size, 1, 1)
+    customer_positions = torch.tensor(full_positions, dtype=torch.float32, device=device)
 
     return customer_positions
 
@@ -109,7 +108,6 @@ class WeatherSimulation:
             depot = [0.5, 0.5]  # Fixed depot position
             # customer_positions = create_random_customer_positions(batch_size, num_nodes, depot, device)
             customer_positions = load_customer_positions_from_txt("positions.txt", batch_size, num_nodes, depot)
-
 
             print("Customer positions:", customer_positions)
             print("Shape of customer positions:", customer_positions.shape)

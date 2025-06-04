@@ -110,7 +110,7 @@ class SVRPEnvironment:
         """
         batch_size = actions.size(0)
         rewards = torch.zeros(batch_size, device=self.device)
-        
+
         # For each vehicle, compute travel costs and update states
         for v in range(self.num_vehicles):
             # Get current positions and next positions
