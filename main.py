@@ -198,7 +198,15 @@ def train(args, env, trainer, logger):
     logger.info(f"Saved final model to {save_path}")
     
     # Plot training metrics
-    plt.figure(figsize=(12, 4))
+    # plt.figure(figsize=(12, 4))
+
+    # # ADDED BY ME: Plot arguments
+    plt.figure(figsize=(16, 4))  # Wider figure
+    plt.subplot(1, 4, 1)
+    plt.axis('off')
+    args_text = "\n".join([f"{k}: {v}" for k, v in vars(args).items()])
+    plt.text(0, 1, args_text, va='top', ha='left', fontsize=9, wrap=True)
+    # # END OF ADDED BY ME
     
     plt.subplot(1, 3, 1)
     plt.plot(rewards_history)
