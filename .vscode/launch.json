@@ -1,0 +1,18 @@
+{
+  "name": "Python: main",
+  "type": "python",
+  "request": "launch",
+  "program": "${workspaceFolder}/main.py",
+"args": [
+    "--num_nodes",
+    "20",
+    "--num_vehicles",
+    "1",
+    "--capacity",
+    "300",
+    "--fixed_customers"
+],
+"configurations": [
+
+]
+}
