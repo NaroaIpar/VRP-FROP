@@ -731,3 +731,153 @@
 2025-06-11 12:24:35,210 [INFO] Evaluation completed. Mean reward: -6.7480
 2025-06-11 12:24:35,210 [INFO] Test reward: -6.7480
 2025-06-11 12:26:54,590 [INFO] Epoch 30/100 | Reward: -63.7096 | Policy Loss: -665.7339 | Baseline Loss: 7536.7178 | Time: 13.67s
+2025-06-11 10:34:52,313 [INFO] Starting SVRP-RL with Namespace(num_nodes=10, num_vehicles=1, capacity=100.0, a_ratio=0.6, b_ratio=0.2, gamma_ratio=0.2, weather_dim=3, fixed_customers=True, embedding_dim=128, epochs=100, batch_size=32, lr=0.0001, baseline_lr=0.001, entropy_weight=0.01, max_steps=100, inference='beam', num_samples=16, beam_width=3, test_size=100, cuda=True, seed=42, save_dir='checkpoints', load_model=None, test=False, log_interval=10, save_interval=20, reoptimization=False)
+2025-06-11 10:34:52,314 [INFO] Using device: cuda
+2025-06-11 10:34:52,314 [INFO] Customer features dimension: 14
+2025-06-11 10:34:52,314 [INFO] Vehicle features dimension: 2
+2025-06-11 10:34:57,840 [INFO] Starting training for 100 epochs
+2025-06-11 10:35:04,153 [INFO] Starting SVRP-RL with Namespace(num_nodes=15, num_vehicles=2, capacity=200.0, a_ratio=0.6, b_ratio=0.2, gamma_ratio=0.2, weather_dim=3, fixed_customers=True, embedding_dim=128, epochs=100, batch_size=32, lr=0.0001, baseline_lr=0.001, entropy_weight=0.01, max_steps=100, inference='beam', num_samples=16, beam_width=3, test_size=100, cuda=True, seed=42, save_dir='checkpoints', load_model=None, test=False, log_interval=10, save_interval=20, reoptimization=False)
+2025-06-11 10:35:04,153 [INFO] Using device: cuda
+2025-06-11 10:35:04,153 [INFO] Customer features dimension: 19
+2025-06-11 10:35:04,153 [INFO] Vehicle features dimension: 2
+2025-06-11 10:35:05,354 [INFO] Starting training for 100 epochs
+2025-06-11 10:35:11,419 [INFO] Starting SVRP-RL with Namespace(num_nodes=20, num_vehicles=1, capacity=300.0, a_ratio=0.6, b_ratio=0.2, gamma_ratio=0.2, weather_dim=3, fixed_customers=True, embedding_dim=128, epochs=100, batch_size=32, lr=0.0001, baseline_lr=0.001, entropy_weight=0.01, max_steps=100, inference='beam', num_samples=16, beam_width=3, test_size=100, cuda=True, seed=42, save_dir='checkpoints', load_model=None, test=False, log_interval=10, save_interval=20, reoptimization=False)
+2025-06-11 10:35:11,419 [INFO] Using device: cuda
+2025-06-11 10:35:11,419 [INFO] Customer features dimension: 24
+2025-06-11 10:35:11,420 [INFO] Vehicle features dimension: 2
+2025-06-11 10:35:12,721 [INFO] Starting training for 100 epochs
+2025-06-11 10:35:22,046 [INFO] Starting SVRP-RL with Namespace(num_nodes=20, num_vehicles=3, capacity=300.0, a_ratio=0.6, b_ratio=0.2, gamma_ratio=0.2, weather_dim=3, fixed_customers=True, embedding_dim=128, epochs=100, batch_size=32, lr=0.0001, baseline_lr=0.001, entropy_weight=0.01, max_steps=100, inference='beam', num_samples=16, beam_width=3, test_size=100, cuda=True, seed=42, save_dir='checkpoints', load_model=None, test=False, log_interval=10, save_interval=20, reoptimization=False)
+2025-06-11 10:35:22,046 [INFO] Using device: cuda
+2025-06-11 10:35:22,046 [INFO] Customer features dimension: 24
+2025-06-11 10:35:22,046 [INFO] Vehicle features dimension: 2
+2025-06-11 10:35:23,282 [INFO] Starting training for 100 epochs
+2025-06-11 10:35:32,798 [INFO] Starting SVRP-RL with Namespace(num_nodes=25, num_vehicles=2, capacity=400.0, a_ratio=0.6, b_ratio=0.2, gamma_ratio=0.2, weather_dim=3, fixed_customers=True, embedding_dim=128, epochs=100, batch_size=32, lr=0.0001, baseline_lr=0.001, entropy_weight=0.01, max_steps=100, inference='beam', num_samples=16, beam_width=3, test_size=100, cuda=True, seed=42, save_dir='checkpoints', load_model=None, test=False, log_interval=10, save_interval=20, reoptimization=False)
+2025-06-11 10:35:32,798 [INFO] Using device: cuda
+2025-06-11 10:35:32,798 [INFO] Customer features dimension: 29
+2025-06-11 10:35:32,798 [INFO] Vehicle features dimension: 2
+2025-06-11 10:35:34,100 [INFO] Starting training for 100 epochs
+2025-06-11 10:35:46,234 [INFO] Starting SVRP-RL with Namespace(num_nodes=30, num_vehicles=1, capacity=500.0, a_ratio=0.6, b_ratio=0.2, gamma_ratio=0.2, weather_dim=3, fixed_customers=True, embedding_dim=128, epochs=100, batch_size=32, lr=0.0001, baseline_lr=0.001, entropy_weight=0.01, max_steps=100, inference='beam', num_samples=16, beam_width=3, test_size=100, cuda=True, seed=42, save_dir='checkpoints', load_model=None, test=False, log_interval=10, save_interval=20, reoptimization=False)
+2025-06-11 10:35:46,234 [INFO] Using device: cuda
+2025-06-11 10:35:46,234 [INFO] Customer features dimension: 34
+2025-06-11 10:35:46,234 [INFO] Vehicle features dimension: 2
+2025-06-11 10:35:47,369 [INFO] Starting training for 100 epochs
+2025-06-11 10:36:02,613 [INFO] Starting SVRP-RL with Namespace(num_nodes=30, num_vehicles=3, capacity=600.0, a_ratio=0.6, b_ratio=0.2, gamma_ratio=0.2, weather_dim=3, fixed_customers=True, embedding_dim=128, epochs=100, batch_size=32, lr=0.0001, baseline_lr=0.001, entropy_weight=0.01, max_steps=100, inference='beam', num_samples=16, beam_width=3, test_size=100, cuda=True, seed=42, save_dir='checkpoints', load_model=None, test=False, log_interval=10, save_interval=20, reoptimization=False)
+2025-06-11 10:36:02,613 [INFO] Using device: cuda
+2025-06-11 10:36:02,613 [INFO] Customer features dimension: 34
+2025-06-11 10:36:02,613 [INFO] Vehicle features dimension: 2
+2025-06-11 10:36:04,129 [INFO] Starting training for 100 epochs
+2025-06-11 10:36:19,254 [INFO] Starting SVRP-RL with Namespace(num_nodes=35, num_vehicles=2, capacity=700.0, a_ratio=0.6, b_ratio=0.2, gamma_ratio=0.2, weather_dim=3, fixed_customers=True, embedding_dim=128, epochs=100, batch_size=32, lr=0.0001, baseline_lr=0.001, entropy_weight=0.01, max_steps=100, inference='beam', num_samples=16, beam_width=3, test_size=100, cuda=True, seed=42, save_dir='checkpoints', load_model=None, test=False, log_interval=10, save_interval=20, reoptimization=False)
+2025-06-11 10:36:19,254 [INFO] Using device: cuda
+2025-06-11 10:36:19,254 [INFO] Customer features dimension: 39
+2025-06-11 10:36:19,254 [INFO] Vehicle features dimension: 2
+2025-06-11 10:36:20,387 [INFO] Starting training for 100 epochs
+2025-06-11 10:36:39,957 [INFO] Starting SVRP-RL with Namespace(num_nodes=40, num_vehicles=1, capacity=800.0, a_ratio=0.6, b_ratio=0.2, gamma_ratio=0.2, weather_dim=3, fixed_customers=True, embedding_dim=128, epochs=100, batch_size=32, lr=0.0001, baseline_lr=0.001, entropy_weight=0.01, max_steps=100, inference='beam', num_samples=16, beam_width=3, test_size=100, cuda=True, seed=42, save_dir='checkpoints', load_model=None, test=False, log_interval=10, save_interval=20, reoptimization=False)
+2025-06-11 10:36:39,958 [INFO] Using device: cuda
+2025-06-11 10:36:39,958 [INFO] Customer features dimension: 44
+2025-06-11 10:36:39,958 [INFO] Vehicle features dimension: 2
+2025-06-11 10:36:41,306 [INFO] Starting training for 100 epochs
+2025-06-11 10:37:05,607 [INFO] Starting SVRP-RL with Namespace(num_nodes=50, num_vehicles=5, capacity=1000.0, a_ratio=0.6, b_ratio=0.2, gamma_ratio=0.2, weather_dim=3, fixed_customers=True, embedding_dim=128, epochs=100, batch_size=32, lr=0.0001, baseline_lr=0.001, entropy_weight=0.01, max_steps=100, inference='beam', num_samples=16, beam_width=3, test_size=100, cuda=True, seed=42, save_dir='checkpoints', load_model=None, test=False, log_interval=10, save_interval=20, reoptimization=False)
+2025-06-11 10:37:05,607 [INFO] Using device: cuda
+2025-06-11 10:37:05,607 [INFO] Customer features dimension: 54
+2025-06-11 10:37:05,607 [INFO] Vehicle features dimension: 2
+2025-06-11 10:37:06,732 [INFO] Starting training for 100 epochs
+2025-06-11 10:37:42,858 [INFO] Starting SVRP-RL with Namespace(num_nodes=10, num_vehicles=1, capacity=100.0, a_ratio=0.6, b_ratio=0.2, gamma_ratio=0.2, weather_dim=3, fixed_customers=True, embedding_dim=128, epochs=100, batch_size=32, lr=0.0001, baseline_lr=0.001, entropy_weight=0.01, max_steps=100, inference='greedy', num_samples=16, beam_width=3, test_size=100, cuda=True, seed=42, save_dir='checkpoints', load_model=None, test=False, log_interval=10, save_interval=20, reoptimization=False)
+2025-06-11 10:37:42,859 [INFO] Using device: cuda
+2025-06-11 10:37:42,859 [INFO] Customer features dimension: 14
+2025-06-11 10:37:42,859 [INFO] Vehicle features dimension: 2
+2025-06-11 10:37:44,046 [INFO] Starting training for 100 epochs
+2025-06-11 10:37:48,410 [INFO] Starting SVRP-RL with Namespace(num_nodes=15, num_vehicles=2, capacity=200.0, a_ratio=0.6, b_ratio=0.2, gamma_ratio=0.2, weather_dim=3, fixed_customers=True, embedding_dim=128, epochs=100, batch_size=32, lr=0.0001, baseline_lr=0.001, entropy_weight=0.01, max_steps=100, inference='greedy', num_samples=16, beam_width=3, test_size=100, cuda=True, seed=42, save_dir='checkpoints', load_model=None, test=False, log_interval=10, save_interval=20, reoptimization=False)
+2025-06-11 10:37:48,410 [INFO] Using device: cuda
+2025-06-11 10:37:48,410 [INFO] Customer features dimension: 19
+2025-06-11 10:37:48,410 [INFO] Vehicle features dimension: 2
+2025-06-11 10:37:49,585 [INFO] Starting training for 100 epochs
+2025-06-11 10:37:56,229 [INFO] Starting SVRP-RL with Namespace(num_nodes=20, num_vehicles=1, capacity=300.0, a_ratio=0.6, b_ratio=0.2, gamma_ratio=0.2, weather_dim=3, fixed_customers=True, embedding_dim=128, epochs=100, batch_size=32, lr=0.0001, baseline_lr=0.001, entropy_weight=0.01, max_steps=100, inference='greedy', num_samples=16, beam_width=3, test_size=100, cuda=True, seed=42, save_dir='checkpoints', load_model=None, test=False, log_interval=10, save_interval=20, reoptimization=False)
+2025-06-11 10:37:56,229 [INFO] Using device: cuda
+2025-06-11 10:37:56,229 [INFO] Customer features dimension: 24
+2025-06-11 10:37:56,229 [INFO] Vehicle features dimension: 2
+2025-06-11 10:37:57,413 [INFO] Starting training for 100 epochs
+2025-06-11 10:38:06,162 [INFO] Starting SVRP-RL with Namespace(num_nodes=20, num_vehicles=3, capacity=300.0, a_ratio=0.6, b_ratio=0.2, gamma_ratio=0.2, weather_dim=3, fixed_customers=True, embedding_dim=128, epochs=100, batch_size=32, lr=0.0001, baseline_lr=0.001, entropy_weight=0.01, max_steps=100, inference='greedy', num_samples=16, beam_width=3, test_size=100, cuda=True, seed=42, save_dir='checkpoints', load_model=None, test=False, log_interval=10, save_interval=20, reoptimization=False)
+2025-06-11 10:38:06,162 [INFO] Using device: cuda
+2025-06-11 10:38:06,162 [INFO] Customer features dimension: 24
+2025-06-11 10:38:06,162 [INFO] Vehicle features dimension: 2
+2025-06-11 10:38:07,451 [INFO] Starting training for 100 epochs
+2025-06-11 10:38:15,693 [INFO] Starting SVRP-RL with Namespace(num_nodes=25, num_vehicles=2, capacity=400.0, a_ratio=0.6, b_ratio=0.2, gamma_ratio=0.2, weather_dim=3, fixed_customers=True, embedding_dim=128, epochs=100, batch_size=32, lr=0.0001, baseline_lr=0.001, entropy_weight=0.01, max_steps=100, inference='greedy', num_samples=16, beam_width=3, test_size=100, cuda=True, seed=42, save_dir='checkpoints', load_model=None, test=False, log_interval=10, save_interval=20, reoptimization=False)
+2025-06-11 10:38:15,693 [INFO] Using device: cuda
+2025-06-11 10:38:15,693 [INFO] Customer features dimension: 29
+2025-06-11 10:38:15,693 [INFO] Vehicle features dimension: 2
+2025-06-11 10:38:17,074 [INFO] Starting training for 100 epochs
+2025-06-11 10:38:28,495 [INFO] Starting SVRP-RL with Namespace(num_nodes=30, num_vehicles=1, capacity=500.0, a_ratio=0.6, b_ratio=0.2, gamma_ratio=0.2, weather_dim=3, fixed_customers=True, embedding_dim=128, epochs=100, batch_size=32, lr=0.0001, baseline_lr=0.001, entropy_weight=0.01, max_steps=100, inference='greedy', num_samples=16, beam_width=3, test_size=100, cuda=True, seed=42, save_dir='checkpoints', load_model=None, test=False, log_interval=10, save_interval=20, reoptimization=False)
+2025-06-11 10:38:28,496 [INFO] Using device: cuda
+2025-06-11 10:38:28,496 [INFO] Customer features dimension: 34
+2025-06-11 10:38:28,496 [INFO] Vehicle features dimension: 2
+2025-06-11 10:38:30,014 [INFO] Starting training for 100 epochs
+2025-06-11 10:38:45,354 [INFO] Starting SVRP-RL with Namespace(num_nodes=30, num_vehicles=3, capacity=600.0, a_ratio=0.6, b_ratio=0.2, gamma_ratio=0.2, weather_dim=3, fixed_customers=True, embedding_dim=128, epochs=100, batch_size=32, lr=0.0001, baseline_lr=0.001, entropy_weight=0.01, max_steps=100, inference='greedy', num_samples=16, beam_width=3, test_size=100, cuda=True, seed=42, save_dir='checkpoints', load_model=None, test=False, log_interval=10, save_interval=20, reoptimization=False)
+2025-06-11 10:38:45,355 [INFO] Using device: cuda
+2025-06-11 10:38:45,355 [INFO] Customer features dimension: 34
+2025-06-11 10:38:45,355 [INFO] Vehicle features dimension: 2
+2025-06-11 10:38:46,495 [INFO] Starting training for 100 epochs
+2025-06-11 10:39:01,622 [INFO] Starting SVRP-RL with Namespace(num_nodes=35, num_vehicles=2, capacity=700.0, a_ratio=0.6, b_ratio=0.2, gamma_ratio=0.2, weather_dim=3, fixed_customers=True, embedding_dim=128, epochs=100, batch_size=32, lr=0.0001, baseline_lr=0.001, entropy_weight=0.01, max_steps=100, inference='greedy', num_samples=16, beam_width=3, test_size=100, cuda=True, seed=42, save_dir='checkpoints', load_model=None, test=False, log_interval=10, save_interval=20, reoptimization=False)
+2025-06-11 10:39:01,623 [INFO] Using device: cuda
+2025-06-11 10:39:01,623 [INFO] Customer features dimension: 39
+2025-06-11 10:39:01,623 [INFO] Vehicle features dimension: 2
+2025-06-11 10:39:02,778 [INFO] Starting training for 100 epochs
+2025-06-11 10:39:22,700 [INFO] Starting SVRP-RL with Namespace(num_nodes=40, num_vehicles=1, capacity=800.0, a_ratio=0.6, b_ratio=0.2, gamma_ratio=0.2, weather_dim=3, fixed_customers=True, embedding_dim=128, epochs=100, batch_size=32, lr=0.0001, baseline_lr=0.001, entropy_weight=0.01, max_steps=100, inference='greedy', num_samples=16, beam_width=3, test_size=100, cuda=True, seed=42, save_dir='checkpoints', load_model=None, test=False, log_interval=10, save_interval=20, reoptimization=False)
+2025-06-11 10:39:22,701 [INFO] Using device: cuda
+2025-06-11 10:39:22,701 [INFO] Customer features dimension: 44
+2025-06-11 10:39:22,701 [INFO] Vehicle features dimension: 2
+2025-06-11 10:39:23,891 [INFO] Starting training for 100 epochs
+2025-06-11 10:39:48,695 [INFO] Starting SVRP-RL with Namespace(num_nodes=50, num_vehicles=5, capacity=1000.0, a_ratio=0.6, b_ratio=0.2, gamma_ratio=0.2, weather_dim=3, fixed_customers=True, embedding_dim=128, epochs=100, batch_size=32, lr=0.0001, baseline_lr=0.001, entropy_weight=0.01, max_steps=100, inference='greedy', num_samples=16, beam_width=3, test_size=100, cuda=True, seed=42, save_dir='checkpoints', load_model=None, test=False, log_interval=10, save_interval=20, reoptimization=False)
+2025-06-11 10:39:48,695 [INFO] Using device: cuda
+2025-06-11 10:39:48,695 [INFO] Customer features dimension: 54
+2025-06-11 10:39:48,695 [INFO] Vehicle features dimension: 2
+2025-06-11 10:39:49,844 [INFO] Starting training for 100 epochs
+2025-06-11 10:40:26,069 [INFO] Starting SVRP-RL with Namespace(num_nodes=10, num_vehicles=1, capacity=100.0, a_ratio=0.6, b_ratio=0.2, gamma_ratio=0.2, weather_dim=3, fixed_customers=True, embedding_dim=128, epochs=100, batch_size=32, lr=0.0001, baseline_lr=0.001, entropy_weight=0.01, max_steps=100, inference='random', num_samples=16, beam_width=3, test_size=100, cuda=True, seed=42, save_dir='checkpoints', load_model=None, test=False, log_interval=10, save_interval=20, reoptimization=False)
+2025-06-11 10:40:26,069 [INFO] Using device: cuda
+2025-06-11 10:40:26,069 [INFO] Customer features dimension: 14
+2025-06-11 10:40:26,069 [INFO] Vehicle features dimension: 2
+2025-06-11 10:40:27,254 [INFO] Starting training for 100 epochs
+2025-06-11 10:40:32,068 [INFO] Starting SVRP-RL with Namespace(num_nodes=15, num_vehicles=2, capacity=200.0, a_ratio=0.6, b_ratio=0.2, gamma_ratio=0.2, weather_dim=3, fixed_customers=True, embedding_dim=128, epochs=100, batch_size=32, lr=0.0001, baseline_lr=0.001, entropy_weight=0.01, max_steps=100, inference='random', num_samples=16, beam_width=3, test_size=100, cuda=True, seed=42, save_dir='checkpoints', load_model=None, test=False, log_interval=10, save_interval=20, reoptimization=False)
+2025-06-11 10:40:32,068 [INFO] Using device: cuda
+2025-06-11 10:40:32,068 [INFO] Customer features dimension: 19
+2025-06-11 10:40:32,068 [INFO] Vehicle features dimension: 2
+2025-06-11 10:40:33,630 [INFO] Starting training for 100 epochs
+2025-06-11 10:40:39,534 [INFO] Starting SVRP-RL with Namespace(num_nodes=20, num_vehicles=1, capacity=300.0, a_ratio=0.6, b_ratio=0.2, gamma_ratio=0.2, weather_dim=3, fixed_customers=True, embedding_dim=128, epochs=100, batch_size=32, lr=0.0001, baseline_lr=0.001, entropy_weight=0.01, max_steps=100, inference='random', num_samples=16, beam_width=3, test_size=100, cuda=True, seed=42, save_dir='checkpoints', load_model=None, test=False, log_interval=10, save_interval=20, reoptimization=False)
+2025-06-11 10:40:39,535 [INFO] Using device: cuda
+2025-06-11 10:40:39,535 [INFO] Customer features dimension: 24
+2025-06-11 10:40:39,535 [INFO] Vehicle features dimension: 2
+2025-06-11 10:40:40,695 [INFO] Starting training for 100 epochs
+2025-06-11 10:40:49,451 [INFO] Starting SVRP-RL with Namespace(num_nodes=20, num_vehicles=3, capacity=300.0, a_ratio=0.6, b_ratio=0.2, gamma_ratio=0.2, weather_dim=3, fixed_customers=True, embedding_dim=128, epochs=100, batch_size=32, lr=0.0001, baseline_lr=0.001, entropy_weight=0.01, max_steps=100, inference='random', num_samples=16, beam_width=3, test_size=100, cuda=True, seed=42, save_dir='checkpoints', load_model=None, test=False, log_interval=10, save_interval=20, reoptimization=False)
+2025-06-11 10:40:49,451 [INFO] Using device: cuda
+2025-06-11 10:40:49,451 [INFO] Customer features dimension: 24
+2025-06-11 10:40:49,451 [INFO] Vehicle features dimension: 2
+2025-06-11 10:40:50,606 [INFO] Starting training for 100 epochs
+2025-06-11 10:40:59,373 [INFO] Starting SVRP-RL with Namespace(num_nodes=25, num_vehicles=2, capacity=400.0, a_ratio=0.6, b_ratio=0.2, gamma_ratio=0.2, weather_dim=3, fixed_customers=True, embedding_dim=128, epochs=100, batch_size=32, lr=0.0001, baseline_lr=0.001, entropy_weight=0.01, max_steps=100, inference='random', num_samples=16, beam_width=3, test_size=100, cuda=True, seed=42, save_dir='checkpoints', load_model=None, test=False, log_interval=10, save_interval=20, reoptimization=False)
+2025-06-11 10:40:59,374 [INFO] Using device: cuda
+2025-06-11 10:40:59,374 [INFO] Customer features dimension: 29
+2025-06-11 10:40:59,374 [INFO] Vehicle features dimension: 2
+2025-06-11 10:41:00,552 [INFO] Starting training for 100 epochs
+2025-06-11 10:41:12,238 [INFO] Starting SVRP-RL with Namespace(num_nodes=30, num_vehicles=1, capacity=500.0, a_ratio=0.6, b_ratio=0.2, gamma_ratio=0.2, weather_dim=3, fixed_customers=True, embedding_dim=128, epochs=100, batch_size=32, lr=0.0001, baseline_lr=0.001, entropy_weight=0.01, max_steps=100, inference='random', num_samples=16, beam_width=3, test_size=100, cuda=True, seed=42, save_dir='checkpoints', load_model=None, test=False, log_interval=10, save_interval=20, reoptimization=False)
+2025-06-11 10:41:12,239 [INFO] Using device: cuda
+2025-06-11 10:41:12,239 [INFO] Customer features dimension: 34
+2025-06-11 10:41:12,239 [INFO] Vehicle features dimension: 2
+2025-06-11 10:41:13,400 [INFO] Starting training for 100 epochs
+2025-06-11 10:41:28,301 [INFO] Starting SVRP-RL with Namespace(num_nodes=30, num_vehicles=3, capacity=600.0, a_ratio=0.6, b_ratio=0.2, gamma_ratio=0.2, weather_dim=3, fixed_customers=True, embedding_dim=128, epochs=100, batch_size=32, lr=0.0001, baseline_lr=0.001, entropy_weight=0.01, max_steps=100, inference='random', num_samples=16, beam_width=3, test_size=100, cuda=True, seed=42, save_dir='checkpoints', load_model=None, test=False, log_interval=10, save_interval=20, reoptimization=False)
+2025-06-11 10:41:28,301 [INFO] Using device: cuda
+2025-06-11 10:41:28,302 [INFO] Customer features dimension: 34
+2025-06-11 10:41:28,302 [INFO] Vehicle features dimension: 2
+2025-06-11 10:41:29,460 [INFO] Starting training for 100 epochs
+2025-06-11 10:41:44,796 [INFO] Starting SVRP-RL with Namespace(num_nodes=35, num_vehicles=2, capacity=700.0, a_ratio=0.6, b_ratio=0.2, gamma_ratio=0.2, weather_dim=3, fixed_customers=True, embedding_dim=128, epochs=100, batch_size=32, lr=0.0001, baseline_lr=0.001, entropy_weight=0.01, max_steps=100, inference='random', num_samples=16, beam_width=3, test_size=100, cuda=True, seed=42, save_dir='checkpoints', load_model=None, test=False, log_interval=10, save_interval=20, reoptimization=False)
+2025-06-11 10:41:44,796 [INFO] Using device: cuda
+2025-06-11 10:41:44,797 [INFO] Customer features dimension: 39
+2025-06-11 10:41:44,797 [INFO] Vehicle features dimension: 2
+2025-06-11 10:41:46,457 [INFO] Starting training for 100 epochs
+2025-06-11 10:42:05,791 [INFO] Starting SVRP-RL with Namespace(num_nodes=40, num_vehicles=1, capacity=800.0, a_ratio=0.6, b_ratio=0.2, gamma_ratio=0.2, weather_dim=3, fixed_customers=True, embedding_dim=128, epochs=100, batch_size=32, lr=0.0001, baseline_lr=0.001, entropy_weight=0.01, max_steps=100, inference='random', num_samples=16, beam_width=3, test_size=100, cuda=True, seed=42, save_dir='checkpoints', load_model=None, test=False, log_interval=10, save_interval=20, reoptimization=False)
+2025-06-11 10:42:05,792 [INFO] Using device: cuda
+2025-06-11 10:42:05,792 [INFO] Customer features dimension: 44
+2025-06-11 10:42:05,792 [INFO] Vehicle features dimension: 2
+2025-06-11 10:42:06,942 [INFO] Starting training for 100 epochs
+2025-06-11 10:42:31,591 [INFO] Starting SVRP-RL with Namespace(num_nodes=50, num_vehicles=5, capacity=1000.0, a_ratio=0.6, b_ratio=0.2, gamma_ratio=0.2, weather_dim=3, fixed_customers=True, embedding_dim=128, epochs=100, batch_size=32, lr=0.0001, baseline_lr=0.001, entropy_weight=0.01, max_steps=100, inference='random', num_samples=16, beam_width=3, test_size=100, cuda=True, seed=42, save_dir='checkpoints', load_model=None, test=False, log_interval=10, save_interval=20, reoptimization=False)
+2025-06-11 10:42:31,591 [INFO] Using device: cuda
+2025-06-11 10:42:31,592 [INFO] Customer features dimension: 54
+2025-06-11 10:42:31,592 [INFO] Vehicle features dimension: 2
+2025-06-11 10:42:32,722 [INFO] Starting training for 100 epochs
