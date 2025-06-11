@@ -75,9 +75,6 @@ def setup_logger(save_dir):
     
     return logging.getLogger()
 
-import matplotlib.pyplot as plt
-import numpy as np
-import os
 
 def visualize_route(env, routes, title=None, save_path=None):
     """
