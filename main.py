@@ -75,117 +75,103 @@ def setup_logger(save_dir):
     
     return logging.getLogger()
 
+import matplotlib.pyplot as plt
+import numpy as np
+import os
 
 def visualize_route(env, routes, title=None, save_path=None):
     """
-    Visualize the routes.
-    
+    Visualize routes with customer layout and written route text.
+    Auto-saves image with incrementing ID in {args.save_dir}/{args.inference}/.
+
     Args:
         env: SVRP environment
-        routes: List of routes for each vehicle
-        title: Title for the plot
-        save_path: Path to save the plot
+        routes: List of routes per vehicle
+        title: Plot title
+        save_path: Expected base path like args.save_dir/route_beam.png
     """
-    plt.figure(figsize=(8, 8))
-    
-    # Get customer positions from the weather simulation
-    # This assumes env.weather_sim.fixed_customer_positions exists
+    print("Visualizing route...")
+    print(f"env: {env}")
+    print(f"routes: {routes}")
+    print(f"title: {title}")
+    print(f"save_path: {save_path}")
+
+    # Rewrite save_path to desired directory and filename format
+    if save_path:
+        base_dir = os.path.dirname(save_path)
+        file_root = os.path.basename(save_path)
+        name_part = os.path.splitext(file_root)[0]  # "route_beam"
+
+        # Extract "beam" from "route_beam"
+        if "_" in name_part:
+            inference = name_part.split("_")[1]
+        else:
+            inference = "default"
+
+        # New target folder: save_dir/routes_imgs/inference/
+        root_dir = os.path.dirname(base_dir)  # -> args.save_dir
+        new_dir = os.path.join(root_dir, "routes_imgs", inference)
+        os.makedirs(new_dir, exist_ok=True)
+
+
+        # New base filename: route_inference_N.png
+        base_name = f"route_{inference}"
+        ext = ".png"
+        count = 0
+        final_name = f"{base_name}_{count}{ext}"
+        final_path = os.path.join(new_dir, final_name)
+        while os.path.exists(final_path):
+            count += 1
+            final_name = f"{base_name}_{count}{ext}"
+            final_path = os.path.join(new_dir, final_name)
+    else:
+        final_path = None
+
+    # Create wider figure with space for text
+    plt.figure(figsize=(12, 6))
+
+    # Left: route text
+    plt.subplot(1, 2, 1)
+    plt.axis('off')
+    route_text = "\n".join([f"Vehicle {i}: {route}" for i, route in enumerate(routes)])
+    plt.text(0, 1, route_text, va='top', ha='left', fontsize=10, wrap=True)
+
+    # Right: route plot
+    plt.subplot(1, 2, 2)
     if hasattr(env.weather_sim, 'fixed_customer_positions') and env.weather_sim.fixed_customer_positions is not None:
         customer_positions = env.weather_sim.fixed_customer_positions[0].cpu().numpy()
     else:
-        # If fixed customer positions aren't available, generate random positions for visualization
-        # This is just a fallback for visualization
         num_nodes = env.num_nodes
         customer_positions = np.zeros((num_nodes, 2))
-        customer_positions[0] = [0.5, 0.5]  # Depot at center
+        customer_positions[0] = [0.5, 0.5]
         for i in range(1, num_nodes):
             customer_positions[i] = np.random.rand(2)
         print("Warning: Using random positions for visualization")
-    
-    # Plot customer positions
+
     plt.scatter(customer_positions[1:, 0], customer_positions[1:, 1], c='blue', s=50, label='Customers')
     plt.scatter(customer_positions[0, 0], customer_positions[0, 1], c='red', s=100, marker='*', label='Depot')
-    
-    # Plot routes
-    colors = ['r', 'g', 'b', 'c', 'm', 'y', 'k']
-    for v, route in enumerate(routes):
-        color = colors[v % len(colors)]
-        if not route:
-            continue
-            
-        # Convert route to positions
-        positions = []
-        positions.append(customer_positions[0])  # Start at depot
-        
-        for node in route:
-            if node < len(customer_positions):
-                positions.append(customer_positions[node])
-        
-        positions.append(customer_positions[0])  # Return to depot
-        positions = np.array(positions)
-        
-        # Plot route
-        plt.plot(positions[:, 0], positions[:, 1], c=color, linewidth=2, label=f'Vehicle {v+1}')
-    
-    plt.grid(True)
-    plt.legend()
-    
+
+    colors = ['green', 'orange', 'purple', 'cyan', 'magenta']
+    for i, route in enumerate(routes):
+        route_positions = customer_positions[route]
+        plt.plot(route_positions[:, 0], route_positions[:, 1],
+                 label=f'Vehicle {i}', color=colors[i % len(colors)], linewidth=2)
+
     if title:
         plt.title(title)
-        
-    if save_path:
-        plt.savefig(save_path)
+    plt.legend()
+    plt.tight_layout()
+
+    if final_path:
+        plt.savefig(final_path)
+        print(f"Saved route image to: {final_path}")
     else:
         plt.show()
-    
+
     plt.close()
 
-    # Build target dir based on inference method
-    save_dir = os.path.join("training_metrics_imgs", args.inference)
-    os.makedirs(save_dir, exist_ok=True)
 
-    # Generate unique filename starting at _0
-    base_name = "training_metrics"
-    ext = ".png"
-    count = 0
-    filename = f"{base_name}_{count}{ext}"
-    filepath = os.path.join(save_dir, filename)
-    while os.path.exists(filepath):
-        count += 1
-        filename = f"{base_name}_{count}{ext}"
-        filepath = os.path.join(save_dir, filename)
-        count += 1
-    
-    # Plot training metrics
-    plt.figure(figsize=(16, 5))
 
-    # Subplot 1: args as text
-    plt.subplot(1, 4, 1)
-    plt.axis('off')
-    args_text = "\n".join([f"{k}: {v}" for k, v in vars(args).items()])
-    plt.text(0, 1, args_text, va='top', ha='left', fontsize=9, wrap=True)
-
-    # Subplot 2: Rewards
-    plt.subplot(1, 4, 2)
-    plt.plot(rewards_history)
-    plt.title('Rewards')
-    plt.xlabel('Episode')
-
-    # Subplot 3: Policy Losses
-    plt.subplot(1, 4, 3)
-    plt.plot(policy_losses)
-    plt.title('Policy Losses')
-    plt.xlabel('Episode')
-
-    # Subplot 4: Baseline Losses
-    plt.subplot(1, 4, 4)
-    plt.plot(baseline_losses)
-    plt.title('Baseline Losses')
-    plt.xlabel('Episode')
-
-    plt.tight_layout()
-    plt.savefig(filepath)
-    plt.close()
 def plot_training_metrics(args, rewards_history, policy_losses, baseline_losses):
     """
     Plots training metrics and saves the plot with unique name in training_metrics_imgs/<inference>/.
@@ -333,14 +319,20 @@ def evaluate(args, env, policy_model, num_instances=100, logger=None):
         if logger and i < 5:  # Only log first 5 instances
             logger.info(f"Instance {i+1}: Cost = {cost:.4f}, Routes = {routes}")
             
-            # Visualize route for first instance
-            if i == 0:
-                visualize_route(
-                    env=env,
-                    routes=routes,
-                    title=f"Routes (Cost: {cost:.4f})",
-                    save_path=os.path.join(args.save_dir, f"route_{args.inference}.png")
-                )
+            # # Visualize route for first instance
+            # if i == 0:
+            #     visualize_route(
+            #         env=env,
+            #         routes=routes,
+            #         title=f"Routes (Cost: {cost:.4f})",
+            #         save_path=os.path.join(args.save_dir, f"route_{args.inference}.png")
+            #     )
+            visualize_route(
+                env=env,
+                routes=routes,
+                title=f"Routes (Cost: {cost:.4f})",
+                save_path=os.path.join(args.save_dir, f"route_{args.inference}.png")
+            )
     
     # Calculate mean reward
     mean_reward = total_reward / num_instances
