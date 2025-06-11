@@ -168,7 +168,6 @@ def visualize_route(env, routes, title=None, save_path=None):
     plt.close()
 
 
-
 def plot_training_metrics(args, rewards_history, policy_losses, baseline_losses):
     """
     Plots training metrics and saves the plot with unique name in training_metrics_imgs/<inference>/.
@@ -281,7 +280,6 @@ def train(args, env, trainer, logger):
     logger.info(f"Saved final model to {save_path}")
 
     plot_training_metrics(args, rewards_history, policy_losses, baseline_losses)
-
     
     logger.info("Training completed")
 
@@ -316,20 +314,14 @@ def evaluate(args, env, policy_model, num_instances=100, logger=None):
         if logger and i < 5:  # Only log first 5 instances
             logger.info(f"Instance {i+1}: Cost = {cost:.4f}, Routes = {routes}")
             
-            # # Visualize route for first instance
-            # if i == 0:
-            #     visualize_route(
-            #         env=env,
-            #         routes=routes,
-            #         title=f"Routes (Cost: {cost:.4f})",
-            #         save_path=os.path.join(args.save_dir, f"route_{args.inference}.png")
-            #     )
-            visualize_route(
-                env=env,
-                routes=routes,
-                title=f"Routes (Cost: {cost:.4f})",
-                save_path=os.path.join(args.save_dir, f"route_{args.inference}.png")
-            )
+            # Visualize route for first instance
+            if i == 0:
+                visualize_route(
+                    env=env,
+                    routes=routes,
+                    title=f"Routes (Cost: {cost:.4f})",
+                    save_path=os.path.join(args.save_dir, f"route_{args.inference}.png")
+                )
     
     # Calculate mean reward
     mean_reward = total_reward / num_instances

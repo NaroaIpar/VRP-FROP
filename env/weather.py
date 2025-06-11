@@ -6,19 +6,19 @@ import os
 def create_random_customer_positions(batch_size, num_nodes, depot = [0.5, 0.5], device='cpu'):
     
         # Node 0 is depot at "depot", rest are random positions
-        print("Generating customer positions for batch size:", batch_size, "and num nodes:", num_nodes)
+        # print("Generating customer positions for batch size:", batch_size, "and num nodes:", num_nodes)
         customer_positions = torch.zeros(batch_size, num_nodes, 2, device=device)
-        print("Customer positions at first:", customer_positions)
+        # print("Customer positions at first:", customer_positions)
         
         # Set depot position
         customer_positions[:, 0] = torch.tensor(depot, device=device)  # Depot position
-        print("Customer positions with depot position in (0.5, 0.5):", customer_positions)
+        # print("Customer positions with depot position in (0.5, 0.5):", customer_positions)
         
         # Generate random positions for customers
         for b in range(batch_size):
             for i in range(1, num_nodes):
                 customer_positions[b, i] = torch.rand(2, device=device)  # Random in [0,1]
-                print(f"Customer {i} position for batch {b} added:", customer_positions[b, i])
+                # print(f"Customer {i} position for batch {b} added:", customer_positions[b, i])
         
         return customer_positions
 
@@ -113,9 +113,9 @@ class WeatherSimulation:
             customer_positions = create_random_customer_positions(batch_size, num_nodes, depot, device)
             # customer_positions = load_customer_positions_from_txt("positions.txt", batch_size, num_nodes, depot)
 
-            print("Customer positions:", customer_positions)
-            print("Shape of customer positions:", customer_positions.shape)
-            print("Customer_positions type:", type(customer_positions))
+            # print("Customer positions:", customer_positions)
+            # print("Shape of customer positions:", customer_positions.shape)
+            # print("Customer_positions type:", type(customer_positions))
             
             # Save positions if fixed_customers
             if fixed_customers:
