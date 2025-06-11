@@ -140,6 +140,60 @@ def visualize_route(env, routes, title=None, save_path=None):
     
     plt.close()
 
+def plot_training_metrics(args, rewards_history, policy_losses, baseline_losses):
+
+    print("Plotting training metrics...")
+    print(f"args.save_dir: {args.save_dir}")
+    print(f"args: {args}")
+    print(f"rewards_history: {rewards_history[:5]}... (total {len(rewards_history)})")
+    print(f"policy_losses: {policy_losses[:5]}... (total {len(policy_losses)})")
+    print(f"baseline_losses: {baseline_losses[:5]}... (total {len(baseline_losses)})")
+
+    # Ensure save subdir exists
+    save_dir = os.path.join(args.save_dir, "training_metrics_imgs")
+    os.makedirs(save_dir, exist_ok=True)
+
+    # Generate unique filename
+    base_name = "training_metrics"
+    ext = ".png"
+    filename = base_name + ext
+    filepath = os.path.join(save_dir, filename)
+    count = 1
+    while os.path.exists(filepath):
+        filename = f"{base_name}_{count}{ext}"
+        filepath = os.path.join(save_dir, filename)
+        count += 1
+    
+    # Plot training metrics
+    plt.figure(figsize=(16, 5))
+
+    # Subplot 1: args as text
+    plt.subplot(1, 4, 1)
+    plt.axis('off')
+    args_text = "\n".join([f"{k}: {v}" for k, v in vars(args).items()])
+    plt.text(0, 1, args_text, va='top', ha='left', fontsize=9, wrap=True)
+
+    # Subplot 2: Rewards
+    plt.subplot(1, 4, 2)
+    plt.plot(rewards_history)
+    plt.title('Rewards')
+    plt.xlabel('Episode')
+
+    # Subplot 3: Policy Losses
+    plt.subplot(1, 4, 3)
+    plt.plot(policy_losses)
+    plt.title('Policy Losses')
+    plt.xlabel('Episode')
+
+    # Subplot 4: Baseline Losses
+    plt.subplot(1, 4, 4)
+    plt.plot(baseline_losses)
+    plt.title('Baseline Losses')
+    plt.xlabel('Episode')
+
+    plt.tight_layout()
+    plt.savefig(filepath)
+    plt.close()
 
 def train(args, env, trainer, logger):
     """
@@ -196,36 +250,9 @@ def train(args, env, trainer, logger):
     save_path = os.path.join(args.save_dir, "model_final")
     trainer.save_models(save_path)
     logger.info(f"Saved final model to {save_path}")
-    
-    # Plot training metrics
-    # plt.figure(figsize=(12, 4))
 
-    # # ADDED BY ME: Plot arguments
-    plt.figure(figsize=(16, 4))  # Wider figure
-    plt.subplot(1, 4, 1)
-    plt.axis('off')
-    args_text = "\n".join([f"{k}: {v}" for k, v in vars(args).items()])
-    plt.text(0, 1, args_text, va='top', ha='left', fontsize=9, wrap=True)
-    # # END OF ADDED BY ME
-    
-    plt.subplot(1, 3, 1)
-    plt.plot(rewards_history)
-    plt.title('Rewards')
-    plt.xlabel('Episode')
-    
-    plt.subplot(1, 3, 2)
-    plt.plot(policy_losses)
-    plt.title('Policy Losses')
-    plt.xlabel('Episode')
-    
-    plt.subplot(1, 3, 3)
-    plt.plot(baseline_losses)
-    plt.title('Baseline Losses')
-    plt.xlabel('Episode')
-    
-    plt.tight_layout()
-    plt.savefig(os.path.join(args.save_dir, 'training_metrics.png'))
-    plt.close()
+    plot_training_metrics(args, rewards_history, policy_losses, baseline_losses)
+
     
     logger.info("Training completed")
 
