@@ -140,26 +140,18 @@ def visualize_route(env, routes, title=None, save_path=None):
     
     plt.close()
 
-def plot_training_metrics(args, rewards_history, policy_losses, baseline_losses):
-
-    print("Plotting training metrics...")
-    print(f"args.save_dir: {args.save_dir}")
-    print(f"args: {args}")
-    print(f"rewards_history: {rewards_history[:5]}... (total {len(rewards_history)})")
-    print(f"policy_losses: {policy_losses[:5]}... (total {len(policy_losses)})")
-    print(f"baseline_losses: {baseline_losses[:5]}... (total {len(baseline_losses)})")
-
-    # Ensure save subdir exists
-    save_dir = os.path.join(args.save_dir, "training_metrics_imgs")
+    # Build target dir based on inference method
+    save_dir = os.path.join("training_metrics_imgs", args.inference)
     os.makedirs(save_dir, exist_ok=True)
 
-    # Generate unique filename
+    # Generate unique filename starting at _0
     base_name = "training_metrics"
     ext = ".png"
-    filename = base_name + ext
+    count = 0
+    filename = f"{base_name}_{count}{ext}"
     filepath = os.path.join(save_dir, filename)
-    count = 1
     while os.path.exists(filepath):
+        count += 1
         filename = f"{base_name}_{count}{ext}"
         filepath = os.path.join(save_dir, filename)
         count += 1
@@ -186,6 +178,60 @@ def plot_training_metrics(args, rewards_history, policy_losses, baseline_losses)
     plt.xlabel('Episode')
 
     # Subplot 4: Baseline Losses
+    plt.subplot(1, 4, 4)
+    plt.plot(baseline_losses)
+    plt.title('Baseline Losses')
+    plt.xlabel('Episode')
+
+    plt.tight_layout()
+    plt.savefig(filepath)
+    plt.close()
+def plot_training_metrics(args, rewards_history, policy_losses, baseline_losses):
+    """
+    Plots training metrics and saves the plot with unique name in training_metrics_imgs/<inference>/.
+    """
+    print("Plotting training metrics...")
+    print(f"args.save_dir: {args.save_dir}")
+    print(f"args.inference: {args.inference}")
+    print(f"args: {args}")
+    print(f"rewards_history: {rewards_history[:5]}... (total {len(rewards_history)})")
+    print(f"policy_losses: {policy_losses[:5]}... (total {len(policy_losses)})")
+    print(f"baseline_losses: {baseline_losses[:5]}... (total {len(baseline_losses)})")
+
+    # Root: checkpoints/training_metrics_imgs/beam
+    save_dir = os.path.join(args.save_dir, "training_metrics_imgs", args.inference)
+    os.makedirs(save_dir, exist_ok=True)
+
+    # Find next available filename: training_metrics_0.png, _1.png, ...
+    base_name = "training_metrics"
+    ext = ".png"
+    count = 0
+    filename = f"{base_name}_{count}{ext}"
+    filepath = os.path.join(save_dir, filename)
+    while os.path.exists(filepath):
+        count += 1
+        filename = f"{base_name}_{count}{ext}"
+        filepath = os.path.join(save_dir, filename)
+
+
+    # Plot
+    plt.figure(figsize=(16, 5))
+
+    plt.subplot(1, 4, 1)
+    plt.axis('off')
+    args_text = "\n".join([f"{k}: {v}" for k, v in vars(args).items()])
+    plt.text(0, 1, args_text, va='top', ha='left', fontsize=9, wrap=True)
+
+    plt.subplot(1, 4, 2)
+    plt.plot(rewards_history)
+    plt.title('Rewards')
+    plt.xlabel('Episode')
+
+    plt.subplot(1, 4, 3)
+    plt.plot(policy_losses)
+    plt.title('Policy Losses')
+    plt.xlabel('Episode')
+
     plt.subplot(1, 4, 4)
     plt.plot(baseline_losses)
     plt.title('Baseline Losses')
