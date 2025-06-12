@@ -125,7 +125,7 @@ def visualize_route(env, routes, title=None, save_path=None):
         final_path = None
 
     # Create wider figure with space for text
-    plt.figure(figsize=(12, 6))
+    plt.figure(figsize=(12, 8))
 
     # Left: route text
     plt.subplot(1, 2, 1)
@@ -145,8 +145,20 @@ def visualize_route(env, routes, title=None, save_path=None):
             customer_positions[i] = np.random.rand(2)
         print("Warning: Using random positions for visualization")
 
-    plt.scatter(customer_positions[1:, 0], customer_positions[1:, 1], c='blue', s=50, label='Customers')
-    plt.scatter(customer_positions[0, 0], customer_positions[0, 1], c='red', s=100, marker='*', label='Depot')
+    # plt.scatter(customer_positions[1:, 0], customer_positions[1:, 1], c='blue', s=50, label='Customers')
+    # plt.scatter(customer_positions[0, 0], customer_positions[0, 1], c='red', s=100, marker='*', label='Depot')
+    
+    # Plot customers with labels
+    for idx in range(1, len(customer_positions)):
+        x, y = customer_positions[idx]
+        plt.scatter(x, y, c='blue', s=50)
+        plt.text(x, y + 0.01, str(idx), fontsize=9, ha='center', va='bottom')
+
+    # Plot depot with label
+    x0, y0 = customer_positions[0]
+    plt.scatter(x0, y0, c='red', s=100, marker='*', label='Depot')
+    plt.text(x0, y0 + 0.01, '0', fontsize=10, fontweight='bold', ha='center', va='bottom')
+
 
     colors = ['green', 'orange', 'purple', 'cyan', 'magenta']
     for i, route in enumerate(routes):
