@@ -21,8 +21,8 @@ class BaselineModel(nn.Module):
         
         # Define layers
         # input_dim = 16  # num_nodes = 10, input_dim = 14 + 2 = 16
-        input_dim = 26 # num_nodes = 20, input_dim = 24 + 2 = 26
-        # input_dim = 56 # num_nodes = 50, input_dim = 54 + 2 = 56
+        # input_dim = 26 # num_nodes = 20, input_dim = 24 + 2 = 26
+        input_dim = 56 # num_nodes = 50, input_dim = 54 + 2 = 56
         self.fc1 = nn.Linear(input_dim, embedding_dim)
         self.fc2 = nn.Linear(embedding_dim, embedding_dim // 2)
         self.fc3 = nn.Linear(embedding_dim // 2, 1)
@@ -64,6 +64,13 @@ class BaselineModel(nn.Module):
         # x shape after concatenation: torch.Size([64, 16])
 
         print(f"x shape after concatenation: {x.shape}")
+
+        # print("------------- Start of adaptative input_dim for self.fc1-------------")
+        # [_, embedding_dim] = self.fc1.weight.shape
+        # input_dim = customer_features.size(2) + vehicle_features.size(2)
+        # print(f"input_dim: {input_dim}, embedding_dim: {embedding_dim}")
+        # self.fc1 = nn.Linear(input_dim, embedding_dim)
+        # print("------------------------------------------------------------")
         
         # Forward pass through network
         # x = self.relu(self.fc1(x))
@@ -82,15 +89,13 @@ class BaselineModel(nn.Module):
         try:
             x = self.relu(self.fc2(x))
         except Exception as e:
-            print("Error in BaselineModel forward function:")
-            print("x = self.relu(self.fc2(x))")
+            print("Error in BaselineModel forward function: x = self.relu(self.fc2(x))")
             raise e
         
         try:
             x = self.fc3(x)  # No activation for final output
         except Exception as e:
-            print("Error in BaselineModel forward function:")
-            print("x = self.relu(self.fc1(x))")
+            print("Error in BaselineModel forward function: x = self.relu(self.fc1(x))")
             raise e
         
         return x
