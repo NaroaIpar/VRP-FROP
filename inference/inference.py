@@ -65,6 +65,7 @@ class GreedyInference(InferenceStrategy):
                 log_probs, hidden = self.policy_model(
                     customer_features, vehicle_features, demands, hidden
                 )
+            print(f"------------Greedy Inference Step {step}------------\n")
             
             # Choose actions greedily
             actions = []
@@ -75,6 +76,12 @@ class GreedyInference(InferenceStrategy):
                 
                 # Record route
                 routes[v].append(action)
+
+                print(f"Vehicle {v} log_probs: {log_probs[0, v]}")
+                print(f"Vehicle {v} selected action: {action}")
+                print(f"Vehicle {v} current route: {routes[v]}")
+            print(f"--------------------------------------------------\n")
+
             
             # Convert to tensor
             actions_tensor = torch.tensor([actions], device=self.device)
@@ -141,6 +148,8 @@ class RandomSamplingInference(InferenceStrategy):
                     log_probs, hidden = self.policy_model(
                         customer_features, vehicle_features, demands, hidden
                     )
+
+                print(f"------------Random Sampling Step {step}------------\n")
                 
                 # Sample actions
                 actions = []
@@ -154,6 +163,10 @@ class RandomSamplingInference(InferenceStrategy):
                     
                     # Record route
                     routes[v].append(action)
+                    print(f"Vehicle {v} log_probs: {log_probs[0, v]}")
+                    print(f"Vehicle {v} selected action: {action}")
+                    print(f"Vehicle {v} current route: {routes[v]}")
+                print(f"--------------------------------------------------\n")
                 
                 # Convert to tensor
                 actions_tensor = torch.tensor([actions], device=self.device)

@@ -24,7 +24,7 @@ class BaselineModel(nn.Module):
         input_dim = 26 # num_nodes = 20, input_dim = 24 + 2 = 26
         # input_dim = 56 # num_nodes = 50, input_dim = 54 + 2 = 56
         self.fc1 = nn.Linear(input_dim, embedding_dim)
-        print(f"self.fc1.weight shape before adaptation: {self.fc1.weight.shape}")
+        # print(f"self.fc1.weight shape before adaptation: {self.fc1.weight.shape}")
         self.fc2 = nn.Linear(embedding_dim, embedding_dim // 2)
         self.fc3 = nn.Linear(embedding_dim // 2, 1)
         
@@ -47,8 +47,8 @@ class BaselineModel(nn.Module):
         vehicle_feature_dim = vehicle_features.size(2)
 
 
-        print(f"customer_features shape: {customer_features.shape}")
-        print(f"vehicle_features shape: {vehicle_features.shape}")
+        # print(f"customer_features shape: {customer_features.shape}")
+        # print(f"vehicle_features shape: {vehicle_features.shape}")
         # customer_features shape: torch.Size([64, 10, 14])
         # vehicle_features shape: torch.Size([64, 1, 2])
         
@@ -58,8 +58,8 @@ class BaselineModel(nn.Module):
         # Average vehicle features
         avg_vehicle = torch.mean(vehicle_features, dim=1)
 
-        print(f"avg_customer shape: {avg_customer.shape}")
-        print(f"avg_vehicle shape: {avg_vehicle.shape}")
+        # print(f"avg_customer shape: {avg_customer.shape}")
+        # print(f"avg_vehicle shape: {avg_vehicle.shape}")
         # avg_customer shape: torch.Size([64, 14])
         # avg_vehicle shape: torch.Size([64, 2])
         
@@ -67,19 +67,19 @@ class BaselineModel(nn.Module):
         x = torch.cat([avg_customer, avg_vehicle], dim=1)
         # x shape after concatenation: torch.Size([64, 16])
 
-        print(f"x shape after concatenation: {x.shape}")
+        # print(f"x shape after concatenation: {x.shape}")
 
-        print("------------- Start of adaptative input_dim for self.fc1-------------")
-        print(f"self.fc1.weight shape: {self.fc1.weight.shape}")
-        print(f"customer_features size 2: {customer_feautre_dim}")
-        print(f"vehicle_features size 2: {vehicle_feature_dim}")
+        # print("------------- Start of adaptative input_dim for self.fc1-------------")
+        # print(f"self.fc1.weight shape: {self.fc1.weight.shape}")
+        # print(f"customer_features size 2: {customer_feautre_dim}")
+        # print(f"vehicle_features size 2: {vehicle_feature_dim}")
         
         [embedding_dim, _] = self.fc1.weight.shape
         input_dim = customer_feautre_dim + vehicle_feature_dim
-        print(f"input_dim: {input_dim}, embedding_dim: {embedding_dim}")
+        # print(f"input_dim: {input_dim}, embedding_dim: {embedding_dim}")
         self.fc1 = nn.Linear(input_dim, embedding_dim)
-        print(f"self.fc1.weight shape after adaptation: {self.fc1.weight.shape}")
-        print("------------------------------------------------------------")
+        # print(f"self.fc1.weight shape after adaptation: {self.fc1.weight.shape}")
+        # print("------------------------------------------------------------")
         
         # Forward pass through network
         # x = self.relu(self.fc1(x))
