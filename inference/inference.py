@@ -67,8 +67,8 @@ class GreedyInference(InferenceStrategy):
                 log_probs, new_hidden = self.policy_model(
                     customer_features, vehicle_features, demands, hidden
                 )
-            print(f"Previous hidden state: {hidden}")
-            print(f"New hidden state: {new_hidden}")
+            # print(f"Previous hidden state: {hidden}")
+            # print(f"New hidden state: {new_hidden}")
 
             if hidden is not None:
                 diff = 0.0
@@ -113,6 +113,7 @@ class GreedyInference(InferenceStrategy):
             customer_features = next_customer_features
             vehicle_features = next_vehicle_features
             demands = next_demands
+            hidden = new_hidden
             
             # Update step counter
             step += 1
