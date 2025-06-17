@@ -135,9 +135,9 @@ class GreedyInference(InferenceStrategy):
                 diff = sum((h1 - h2).abs().sum().item() for h1, h2 in zip(vehicle_features, next_vehicle_features))
             else:  # GRU or single tensor
                 diff = (vehicle_features - next_vehicle_features).abs().sum().item()
-            print(f"Customer features state total difference: {diff}")
+            print(f"Vehicle features state total difference: {diff}")
             if diff < 1e-6:
-                print("[WARNING] Customer features state did not significantly change.")
+                print("[WARNING] Vehicle features state did not significantly change.")
 
             # Debug output of demands
             # print(f"Previous demands: {demands}")
@@ -147,9 +147,9 @@ class GreedyInference(InferenceStrategy):
                 diff = sum((h1 - h2).abs().sum().item() for h1, h2 in zip(demands, next_demands))
             else:  # GRU or single tensor
                 diff = (demands - next_demands).abs().sum().item()
-            print(f"Customer features state total difference: {diff}")
+            print(f"Demands state total difference: {diff}")
             if diff < 1e-6:
-                print("[WARNING] Customer features state did not significantly change.")
+                print("[WARNING] Demands state did not significantly change.")
             
             # Update step counter
             step += 1
