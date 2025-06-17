@@ -114,6 +114,42 @@ class GreedyInference(InferenceStrategy):
             vehicle_features = next_vehicle_features
             demands = next_demands
             hidden = new_hidden
+
+            # Debug output of customer features
+            # print(f"Previous customer features: {customer_features}")
+            # print(f"Next customer features: {next_customer_features}")
+            diff = 0.0
+            if isinstance(customer_features, tuple):  # LSTM case
+                diff = sum((h1 - h2).abs().sum().item() for h1, h2 in zip(customer_features, next_customer_features))
+            else:  # GRU or single tensor
+                diff = (customer_features - next_customer_features).abs().sum().item()
+            print(f"Customer features state total difference: {diff}")
+            if diff < 1e-6:
+                print("[WARNING] Customer features state did not significantly change.")
+
+            # Debug output of customer features
+            # print(f"Previous vehicle features: {vehicle_features}")
+            # print(f"Next vehicle features: {next_vehicle_features}")
+            diff = 0.0
+            if isinstance(vehicle_features, tuple):  # LSTM case
+                diff = sum((h1 - h2).abs().sum().item() for h1, h2 in zip(vehicle_features, next_vehicle_features))
+            else:  # GRU or single tensor
+                diff = (vehicle_features - next_vehicle_features).abs().sum().item()
+            print(f"Customer features state total difference: {diff}")
+            if diff < 1e-6:
+                print("[WARNING] Customer features state did not significantly change.")
+
+            # Debug output of demands
+            # print(f"Previous demands: {demands}")
+            # print(f"Next demands: {next_demands}")
+            diff = 0.0
+            if isinstance(demands, tuple):  # LSTM case
+                diff = sum((h1 - h2).abs().sum().item() for h1, h2 in zip(demands, next_demands))
+            else:  # GRU or single tensor
+                diff = (demands - next_demands).abs().sum().item()
+            print(f"Customer features state total difference: {diff}")
+            if diff < 1e-6:
+                print("[WARNING] Customer features state did not significantly change.")
             
             # Update step counter
             step += 1
