@@ -60,14 +60,29 @@ class GreedyInference(InferenceStrategy):
         step = 0
         
         while not done and step < 1000:  # Safety limit
+            print(f"------------Greedy Inference Step {step}------------\n")
+
             # Forward pass through policy network
             with torch.no_grad():
-                log_probs, hidden = self.policy_model(
+                log_probs, new_hidden = self.policy_model(
                     customer_features, vehicle_features, demands, hidden
                 )
-            print(f"------------Greedy Inference Step {step}------------\n")
-            print(f"Hidden state: {hidden}")
-            print(f"Hidden state norm: {torch.norm(hidden)}")
+            print(f"Previous hidden state: {hidden}")
+            print(f"New hidden state: {new_hidden}")
+
+            if hidden is not None:
+                diff = 0.0
+                if isinstance(hidden, tuple):  # LSTM case
+                    diff = sum((h1 - h2).abs().sum().item() for h1, h2 in zip(hidden, new_hidden))
+                else:  # GRU or single tensor
+                    diff = (hidden - new_hidden).abs().sum().item()
+                
+                print(f"Hidden state total difference: {diff}")
+
+                if diff < 1e-6:
+                    print("[WARNING] Hidden state did not significantly change.")
+
+
             
             # Choose actions greedily
             actions = []
