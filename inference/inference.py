@@ -66,6 +66,7 @@ class GreedyInference(InferenceStrategy):
                     customer_features, vehicle_features, demands, hidden
                 )
             print(f"------------Greedy Inference Step {step}------------\n")
+            print(f"Hidden state norm: {torch.norm(hidden)}")
             
             # Choose actions greedily
             actions = []
@@ -127,7 +128,8 @@ class RandomSamplingInference(InferenceStrategy):
         best_routes = None
         
         # Sample multiple solutions
-        for _ in range(num_samples):
+        for i in range(num_samples):
+            print(f"------------Random Sampling Iteration {i}------------\n")
             # Reset environment
             customer_features, vehicle_features, demands = env.reset(batch_size=1)
             
