@@ -66,6 +66,7 @@ class GreedyInference(InferenceStrategy):
                     customer_features, vehicle_features, demands, hidden
                 )
             print(f"------------Greedy Inference Step {step}------------\n")
+            print(f"Hidden state: {hidden}")
             print(f"Hidden state norm: {torch.norm(hidden)}")
             
             # Choose actions greedily
