@@ -160,6 +160,15 @@ class SVRPEnvironment:
         
         # Get updated features
         customer_features, vehicle_features = self._get_features()
+
+        # Penalizar si un vehículo termina su ruta fuera del depot
+        for b in range(batch_size):
+            for v in range(self.num_vehicles):
+                final_pos = self.vehicle_positions[b, v].item()
+                if final_pos != 0:
+                    # Penalización por no terminar en el depot
+                    rewards[b] -= self.travel_costs[b, final_pos, 0]  # penaliza el coste de volver
+
         
         return customer_features, vehicle_features, self.remaining_demands, rewards, done
     
