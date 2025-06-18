@@ -207,25 +207,29 @@ class GreedyInference(InferenceStrategy):
 
                 if diff < 1e-6:
                     print("[WARNING] Hidden state did not significantly change.")
-
+            
+            actions = []
+            # Initialize routes for each vehicle
+            for v in range(env.num_vehicles):
+                action = 0  # Start at depot (index 0)
+                actions.append(action)
+                routes[v].append(action)
 
             
             # Choose actions greedily
-            actions = []
             for v in range(env.num_vehicles):
                 logits = log_probs[0, v].clone()
 
                 # Nodo actual del vehículo (último nodo visitado)
-                current_node = routes[v][-1] if routes[v] else 0  # asume que empiezan en depot (índice 0)
+                current_node = routes[v][-1]
 
                 # Crear máscara booleana de nodos prohibidos
                 mask = torch.ones_like(logits, dtype=torch.bool)
 
-                # Desactiva nodos ya visitados (da igual qué vehículo sea, todos comparten el mismo conjunto de nodos)
-                for vehicle in range(env.num_vehicles):
-                    for node in routes[vehicle]:
-                        if node != 0:  # permitimos volver al depot
-                            mask[node] = False
+                # Desactiva nodos ya visitados
+                for node in routes[v]:
+                    if node != 0:  # permitimos volver al depot
+                        mask[node] = False
 
                 # No permitir volver al depot si acabamos de salir
                 if current_node == 0 and len(routes[v]) >= 2:
