@@ -162,7 +162,7 @@ class SVRPEnvironment:
         customer_features, vehicle_features = self._get_features()
 
         # Si la demanda de todos los clientes es 0, el episodio ha terminado
-        if done:
+        if done.all():
             # Penalizar si un vehículo termina su ruta fuera del depot
             for b in range(batch_size):
                 for v in range(self.num_vehicles):
