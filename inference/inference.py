@@ -203,7 +203,7 @@ class GreedyInference(InferenceStrategy):
                 for v in range(env.num_vehicles):
                     logits = log_probs[0, v].clone()
 
-                    current_node = routes[v][-1] if routes[v] else 0
+                    current_node = routes[v][-1]
                     mask = torch.ones_like(logits, dtype=torch.bool)
 
                     # Evitar repetir boyas no depot
@@ -212,7 +212,7 @@ class GreedyInference(InferenceStrategy):
                             mask[node] = False
 
                     # No volver al depot inmediatamente después de salir
-                    if current_node == 0 and len(routes[v]) >= 2:
+                    if current_node == 0:
                         mask[0] = False
 
                     # Aplicar máscara
