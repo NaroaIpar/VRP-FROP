@@ -34,6 +34,132 @@ class GreedyInference(InferenceStrategy):
     Greedy inference strategy that always selects the action with highest probability.
     """
     
+    # def solve(self, env):
+    #     """
+    #     Solve the SVRP instance using greedy action selection.
+        
+    #     Args:
+    #         env: SVRP environment
+            
+    #     Returns:
+    #         routes: List of routes for each vehicle
+    #         total_cost: Total travel cost
+    #     """
+    #     # Reset environment
+    #     customer_features, vehicle_features, demands = env.reset(batch_size=1)
+        
+    #     # Initialize hidden state
+    #     hidden = None
+        
+    #     # Initialize routes and cost
+    #     routes = [[] for _ in range(env.num_vehicles)]
+    #     total_cost = 0.0
+        
+    #     # Track visited customers
+    #     done = False
+    #     step = 0
+        
+    #     while not done and step < 1000:  # Safety limit
+    #         print(f"------------Greedy Inference Step {step}------------\n")
+
+    #         # Forward pass through policy network
+    #         with torch.no_grad():
+    #             log_probs, new_hidden = self.policy_model(
+    #                 customer_features, vehicle_features, demands, hidden
+    #             )
+    #         # print(f"Previous hidden state: {hidden}")
+    #         # print(f"New hidden state: {new_hidden}")
+
+    #         if hidden is not None:
+    #             diff = 0.0
+    #             if isinstance(hidden, tuple):  # LSTM case
+    #                 diff = sum((h1 - h2).abs().sum().item() for h1, h2 in zip(hidden, new_hidden))
+    #             else:  # GRU or single tensor
+    #                 diff = (hidden - new_hidden).abs().sum().item()
+                
+    #             print(f"Hidden state total difference: {diff}")
+
+    #             if diff < 1e-6:
+    #                 print("[WARNING] Hidden state did not significantly change.")
+
+
+            
+    #         # Choose actions greedily
+    #         actions = []
+    #         for v in range(env.num_vehicles):
+    #             # Select most probable action
+    #             action = torch.argmax(log_probs[0, v]).item()
+    #             actions.append(action)
+                
+    #             # Record route
+    #             routes[v].append(action)
+
+    #             print(f"Vehicle {v} log_probs: {log_probs[0, v]}")
+    #             print(f"Vehicle {v} selected action: {action}")
+    #             print(f"Vehicle {v} current route: {routes[v]}")
+            
+    #         # Convert to tensor
+    #         actions_tensor = torch.tensor([actions], device=self.device)
+            
+    #         # Execute actions in environment
+    #         next_customer_features, next_vehicle_features, next_demands, rewards, done_tensor = env.step(actions_tensor)
+            
+    #         # Update cost
+    #         total_cost -= rewards.item()  # Rewards are negative costs
+            
+    #         # Update state
+    #         customer_features = next_customer_features
+    #         vehicle_features = next_vehicle_features
+    #         demands = next_demands
+    #         hidden = new_hidden
+
+    #         # Debug output of customer features
+    #         # print(f"Previous customer features: {customer_features}")
+    #         # print(f"Next customer features: {next_customer_features}")
+    #         diff = 0.0
+    #         if isinstance(customer_features, tuple):  # LSTM case
+    #             diff = sum((h1 - h2).abs().sum().item() for h1, h2 in zip(customer_features, next_customer_features))
+    #         else:  # GRU or single tensor
+    #             diff = (customer_features - next_customer_features).abs().sum().item()
+    #         print(f"Customer features state total difference: {diff}")
+    #         if diff < 1e-6:
+    #             print("[WARNING] Customer features state did not significantly change.")
+
+    #         # Debug output of customer features
+    #         # print(f"Previous vehicle features: {vehicle_features}")
+    #         # print(f"Next vehicle features: {next_vehicle_features}")
+    #         diff = 0.0
+    #         if isinstance(vehicle_features, tuple):  # LSTM case
+    #             diff = sum((h1 - h2).abs().sum().item() for h1, h2 in zip(vehicle_features, next_vehicle_features))
+    #         else:  # GRU or single tensor
+    #             diff = (vehicle_features - next_vehicle_features).abs().sum().item()
+    #         print(f"Vehicle features state total difference: {diff}")
+    #         if diff < 1e-6:
+    #             print("[WARNING] Vehicle features state did not significantly change.")
+
+    #         # Debug output of demands
+    #         # print(f"Previous demands: {demands}")
+    #         # print(f"Next demands: {next_demands}")
+    #         diff = 0.0
+    #         if isinstance(demands, tuple):  # LSTM case
+    #             diff = sum((h1 - h2).abs().sum().item() for h1, h2 in zip(demands, next_demands))
+    #         else:  # GRU or single tensor
+    #             diff = (demands - next_demands).abs().sum().item()
+    #         print(f"Demands state total difference: {diff}")
+    #         if diff < 1e-6:
+    #             print("[WARNING] Demands state did not significantly change.")
+            
+    #         # Update step counter
+    #         step += 1
+            
+    #         # Check if done
+    #         done = done_tensor.item()
+    #         print(f"--------------------------------------------------\n")
+
+        
+    #     return routes, total_cost
+
+    
     def solve(self, env):
         """
         Solve the SVRP instance using greedy action selection.
@@ -60,7 +186,7 @@ class GreedyInference(InferenceStrategy):
         step = 0
         
         while not done and step < 1000:  # Safety limit
-            print(f"------------Greedy Inference Step {step}------------\n")
+            print(f"------------Greedy Inference Step {step}------------")
 
             # Forward pass through policy network
             with torch.no_grad():
@@ -87,17 +213,38 @@ class GreedyInference(InferenceStrategy):
             # Choose actions greedily
             actions = []
             for v in range(env.num_vehicles):
-                # Select most probable action
-                action = torch.argmax(log_probs[0, v]).item()
+                logits = log_probs[0, v].clone()
+
+                # Nodo actual del vehículo (último nodo visitado)
+                current_node = routes[v][-1] if routes[v] else 0  # asume que empiezan en depot (índice 0)
+
+                # Crear máscara booleana de nodos prohibidos
+                mask = torch.ones_like(logits, dtype=torch.bool)
+
+                # Desactiva nodos ya visitados
+                for r in routes:
+                    for node in r:
+                        if node != 0:  # permitimos volver al depot
+                            mask[node] = False
+
+                # No permitir volver al depot si acabamos de salir
+                if current_node == 0 and len(routes[v]) >= 2 and routes[v][-2] == 0:
+                    mask[0] = False
+
+                # Aplicar la máscara: nodos prohibidos → -inf
+                logits[~mask] = -float('inf')
+
+                # Greedy argmax
+                action = torch.argmax(logits).item()
                 actions.append(action)
-                
-                # Record route
                 routes[v].append(action)
 
                 print(f"Vehicle {v} log_probs: {log_probs[0, v]}")
+                print(f"Vehicle {v} logits after masking: {logits}")
+                print(f"Vehicle {v} mask {mask}")
                 print(f"Vehicle {v} selected action: {action}")
                 print(f"Vehicle {v} current route: {routes[v]}")
-            print(f"--------------------------------------------------\n")
+
 
             
             # Convert to tensor
@@ -156,6 +303,8 @@ class GreedyInference(InferenceStrategy):
             
             # Check if done
             done = done_tensor.item()
+            print(f"--------------------------------------------------\n")
+
         
         return routes, total_cost
 
