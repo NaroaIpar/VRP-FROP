@@ -242,7 +242,11 @@ class GreedyInference(InferenceStrategy):
             done = done_tensor.item()
             print(f"--------------------------------------------------\n")
 
-
+        # Indicar que todos los vehículos regresan al depot al final
+        for v in range(env.num_vehicles):
+            if routes[v][-1] != 0:
+                routes[v].append(0)
+                
         return routes, total_cost
 
 
