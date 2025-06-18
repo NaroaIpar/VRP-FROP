@@ -239,8 +239,8 @@ class GreedyInference(InferenceStrategy):
                 routes[v].append(action)
 
                 print(f"Vehicle {v} log_probs: {log_probs[0, v]}")
-                print(f"Vehicle {v} logits after masking: {logits}")
                 print(f"Vehicle {v} mask {mask}")
+                print(f"Vehicle {v} logits after masking: {logits}")
                 print(f"Vehicle {v} selected action: {action}")
                 print(f"Vehicle {v} current route: {routes[v]}")
 
