@@ -222,13 +222,12 @@ class GreedyInference(InferenceStrategy):
                 mask = torch.ones_like(logits, dtype=torch.bool)
 
                 # Desactiva nodos ya visitados
-                for r in routes:
-                    for node in r:
-                        if node != 0:  # permitimos volver al depot
-                            mask[node] = False
+                for node in routes[v]:
+                    if node != 0:  # permitimos volver al depot
+                        mask[node] = False
 
                 # No permitir volver al depot si acabamos de salir
-                if current_node == 0 and len(routes[v]) >= 2 and routes[v][-2] == 0:
+                if current_node == 0 and len(routes[v]) >= 2:
                     mask[0] = False
 
                 # Aplicar la máscara: nodos prohibidos → -inf
