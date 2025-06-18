@@ -185,131 +185,63 @@ class GreedyInference(InferenceStrategy):
         done = False
         step = 0
         
-        while not done and step < 1000:  # Safety limit
+        while not done and step < 1000:
             print(f"------------Greedy Inference Step {step}------------")
 
-            # Forward pass through policy network
+            # Siempre hacemos forward
             with torch.no_grad():
                 log_probs, new_hidden = self.policy_model(
                     customer_features, vehicle_features, demands, hidden
                 )
-            # print(f"Previous hidden state: {hidden}")
-            # print(f"New hidden state: {new_hidden}")
 
-            if hidden is not None:
-                diff = 0.0
-                if isinstance(hidden, tuple):  # LSTM case
-                    diff = sum((h1 - h2).abs().sum().item() for h1, h2 in zip(hidden, new_hidden))
-                else:  # GRU or single tensor
-                    diff = (hidden - new_hidden).abs().sum().item()
-                
-                print(f"Hidden state total difference: {diff}")
-
-                if diff < 1e-6:
-                    print("[WARNING] Hidden state did not significantly change.")
-            
             actions = []
-            # Initialize routes for each vehicle
-            for v in range(env.num_vehicles):
-                action = 0  # Start at depot (index 0)
-                actions.append(action)
-                routes[v].append(action)
-
-            
-            # Choose actions greedily
             for v in range(env.num_vehicles):
                 logits = log_probs[0, v].clone()
 
-                # Nodo actual del vehículo (último nodo visitado)
-                current_node = routes[v][-1]
+                if step == 0:
+                    # Prohibir quedarse en el depot
+                    logits[0] = -float('inf')
 
-                # Crear máscara booleana de nodos prohibidos
-                mask = torch.ones_like(logits, dtype=torch.bool)
+                    # Prohibir nodos con demanda 0
+                    zero_demand = demands[0] <= 0
+                    logits[zero_demand] = -float('inf')
+                else:
+                    current_node = routes[v][-1] if routes[v] else 0
+                    mask = torch.ones_like(logits, dtype=torch.bool)
 
-                # Desactiva nodos ya visitados
-                for node in routes[v]:
-                    if node != 0:  # permitimos volver al depot
-                        mask[node] = False
+                    for node in routes[v]:
+                        if node != 0:
+                            mask[node] = False
 
-                # No permitir volver al depot si acabamos de salir
-                if current_node == 0 and len(routes[v]) >= 2:
-                    mask[0] = False
+                    if current_node == 0 and len(routes[v]) >= 2:
+                        mask[0] = False
 
-                # Aplicar la máscara: nodos prohibidos → -inf
-                logits[~mask] = -float('inf')
+                    logits[~mask] = -float('inf')
 
-                # Greedy argmax
                 action = torch.argmax(logits).item()
                 actions.append(action)
                 routes[v].append(action)
 
                 print(f"Vehicle {v} log_probs: {log_probs[0, v]}")
-                print(f"Vehicle {v} mask {mask}")
                 print(f"Vehicle {v} logits after masking: {logits}")
                 print(f"Vehicle {v} selected action: {action}")
                 print(f"Vehicle {v} current route: {routes[v]}")
 
-
-            
-            # Convert to tensor
+            # Paso en el entorno
             actions_tensor = torch.tensor([actions], device=self.device)
-            
-            # Execute actions in environment
             next_customer_features, next_vehicle_features, next_demands, rewards, done_tensor = env.step(actions_tensor)
-            
-            # Update cost
-            total_cost -= rewards.item()  # Rewards are negative costs
-            
-            # Update state
+
+            # Actualiza estado
+            total_cost -= rewards.item()
             customer_features = next_customer_features
             vehicle_features = next_vehicle_features
             demands = next_demands
             hidden = new_hidden
 
-            # Debug output of customer features
-            # print(f"Previous customer features: {customer_features}")
-            # print(f"Next customer features: {next_customer_features}")
-            diff = 0.0
-            if isinstance(customer_features, tuple):  # LSTM case
-                diff = sum((h1 - h2).abs().sum().item() for h1, h2 in zip(customer_features, next_customer_features))
-            else:  # GRU or single tensor
-                diff = (customer_features - next_customer_features).abs().sum().item()
-            print(f"Customer features state total difference: {diff}")
-            if diff < 1e-6:
-                print("[WARNING] Customer features state did not significantly change.")
-
-            # Debug output of customer features
-            # print(f"Previous vehicle features: {vehicle_features}")
-            # print(f"Next vehicle features: {next_vehicle_features}")
-            diff = 0.0
-            if isinstance(vehicle_features, tuple):  # LSTM case
-                diff = sum((h1 - h2).abs().sum().item() for h1, h2 in zip(vehicle_features, next_vehicle_features))
-            else:  # GRU or single tensor
-                diff = (vehicle_features - next_vehicle_features).abs().sum().item()
-            print(f"Vehicle features state total difference: {diff}")
-            if diff < 1e-6:
-                print("[WARNING] Vehicle features state did not significantly change.")
-
-            # Debug output of demands
-            # print(f"Previous demands: {demands}")
-            # print(f"Next demands: {next_demands}")
-            diff = 0.0
-            if isinstance(demands, tuple):  # LSTM case
-                diff = sum((h1 - h2).abs().sum().item() for h1, h2 in zip(demands, next_demands))
-            else:  # GRU or single tensor
-                diff = (demands - next_demands).abs().sum().item()
-            print(f"Demands state total difference: {diff}")
-            if diff < 1e-6:
-                print("[WARNING] Demands state did not significantly change.")
-            
-            # Update step counter
             step += 1
-            
-            # Check if done
             done = done_tensor.item()
             print(f"--------------------------------------------------\n")
 
-        
         return routes, total_cost
 
 
