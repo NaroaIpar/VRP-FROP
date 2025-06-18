@@ -184,63 +184,64 @@ class GreedyInference(InferenceStrategy):
         # Track visited customers
         done = False
         step = 0
-        
         while not done and step < 1000:
             print(f"------------Greedy Inference Step {step}------------")
 
-            # Siempre hacemos forward
-            with torch.no_grad():
-                log_probs, new_hidden = self.policy_model(
-                    customer_features, vehicle_features, demands, hidden
-                )
-
             actions = []
-            for v in range(env.num_vehicles):
-                logits = log_probs[0, v].clone()
+            if step == 0:
+                # Forzar que todos los vehículos empiecen en el depot (nodo 0)
+                for v in range(env.num_vehicles):
+                    actions.append(0)
+                    routes[v].append(0)
+            else:
+                # Forward pass a partir del segundo paso
+                with torch.no_grad():
+                    log_probs, new_hidden = self.policy_model(
+                        customer_features, vehicle_features, demands, hidden
+                    )
 
-                if step == 0:
-                    # Prohibir quedarse en el depot
-                    logits[0] = -float('inf')
+                for v in range(env.num_vehicles):
+                    logits = log_probs[0, v].clone()
 
-                    # Prohibir nodos con demanda 0
-                    zero_demand = demands[0] <= 0
-                    logits[zero_demand] = -float('inf')
-                else:
                     current_node = routes[v][-1] if routes[v] else 0
                     mask = torch.ones_like(logits, dtype=torch.bool)
 
+                    # Evitar repetir boyas no depot
                     for node in routes[v]:
                         if node != 0:
                             mask[node] = False
 
+                    # No volver al depot inmediatamente después de salir
                     if current_node == 0 and len(routes[v]) >= 2:
                         mask[0] = False
 
+                    # Aplicar máscara
                     logits[~mask] = -float('inf')
 
-                action = torch.argmax(logits).item()
-                actions.append(action)
-                routes[v].append(action)
+                    action = torch.argmax(logits).item()
+                    actions.append(action)
+                    routes[v].append(action)
 
-                print(f"Vehicle {v} log_probs: {log_probs[0, v]}")
-                print(f"Vehicle {v} logits after masking: {logits}")
-                print(f"Vehicle {v} selected action: {action}")
-                print(f"Vehicle {v} current route: {routes[v]}")
+                    print(f"Vehicle {v} log_probs: {log_probs[0, v]}")
+                    print(f"Vehicle {v} logits after masking: {logits}")
+                    print(f"Vehicle {v} selected action: {action}")
+                    print(f"Vehicle {v} current route: {routes[v]}")
 
-            # Paso en el entorno
+            # Ejecutar paso en el entorno
             actions_tensor = torch.tensor([actions], device=self.device)
             next_customer_features, next_vehicle_features, next_demands, rewards, done_tensor = env.step(actions_tensor)
 
-            # Actualiza estado
+            # Actualizar estado
             total_cost -= rewards.item()
             customer_features = next_customer_features
             vehicle_features = next_vehicle_features
             demands = next_demands
-            hidden = new_hidden
+            hidden = new_hidden if step > 0 else None  # `hidden` solo se actualiza si se hizo forward
 
             step += 1
             done = done_tensor.item()
             print(f"--------------------------------------------------\n")
+
 
         return routes, total_cost
 
