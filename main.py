@@ -76,6 +76,109 @@ def setup_logger(save_dir):
     return logging.getLogger()
 
 
+# def visualize_route(env, routes, title=None, save_path=None):
+#     """
+#     Visualize routes with customer layout and written route text.
+#     Auto-saves image with incrementing ID in {args.save_dir}/{args.inference}/.
+
+#     Args:
+#         env: SVRP environment
+#         routes: List of routes per vehicle
+#         title: Plot title
+#         save_path: Expected base path like args.save_dir/route_beam.png
+#     """
+#     print("Visualizing route...")
+#     print(f"env: {env}")
+#     print(f"routes: {routes}")
+#     print(f"title: {title}")
+#     print(f"save_path: {save_path}")
+
+#     # Rewrite save_path to desired directory and filename format
+#     if save_path:
+#         base_dir = os.path.dirname(save_path)
+#         file_root = os.path.basename(save_path)
+#         name_part = os.path.splitext(file_root)[0]  # "route_beam"
+
+#         # Extract "beam" from "route_beam"
+#         if "_" in name_part:
+#             inference = name_part.split("_")[1]
+#         else:
+#             inference = "default"
+
+#         # New target folder: save_dir/routes_imgs/inference/
+#         root_dir = os.path.dirname(base_dir)  # -> args.save_dir
+#         new_dir = os.path.join(root_dir, "routes_imgs", inference)
+#         os.makedirs(new_dir, exist_ok=True)
+
+
+#         # New base filename: route_inference_N.png
+#         base_name = f"route_{inference}"
+#         ext = ".png"
+#         count = 0
+#         final_name = f"{base_name}_{count}{ext}"
+#         final_path = os.path.join(new_dir, final_name)
+#         while os.path.exists(final_path):
+#             count += 1
+#             final_name = f"{base_name}_{count}{ext}"
+#             final_path = os.path.join(new_dir, final_name)
+#     else:
+#         final_path = None
+
+#     # Create wider figure with space for text
+#     plt.figure(figsize=(12, 8))
+
+#     # Left: route text
+#     plt.subplot(1, 2, 1)
+#     plt.axis('off')
+#     route_text = "\n".join([f"Vehicle {i}: {route}" for i, route in enumerate(routes)])
+#     plt.text(0, 1, route_text, va='top', ha='left', fontsize=10, wrap=True)
+
+#     # Right: route plot
+#     plt.subplot(1, 2, 2)
+#     if hasattr(env.weather_sim, 'fixed_customer_positions') and env.weather_sim.fixed_customer_positions is not None:
+#         customer_positions = env.weather_sim.fixed_customer_positions[0].cpu().numpy()
+#     else:
+#         num_nodes = env.num_nodes
+#         customer_positions = np.zeros((num_nodes, 2))
+#         customer_positions[0] = [0.5, 0.5]
+#         for i in range(1, num_nodes):
+#             customer_positions[i] = np.random.rand(2)
+#         print("Warning: Using random positions for visualization")
+
+#     # plt.scatter(customer_positions[1:, 0], customer_positions[1:, 1], c='blue', s=50, label='Customers')
+#     # plt.scatter(customer_positions[0, 0], customer_positions[0, 1], c='red', s=100, marker='*', label='Depot')
+    
+#     # Plot customers with labels
+#     for idx in range(1, len(customer_positions)):
+#         x, y = customer_positions[idx]
+#         plt.scatter(x, y, c='blue', s=50)
+#         plt.text(x, y + 0.01, str(idx), fontsize=9, ha='center', va='bottom')
+
+#     # Plot depot with label
+#     x0, y0 = customer_positions[0]
+#     plt.scatter(x0, y0, c='red', s=100, marker='*', label='Depot')
+#     plt.text(x0, y0 + 0.01, '0', fontsize=10, fontweight='bold', ha='center', va='bottom')
+
+
+#     colors = ['green', 'orange', 'purple', 'cyan', 'magenta']
+#     for i, route in enumerate(routes):
+#         route_positions = customer_positions[route]
+#         plt.plot(route_positions[:, 0], route_positions[:, 1],
+#                  label=f'Vehicle {i}', color=colors[i % len(colors)], linewidth=2)
+
+#     if title:
+#         plt.title(title)
+#     plt.legend()
+#     plt.tight_layout()
+
+#     if final_path:
+#         plt.savefig(final_path)
+#         print(f"Saved route image to: {final_path}")
+#     else:
+#         plt.show()
+
+#     plt.close()
+
 def visualize_route(env, routes, title=None, save_path=None):
     """
     Visualize routes with customer layout and written route text.
@@ -110,7 +213,6 @@ def visualize_route(env, routes, title=None, save_path=None):
         new_dir = os.path.join(root_dir, "routes_imgs", inference)
         os.makedirs(new_dir, exist_ok=True)
 
-
         # New base filename: route_inference_N.png
         base_name = f"route_{inference}"
         ext = ".png"
@@ -124,17 +226,24 @@ def visualize_route(env, routes, title=None, save_path=None):
     else:
         final_path = None
 
-    # Create wider figure with space for text
-    plt.figure(figsize=(12, 8))
+    import matplotlib.gridspec as gridspec
+    import textwrap
+
+    fig = plt.figure(figsize=(14, 10))
+    gs = gridspec.GridSpec(1, 2, width_ratios=[1.5, 2], wspace=0.3)
+    fig.subplots_adjust(left=0.05, right=0.95, top=0.95, bottom=0.05)
 
     # Left: route text
-    plt.subplot(1, 2, 1)
-    plt.axis('off')
-    route_text = "\n".join([f"Vehicle {i}: {route}" for i, route in enumerate(routes)])
-    plt.text(0, 1, route_text, va='top', ha='left', fontsize=10, wrap=True)
+    ax_text = plt.subplot(gs[0])
+    ax_text.axis('off')
+    route_text = "\n\n".join([
+        f"Vehicle {i}:\n" + textwrap.fill(str(route), width=55)
+        for i, route in enumerate(routes)
+    ])
+    ax_text.text(0, 1, route_text, va='top', ha='left', fontsize=10, transform=ax_text.transAxes)
 
     # Right: route plot
-    plt.subplot(1, 2, 2)
+    ax_plot = plt.subplot(gs[1])
     if hasattr(env.weather_sim, 'fixed_customer_positions') and env.weather_sim.fixed_customer_positions is not None:
         customer_positions = env.weather_sim.fixed_customer_positions[0].cpu().numpy()
     else:
@@ -145,30 +254,24 @@ def visualize_route(env, routes, title=None, save_path=None):
             customer_positions[i] = np.random.rand(2)
         print("Warning: Using random positions for visualization")
 
-    # plt.scatter(customer_positions[1:, 0], customer_positions[1:, 1], c='blue', s=50, label='Customers')
-    # plt.scatter(customer_positions[0, 0], customer_positions[0, 1], c='red', s=100, marker='*', label='Depot')
-    
-    # Plot customers with labels
     for idx in range(1, len(customer_positions)):
         x, y = customer_positions[idx]
-        plt.scatter(x, y, c='blue', s=50)
-        plt.text(x, y + 0.01, str(idx), fontsize=9, ha='center', va='bottom')
+        ax_plot.scatter(x, y, c='blue', s=50)
+        ax_plot.text(x, y + 0.01, str(idx), fontsize=9, ha='center', va='bottom')
 
-    # Plot depot with label
     x0, y0 = customer_positions[0]
-    plt.scatter(x0, y0, c='red', s=100, marker='*', label='Depot')
-    plt.text(x0, y0 + 0.01, '0', fontsize=10, fontweight='bold', ha='center', va='bottom')
-
+    ax_plot.scatter(x0, y0, c='red', s=100, marker='*', label='Depot')
+    ax_plot.text(x0, y0 + 0.01, '0', fontsize=10, fontweight='bold', ha='center', va='bottom')
 
     colors = ['green', 'orange', 'purple', 'cyan', 'magenta']
     for i, route in enumerate(routes):
         route_positions = customer_positions[route]
-        plt.plot(route_positions[:, 0], route_positions[:, 1],
-                 label=f'Vehicle {i}', color=colors[i % len(colors)], linewidth=2)
+        ax_plot.plot(route_positions[:, 0], route_positions[:, 1],
+                     label=f'Vehicle {i}', color=colors[i % len(colors)], linewidth=2)
 
     if title:
-        plt.title(title)
-    plt.legend()
+        ax_plot.set_title(title)
+    ax_plot.legend()
     plt.tight_layout()
 
     if final_path:

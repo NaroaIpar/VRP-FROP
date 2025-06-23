@@ -1950,3 +1950,17 @@
 2025-06-13 17:42:53,731 [INFO] Evaluation completed. Mean reward: -21.7457
 2025-06-13 17:42:53,731 [INFO] Test reward: -21.7457
 2025-06-13 17:43:29,668 [INFO] Epoch 30/100 | Reward: -32.6664 | Policy Loss: -220.1132 | Baseline Loss: 1939.7928 | Time: 3.53s
+2025-06-23 17:34:19,039 [INFO] Starting SVRP-RL with Namespace(num_nodes=20, num_vehicles=1, capacity=50.0, a_ratio=0.6, b_ratio=0.2, gamma_ratio=0.2, weather_dim=3, fixed_customers=False, embedding_dim=128, epochs=100, batch_size=32, lr=0.0001, baseline_lr=0.001, entropy_weight=0.01, max_steps=100, inference='random', num_samples=32, beam_width=3, test_size=100, cuda=False, seed=42, save_dir='checkpoints', load_model='checkpoints/model_final', test=True, log_interval=10, save_interval=20, reoptimization=False)
+2025-06-23 17:34:19,041 [INFO] Using device: cpu
+2025-06-23 17:34:19,042 [INFO] Customer features dimension: 24
+2025-06-23 17:34:19,042 [INFO] Vehicle features dimension: 2
+2025-06-23 17:34:21,999 [INFO] Loaded model from checkpoints/model_final
+2025-06-23 17:34:21,999 [INFO] Evaluating model with random inference strategy
+2025-06-23 17:34:36,838 [INFO] Instance 1: Cost = 59.8921, Routes = [[0, 3, 5, 1, 0, 8, 0, 12, 10, 13, 19, 6, 0, 2, 7, 0, 17, 9, 0, 11, 0, 0, 0, 15, 16, 4, 0, 0, 18, 14]]
+2025-06-23 17:37:57,568 [INFO] Starting SVRP-RL with Namespace(num_nodes=20, num_vehicles=1, capacity=50.0, a_ratio=0.6, b_ratio=0.2, gamma_ratio=0.2, weather_dim=3, fixed_customers=False, embedding_dim=128, epochs=100, batch_size=32, lr=0.0001, baseline_lr=0.001, entropy_weight=0.01, max_steps=100, inference='random', num_samples=32, beam_width=3, test_size=100, cuda=False, seed=42, save_dir='checkpoints', load_model='checkpoints/model_final', test=True, log_interval=10, save_interval=20, reoptimization=False)
+2025-06-23 17:37:57,568 [INFO] Using device: cpu
+2025-06-23 17:37:57,568 [INFO] Customer features dimension: 24
+2025-06-23 17:37:57,569 [INFO] Vehicle features dimension: 2
+2025-06-23 17:37:59,757 [INFO] Loaded model from checkpoints/model_final
+2025-06-23 17:37:59,757 [INFO] Evaluating model with random inference strategy
+2025-06-23 17:38:14,359 [INFO] Instance 1: Cost = 59.8921, Routes = [[0, 3, 5, 1, 0, 8, 0, 12, 10, 13, 19, 6, 0, 2, 7, 0, 17, 9, 0, 11, 0, 0, 0, 15, 16, 4, 0, 0, 18, 14]]
