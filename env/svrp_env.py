@@ -12,6 +12,7 @@ class SVRPEnvironment:
     def __init__(self, 
                  num_nodes, 
                  num_vehicles, 
+                 num_buoys,
                  capacity, 
                  weather_dim=3,
                  a_ratio=0.6,
@@ -37,6 +38,7 @@ class SVRPEnvironment:
         self.b_ratio = b_ratio
         self.gamma_ratio = gamma_ratio
         self.device = device
+        self.num_buoys = num_buoys
         
         # Weather simulation
         self.weather_sim = WeatherSimulation(

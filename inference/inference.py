@@ -171,6 +171,9 @@ class GreedyInference(InferenceStrategy):
             routes: List of routes for each vehicle
             total_cost: Total travel cost
         """
+        print("Greedy Inference starting...\n")
+        print(f"Number of buoys to visit: {env.num_buoys}")
+
         # Reset environment
         customer_features, vehicle_features, demands = env.reset(batch_size=1)
         
@@ -184,7 +187,7 @@ class GreedyInference(InferenceStrategy):
         # Track visited customers
         done = False
         step = 0
-        while not done and step < 1000:
+        while not done and step < env.num_buoys and step < 1000:
             print(f"------------Greedy Inference Step {step}------------")
 
             actions = []

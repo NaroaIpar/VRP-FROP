@@ -25,6 +25,8 @@ def parse_args():
     parser.add_argument('--gamma_ratio', type=float, default=0.2, help='Noise component ratio')
     parser.add_argument('--weather_dim', type=int, default=3, help='Weather dimension')
     parser.add_argument('--fixed_customers', action='store_true', help='Use fixed customer positions')
+    parser.add_argument('--num_buoys', type=int, default=1, help='Number of buoys to visit')
+
     
     # Model settings
     parser.add_argument('--embedding_dim', type=int, default=128, help='Embedding dimension')
@@ -363,6 +365,7 @@ def main():
     env = SVRPEnvironment(
         num_nodes=args.num_nodes,
         num_vehicles=args.num_vehicles,
+        num_buoys=args.num_buoys,
         capacity=args.capacity,
         weather_dim=args.weather_dim,
         a_ratio=args.a_ratio,

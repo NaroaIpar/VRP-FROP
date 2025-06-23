@@ -14,6 +14,8 @@ ENV_CONFIG = {
     'b_ratio': 0.2,            # Weather component ratio
     'gamma_ratio': 0.2,        # Noise component ratio
     'fixed_customers': True,   # Use fixed customer positions
+    'num_buoys': 1,            # Number of buoys to visit
+
 }
 
 # Model settings
