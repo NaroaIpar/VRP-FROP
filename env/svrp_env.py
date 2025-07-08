@@ -95,6 +95,87 @@ class SVRPEnvironment:
         
         return customer_features, vehicle_features, self.remaining_demands
     
+    # def step(self, actions):
+    #     """
+    #     Execute actions and update environment state.
+        
+    #     Args:
+    #         actions: Tensor of shape [batch_size, num_vehicles]
+    #                containing node indices to visit
+            
+    #     Returns:
+    #         customer_features: Updated customer information
+    #         vehicle_features: Updated vehicle information
+    #         demands: Updated remaining demand
+    #         rewards: Negative travel costs
+    #         done: Whether episode is complete
+    #     """
+    #     batch_size = actions.size(0)
+    #     rewards = torch.zeros(batch_size, device=self.device)
+
+    #     # For each vehicle, compute travel costs and update states
+    #     for v in range(self.num_vehicles):
+    #         # Get current positions and next positions
+    #         current_positions = self.vehicle_positions[:, v]
+    #         next_positions = actions[:, v]
+            
+    #         # Compute travel costs
+    #         for b in range(batch_size):
+    #             current = current_positions[b].item()
+    #             next_node = next_positions[b].item()
+                
+    #             # Add travel cost
+    #             rewards[b] -= self.travel_costs[b, current, next_node]
+                
+    #             # Update vehicle load and remaining demand
+    #             if next_node > 0:  # Not depot
+    #                 # Calculate how much can be delivered
+    #                 delivery = torch.min(
+    #                     self.vehicle_loads[b, v],
+    #                     self.remaining_demands[b, next_node]
+    #                 )
+                    
+    #                 # Update vehicle load and remaining demand
+    #                 self.vehicle_loads[b, v] -= delivery
+    #                 self.remaining_demands[b, next_node] -= delivery
+                    
+    #                 # If vehicle cannot fulfill demand, record failure
+    #                 if self.remaining_demands[b, next_node] > 0 and self.vehicle_loads[b, v] <= 0:
+    #                     # Vehicle needs to return to depot for refill
+    #                     # Add recourse cost (depot to customer and back)
+    #                     rewards[b] -= 2 * self.travel_costs[b, 0, next_node]
+                        
+    #                     # Refill vehicle
+    #                     self.vehicle_loads[b, v] = self.capacity
+    #             else:
+    #                 # Refill at depot
+    #                 self.vehicle_loads[b, v] = self.capacity
+            
+    #         # Update vehicle positions
+    #         self.vehicle_positions[:, v] = next_positions
+        
+    #     # Update step counter
+    #     self.steps += 1
+        
+    #     # Check if done (all demands fulfilled)
+    #     done = (self.remaining_demands[:, 1:].sum(dim=1) <= 0)
+        
+    #     # Get updated features
+    #     customer_features, vehicle_features = self._get_features()
+
+    #     # Si la demanda de todos los clientes es 0, el episodio ha terminado
+    #     if done.all():
+    #         # Penalizar si un vehículo termina su ruta fuera del depot
+    #         for b in range(batch_size):
+    #             for v in range(self.num_vehicles):
+    #                 final_pos = self.vehicle_positions[b, v].item()
+    #                 if final_pos != 0:
+    #                     # Penalización por no terminar en el depot
+    #                     rewards[b] -= self.travel_costs[b, final_pos, 0]  # penaliza el coste de volver
+
+        
+    #     return customer_features, vehicle_features, self.remaining_demands, rewards, done
+    
     def step(self, actions):
         """
         Execute actions and update environment state.
@@ -113,6 +194,14 @@ class SVRPEnvironment:
         batch_size = actions.size(0)
         rewards = torch.zeros(batch_size, device=self.device)
 
+        # Variables for the objective function
+        obj_lambda = 0.5  # Weight for the objective function
+        c_min = (self.travel_costs).min()  # Minimum cost for the objective function
+        non_zero_c_min = self.travel_costs[self.travel_costs != 0.0].min()
+        er_max = (self.demands).max()  # Maximum remaining demand for the objective function
+
+        print("c_min:", c_min, " non_zero_c_min:", non_zero_c_min, "y er_max:", er_max)
+
         # For each vehicle, compute travel costs and update states
         for v in range(self.num_vehicles):
             # Get current positions and next positions
@@ -125,7 +214,7 @@ class SVRPEnvironment:
                 next_node = next_positions[b].item()
                 
                 # Add travel cost
-                rewards[b] -= self.travel_costs[b, current, next_node]
+                rewards[b] -= (obj_lambda / non_zero_c_min)  * self.travel_costs[b, current, next_node]
                 
                 # Update vehicle load and remaining demand
                 if next_node > 0:  # Not depot
@@ -138,6 +227,9 @@ class SVRPEnvironment:
                     # Update vehicle load and remaining demand
                     self.vehicle_loads[b, v] -= delivery
                     self.remaining_demands[b, next_node] -= delivery
+
+                    # Add delivery cost to rewards
+                    rewards[b] -= ((1 - obj_lambda) / er_max) * -delivery
                     
                     # If vehicle cannot fulfill demand, record failure
                     if self.remaining_demands[b, next_node] > 0 and self.vehicle_loads[b, v] <= 0:
@@ -176,6 +268,7 @@ class SVRPEnvironment:
         
         return customer_features, vehicle_features, self.remaining_demands, rewards, done
     
+
     def _get_features(self):
         """
         Construct feature tensors for the current state.

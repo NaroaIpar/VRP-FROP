@@ -19,7 +19,7 @@ def parse_args():
     # Environment settings
     parser.add_argument('--num_nodes', type=int, default=20, help='Number of nodes (customers + depot)')
     parser.add_argument('--num_vehicles', type=int, default=1, help='Number of vehicles')
-    parser.add_argument('--capacity', type=float, default=50.0, help='Vehicle capacity')
+    parser.add_argument('--capacity', type=float, default=50000.0, help='Vehicle capacity')
     parser.add_argument('--a_ratio', type=float, default=0.6, help='Constant component ratio')
     parser.add_argument('--b_ratio', type=float, default=0.2, help='Weather component ratio')
     parser.add_argument('--gamma_ratio', type=float, default=0.2, help='Noise component ratio')

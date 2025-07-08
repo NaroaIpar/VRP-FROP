@@ -8,8 +8,10 @@
     "20",
     "--num_vehicles",
     "1",
-    "--capacity",
-    "300",
+    "--inference",
+    "greedy",
+    "--num_buoys",
+    "5",
     "--fixed_customers"
 ],
 "configurations": [
