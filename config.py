@@ -8,13 +8,14 @@ by command line arguments.
 ENV_CONFIG = {
     'num_nodes': 20,           # Number of nodes (customers + depot)
     'num_vehicles': 1,         # Number of vehicles
-    'capacity': 50000.0,        # Vehicle capacity
+    'capacity': 50000.0,       # Vehicle capacity
     'weather_dim': 3,          # Dimension of weather variables
     'a_ratio': 0.6,            # Constant component ratio
     'b_ratio': 0.2,            # Weather component ratio
     'gamma_ratio': 0.2,        # Noise component ratio
     'fixed_customers': True,   # Use fixed customer positions
     'num_buoys': 1,            # Number of buoys to visit
+    'obj_lambda': 0.5,         # Objective function weight for delivery
 
 }
 

@@ -2359,3 +2359,68 @@
 2025-07-08 21:41:56,638 [INFO] Instance 5: Cost = 25.2482, Routes = [[0, 5, 8, 0]]
 2025-07-08 21:42:06,065 [INFO] Evaluation completed. Mean reward: -16.2337
 2025-07-08 21:42:06,065 [INFO] Final evaluation - Mean reward: -16.2337
+2025-07-08 21:56:29,941 [INFO] Starting SVRP-RL with Namespace(num_nodes=10, num_vehicles=1, capacity=50000.0, a_ratio=0.6, b_ratio=0.2, gamma_ratio=0.2, weather_dim=3, fixed_customers=True, num_buoys=5, obj_lambda=0.7, embedding_dim=128, epochs=100, batch_size=32, lr=0.0001, baseline_lr=0.001, entropy_weight=0.01, max_steps=100, inference='greedy', num_samples=16, beam_width=3, test_size=100, cuda=False, seed=42, save_dir='checkpoints', load_model=None, test=False, log_interval=10, save_interval=20, reoptimization=False)
+2025-07-08 21:56:29,942 [INFO] Using device: cpu
+2025-07-08 21:56:29,942 [INFO] Customer features dimension: 14
+2025-07-08 21:56:29,942 [INFO] Vehicle features dimension: 2
+2025-07-08 21:56:32,064 [INFO] Starting training for 100 epochs
+2025-07-08 21:56:53,626 [INFO] Epoch 10/100 | Reward: -156.8967 | Policy Loss: -1488.8939 | Baseline Loss: 77084.4531 | Time: 2.11s
+2025-07-08 21:57:14,747 [INFO] Epoch 20/100 | Reward: -158.9170 | Policy Loss: -1501.9835 | Baseline Loss: 78271.9141 | Time: 2.13s
+2025-07-08 21:57:14,758 [INFO] Saved model to checkpoints\model_epoch_20
+2025-07-08 21:57:14,874 [INFO] Instance 1: Cost = 24.4164, Routes = [[0, 5, 4, 7, 8, 0]]
+2025-07-08 21:57:15,713 [INFO] Instance 2: Cost = 33.2477, Routes = [[0, 5, 4, 6, 8, 0]]
+2025-07-08 21:57:15,823 [INFO] Instance 3: Cost = 37.6347, Routes = [[0, 5, 8, 7, 2, 0]]
+2025-07-08 21:57:15,926 [INFO] Instance 4: Cost = 36.4906, Routes = [[0, 3, 5, 7, 6, 0]]
+2025-07-08 21:57:16,029 [INFO] Instance 5: Cost = 63.1485, Routes = [[0, 3, 6, 2, 5, 0]]
+2025-07-08 21:57:16,607 [INFO] Evaluation completed. Mean reward: -27.5869
+2025-07-08 21:57:16,607 [INFO] Test reward: -27.5869
+2025-07-08 21:57:38,074 [INFO] Epoch 30/100 | Reward: -154.8668 | Policy Loss: -1505.9071 | Baseline Loss: 76439.8203 | Time: 2.12s
+2025-07-08 21:57:59,454 [INFO] Epoch 40/100 | Reward: -155.4333 | Policy Loss: -1352.7292 | Baseline Loss: 66849.1016 | Time: 2.16s
+2025-07-08 21:57:59,459 [INFO] Saved model to checkpoints\model_epoch_40
+2025-07-08 21:57:59,562 [INFO] Instance 1: Cost = 18.2152, Routes = [[0, 5, 7, 4, 8, 0]]
+2025-07-08 21:58:00,161 [INFO] Instance 2: Cost = 34.3248, Routes = [[0, 5, 6, 7, 8, 0]]
+2025-07-08 21:58:00,262 [INFO] Instance 3: Cost = 34.1432, Routes = [[0, 6, 7, 4, 2, 0]]
+2025-07-08 21:58:00,364 [INFO] Instance 4: Cost = 13.5549, Routes = [[0, 5, 2, 6, 7, 0]]
+2025-07-08 21:58:00,468 [INFO] Instance 5: Cost = 11.5448, Routes = [[0, 5, 2, 4, 6, 0]]
+2025-07-08 21:58:00,996 [INFO] Evaluation completed. Mean reward: -31.3466
+2025-07-08 21:58:00,997 [INFO] Test reward: -31.3466
+2025-07-08 21:58:22,445 [INFO] Epoch 50/100 | Reward: -150.4182 | Policy Loss: -1221.7487 | Baseline Loss: 55180.9883 | Time: 2.13s
+2025-07-08 21:58:44,419 [INFO] Epoch 60/100 | Reward: -159.1380 | Policy Loss: -1235.5872 | Baseline Loss: 55058.7930 | Time: 2.13s
+2025-07-08 21:58:44,426 [INFO] Saved model to checkpoints\model_epoch_60
+2025-07-08 21:58:44,529 [INFO] Instance 1: Cost = 27.1756, Routes = [[0, 5, 6, 2, 8, 0]]
+2025-07-08 21:58:45,100 [INFO] Instance 2: Cost = 46.3130, Routes = [[0, 4, 8, 5, 2, 0]]
+2025-07-08 21:58:45,200 [INFO] Instance 3: Cost = 29.6195, Routes = [[0, 5, 7, 2, 6, 0]]
+2025-07-08 21:58:45,304 [INFO] Instance 4: Cost = 17.0377, Routes = [[0, 5, 7, 8, 4, 0]]
+2025-07-08 21:58:45,402 [INFO] Instance 5: Cost = 21.6205, Routes = [[0, 1, 6, 7, 8, 0]]
+2025-07-08 21:58:45,917 [INFO] Evaluation completed. Mean reward: -25.5688
+2025-07-08 21:58:45,917 [INFO] Test reward: -25.5688
+2025-07-08 21:59:07,514 [INFO] Epoch 70/100 | Reward: -150.7192 | Policy Loss: -1033.8782 | Baseline Loss: 44569.0117 | Time: 2.16s
+2025-07-08 21:59:28,822 [INFO] Epoch 80/100 | Reward: -150.6198 | Policy Loss: -943.2654 | Baseline Loss: 38321.5898 | Time: 2.10s
+2025-07-08 21:59:28,829 [INFO] Saved model to checkpoints\model_epoch_80
+2025-07-08 21:59:28,936 [INFO] Instance 1: Cost = 7.9716, Routes = [[0, 5, 4, 2, 7, 0]]
+2025-07-08 21:59:29,481 [INFO] Instance 2: Cost = 44.7130, Routes = [[0, 5, 7, 8, 4, 0]]
+2025-07-08 21:59:29,577 [INFO] Instance 3: Cost = 9.7221, Routes = [[0, 5, 2, 4, 7, 0]]
+2025-07-08 21:59:29,679 [INFO] Instance 4: Cost = 27.5660, Routes = [[0, 6, 4, 2, 7, 0]]
+2025-07-08 21:59:29,782 [INFO] Instance 5: Cost = 14.2278, Routes = [[0, 5, 2, 7, 4, 0]]
+2025-07-08 21:59:30,309 [INFO] Evaluation completed. Mean reward: -22.4455
+2025-07-08 21:59:30,309 [INFO] Test reward: -22.4455
+2025-07-08 21:59:51,706 [INFO] Epoch 90/100 | Reward: -145.8142 | Policy Loss: -644.4755 | Baseline Loss: 22406.5859 | Time: 2.12s
+2025-07-08 22:00:12,847 [INFO] Epoch 100/100 | Reward: -148.6114 | Policy Loss: -612.3774 | Baseline Loss: 26302.9199 | Time: 2.14s
+2025-07-08 22:00:12,852 [INFO] Saved model to checkpoints\model_epoch_100
+2025-07-08 22:00:12,968 [INFO] Instance 1: Cost = 44.8945, Routes = [[0, 5, 2, 4, 6, 0]]
+2025-07-08 22:00:13,570 [INFO] Instance 2: Cost = 4.6673, Routes = [[0, 4, 2, 7, 8, 0]]
+2025-07-08 22:00:13,672 [INFO] Instance 3: Cost = 27.7661, Routes = [[0, 5, 6, 2, 7, 0]]
+2025-07-08 22:00:13,771 [INFO] Instance 4: Cost = 36.0926, Routes = [[0, 7, 2, 4, 6, 0]]
+2025-07-08 22:00:13,879 [INFO] Instance 5: Cost = 18.9662, Routes = [[0, 5, 7, 4, 6, 0]]
+2025-07-08 22:00:14,413 [INFO] Evaluation completed. Mean reward: -25.9136
+2025-07-08 22:00:14,413 [INFO] Test reward: -25.9136
+2025-07-08 22:00:14,419 [INFO] Saved final model to checkpoints\model_final
+2025-07-08 22:00:15,154 [INFO] Training completed
+2025-07-08 22:00:15,155 [INFO] Evaluating model with greedy inference strategy
+2025-07-08 22:00:15,248 [INFO] Instance 1: Cost = 11.9212, Routes = [[0, 4, 6, 2, 8, 0]]
+2025-07-08 22:00:15,803 [INFO] Instance 2: Cost = 6.7805, Routes = [[0, 4, 6, 7, 2, 0]]
+2025-07-08 22:00:15,908 [INFO] Instance 3: Cost = 33.0108, Routes = [[0, 5, 7, 8, 4, 0]]
+2025-07-08 22:00:16,007 [INFO] Instance 4: Cost = 25.7047, Routes = [[0, 4, 2, 6, 7, 0]]
+2025-07-08 22:00:16,108 [INFO] Instance 5: Cost = 37.6614, Routes = [[0, 5, 8, 6, 7, 0]]
+2025-07-08 22:00:26,429 [INFO] Evaluation completed. Mean reward: -23.9588
+2025-07-08 22:00:26,430 [INFO] Final evaluation - Mean reward: -23.9588

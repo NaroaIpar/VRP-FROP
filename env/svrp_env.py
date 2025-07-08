@@ -14,6 +14,7 @@ class SVRPEnvironment:
                  num_vehicles, 
                  num_buoys,
                  capacity, 
+                 obj_lambda=0.5,
                  weather_dim=3,
                  a_ratio=0.6,
                  b_ratio=0.2,
@@ -33,6 +34,7 @@ class SVRPEnvironment:
         self.num_nodes = num_nodes
         self.num_vehicles = num_vehicles
         self.capacity = capacity
+        self.obj_lambda = obj_lambda
         self.weather_dim = weather_dim
         self.a_ratio = a_ratio
         self.b_ratio = b_ratio
@@ -195,12 +197,11 @@ class SVRPEnvironment:
         rewards = torch.zeros(batch_size, device=self.device)
 
         # Variables for the objective function
-        obj_lambda = 0.5  # Weight for the objective function
         c_min = (self.travel_costs).min()  # Minimum cost for the objective function
         non_zero_c_min = self.travel_costs[self.travel_costs != 0.0].min()
         er_max = (self.demands).max()  # Maximum remaining demand for the objective function
 
-        print("c_min:", c_min, " non_zero_c_min:", non_zero_c_min, "y er_max:", er_max)
+        # print("c_min:", c_min, " non_zero_c_min:", non_zero_c_min, "y er_max:", er_max)
 
         # For each vehicle, compute travel costs and update states
         for v in range(self.num_vehicles):
@@ -214,7 +215,7 @@ class SVRPEnvironment:
                 next_node = next_positions[b].item()
                 
                 # Add travel cost
-                rewards[b] -= (obj_lambda / non_zero_c_min)  * self.travel_costs[b, current, next_node]
+                rewards[b] -= (self.obj_lambda / non_zero_c_min)  * self.travel_costs[b, current, next_node]
                 
                 # Update vehicle load and remaining demand
                 if next_node > 0:  # Not depot
@@ -229,7 +230,7 @@ class SVRPEnvironment:
                     self.remaining_demands[b, next_node] -= delivery
 
                     # Add delivery cost to rewards
-                    rewards[b] -= ((1 - obj_lambda) / er_max) * -delivery
+                    rewards[b] -= ((1 - self.obj_lambda) / er_max) * -delivery
                     
                     # If vehicle cannot fulfill demand, record failure
                     if self.remaining_demands[b, next_node] > 0 and self.vehicle_loads[b, v] <= 0:

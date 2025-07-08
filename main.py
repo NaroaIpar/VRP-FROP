@@ -26,7 +26,7 @@ def parse_args():
     parser.add_argument('--weather_dim', type=int, default=3, help='Weather dimension')
     parser.add_argument('--fixed_customers', action='store_true', help='Use fixed customer positions')
     parser.add_argument('--num_buoys', type=int, default=1, help='Number of buoys to visit')
-
+    parser.add_argument('--obj_lambda', type=float, default=0.5, help='Objective function weight for costs and delivery')
     
     # Model settings
     parser.add_argument('--embedding_dim', type=int, default=128, help='Embedding dimension')
