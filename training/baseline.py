@@ -20,8 +20,8 @@ class BaselineModel(nn.Module):
         super(BaselineModel, self).__init__()
         
         # Define layers
-        # input_dim = 16  # num_nodes = 10, input_dim = 14 + 2 = 16
-        input_dim = 26 # num_nodes = 20, input_dim = 24 + 2 = 26
+        input_dim = 16  # num_nodes = 10, input_dim = 14 + 2 = 16
+        # input_dim = 26 # num_nodes = 20, input_dim = 24 + 2 = 26
         # input_dim = 56 # num_nodes = 50, input_dim = 54 + 2 = 56
         self.fc1 = nn.Linear(input_dim, embedding_dim)
         # print(f"self.fc1.weight shape before adaptation: {self.fc1.weight.shape}")

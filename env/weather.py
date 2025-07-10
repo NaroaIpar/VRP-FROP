@@ -56,6 +56,40 @@ def load_customer_positions_from_txt(file_name, batch_size, num_nodes, depot = [
 
     return customer_positions
 
+def load_demands_from_txt(file_name, batch_size, num_nodes, device='cpu'):
+    """
+    Carga demandas desde un archivo .txt y las replica para un batch.
+    Al final demands tensor debría tener shape [batch_size, num_nodes].
+
+    Args:
+        file_name (str): Nombre del archivo con las demandas (una línea por cliente).
+        batch_size (int): Número de escenarios.
+        num_nodes (int): Número total de nodos (clientes + 1 depósito).
+        device (str): 'cpu' o 'cuda'.
+
+    Returns:
+        torch.Tensor: Tensor de shape [batch_size, num_nodes]
+    """
+    path = os.path.join(os.path.dirname(__file__), file_name)
+
+    demands = []
+    with open(path, 'r') as f:
+        for line in f:
+            demand = float(line.strip())
+            demands.append(demand)
+
+    if len(demands) != num_nodes - 1:
+        raise ValueError(f"Se esperaban {num_nodes - 1} demandas, pero se encontraron {len(demands)}")
+
+    full_demands = [0] + demands  # Incluye demanda 0 para el depósito
+
+    demand_tensor = torch.zeros(batch_size, num_nodes, device=device)
+
+    for i in range(0, num_nodes):
+        demand_tensor[:, i] = torch.tensor(full_demands[i], device=device)
+
+    return demand_tensor
+
 
 class WeatherSimulation:
     """
@@ -110,6 +144,7 @@ class WeatherSimulation:
         else:
             # Create random customer positions with depot at (0.5, 0.5)
             depot = [0.5, 0.5]  # Fixed depot position
+
             customer_positions = create_random_customer_positions(batch_size, num_nodes, depot, device)
             # customer_positions = load_customer_positions_from_txt("positions.txt", batch_size, num_nodes, depot)
 
@@ -216,3 +251,65 @@ class WeatherSimulation:
             'demands': demands,
             'travel_costs': travel_costs
         }
+    
+    def decide_evaluation_environment(self, batch_size, num_nodes, fixed_customers=True, device='cpu'):
+        """
+        Decide the evaluation environment based on the model state.
+        
+        Args:
+            batch_size: Number of scenarios to generate
+            fixed_customers: If True, use fixed customer positions
+            
+        Returns:
+            None
+        """
+        # Generate weather variables --> ex: always sunny
+        weather = torch.ones(batch_size, self.weather_dim, device=device)
+
+        depot = [0.5, 0.5]  # Fixed depot position
+        customer_positions = load_customer_positions_from_txt("positions.txt", batch_size, num_nodes, depot)
+        fixed_customer_positions = customer_positions[0].unsqueeze(0)
+
+        # Generate demands (node 0 is depot, has no demand) --> ex: these aleatory demands
+        demands = load_demands_from_txt("demands.txt", batch_size, num_nodes, device)
+        
+        # Generate travel costs
+        travel_costs = torch.zeros(batch_size, num_nodes, num_nodes, device=device)
+        
+        # Calculate Euclidean distances between nodes
+        for b in range(batch_size):
+            for i in range(num_nodes):
+                for j in range(num_nodes):
+                    if i != j:
+                        # Base cost is Euclidean distance
+                        dist = torch.norm(customer_positions[b, i] - customer_positions[b, j])
+                        base_cost = dist * 10  # Scale for better numerical properties
+                        
+                        # Constant component
+                        constant = base_cost * self.a_ratio
+                        
+                        # Weather component
+                        weather_effect = 0
+                        for k in range(self.weather_dim):
+                            for l in range(self.weather_dim):
+                                # Random coefficient for weather interaction
+                                alpha = torch.randn(1, device=device) * 0.5
+                                weather_effect += alpha * weather[b, k] * weather[b, l]
+                        
+                        weather_effect *= self.b_ratio * base_cost
+                        
+                        # Noise component
+                        noise = torch.randn(1, device=device) * self.gamma_ratio * base_cost
+                        
+                        # Combine components
+                        travel_costs[b, i, j] = constant + weather_effect + noise
+                        
+                        # Ensure cost is positive
+                        travel_costs[b, i, j] = torch.max(travel_costs[b, i, j], 
+                                                          torch.tensor(0.1, device=device))
+                        
+
+        return weather, demands, travel_costs, fixed_customer_positions
+
+
+        

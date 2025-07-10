@@ -116,7 +116,3 @@ If you use this code in your research, please cite the original paper:
   year={2023}
 }
 ```
-
-## License
-
-MIT

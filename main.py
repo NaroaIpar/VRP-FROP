@@ -302,6 +302,8 @@ def evaluate(args, env, policy_model, num_instances=100, logger=None):
     Evaluate the model on multiple instances.
     """
     total_reward = 0.0
+
+    env.decide_evaluation_environment(batch_size=1, fixed_customers=True)
     
     # Create inference strategy
     if args.inference == 'greedy':
@@ -313,6 +315,7 @@ def evaluate(args, env, policy_model, num_instances=100, logger=None):
     
     # Evaluate on multiple instances
     for i in tqdm(range(num_instances), desc="Evaluating"):
+
         # Solve instance with appropriate parameters for each strategy
         if args.inference == 'random':
             routes, cost = inference_strategy.solve(env=env, num_samples=args.num_samples)

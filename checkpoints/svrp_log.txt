@@ -2424,3 +2424,274 @@
 2025-07-08 22:00:16,108 [INFO] Instance 5: Cost = 37.6614, Routes = [[0, 5, 8, 6, 7, 0]]
 2025-07-08 22:00:26,429 [INFO] Evaluation completed. Mean reward: -23.9588
 2025-07-08 22:00:26,430 [INFO] Final evaluation - Mean reward: -23.9588
+2025-07-10 17:21:47,950 [INFO] Starting SVRP-RL with Namespace(num_nodes=20, num_vehicles=1, capacity=50000.0, a_ratio=0.6, b_ratio=0.2, gamma_ratio=0.2, weather_dim=3, fixed_customers=False, num_buoys=1, obj_lambda=0.5, embedding_dim=128, epochs=100, batch_size=32, lr=0.0001, baseline_lr=0.001, entropy_weight=0.01, max_steps=100, inference='greedy', num_samples=16, beam_width=3, test_size=100, cuda=False, seed=42, save_dir='checkpoints', load_model='checkpoints/model_final', test=True, log_interval=10, save_interval=20, reoptimization=False)
+2025-07-10 17:21:47,950 [INFO] Using device: cpu
+2025-07-10 17:21:47,950 [INFO] Customer features dimension: 24
+2025-07-10 17:21:47,950 [INFO] Vehicle features dimension: 2
+2025-07-10 17:23:49,614 [INFO] Starting SVRP-RL with Namespace(num_nodes=20, num_vehicles=1, capacity=50000.0, a_ratio=0.6, b_ratio=0.2, gamma_ratio=0.2, weather_dim=3, fixed_customers=False, num_buoys=1, obj_lambda=0.5, embedding_dim=128, epochs=100, batch_size=32, lr=0.0001, baseline_lr=0.001, entropy_weight=0.01, max_steps=100, inference='greedy', num_samples=16, beam_width=3, test_size=100, cuda=False, seed=42, save_dir='checkpoints', load_model='checkpoints/model_final', test=True, log_interval=10, save_interval=20, reoptimization=False)
+2025-07-10 17:23:49,615 [INFO] Using device: cpu
+2025-07-10 17:23:49,615 [INFO] Customer features dimension: 24
+2025-07-10 17:23:49,615 [INFO] Vehicle features dimension: 2
+2025-07-10 17:28:59,485 [INFO] Starting SVRP-RL with Namespace(num_nodes=10, num_vehicles=1, capacity=50000.0, a_ratio=0.6, b_ratio=0.2, gamma_ratio=0.2, weather_dim=3, fixed_customers=False, num_buoys=1, obj_lambda=0.5, embedding_dim=128, epochs=100, batch_size=32, lr=0.0001, baseline_lr=0.001, entropy_weight=0.01, max_steps=100, inference='greedy', num_samples=16, beam_width=3, test_size=100, cuda=False, seed=42, save_dir='checkpoints', load_model='checkpoints/model_final', test=True, log_interval=10, save_interval=20, reoptimization=False)
+2025-07-10 17:28:59,485 [INFO] Using device: cpu
+2025-07-10 17:28:59,486 [INFO] Customer features dimension: 14
+2025-07-10 17:28:59,486 [INFO] Vehicle features dimension: 2
+2025-07-10 17:33:38,345 [INFO] Starting SVRP-RL with Namespace(num_nodes=10, num_vehicles=1, capacity=50000.0, a_ratio=0.6, b_ratio=0.2, gamma_ratio=0.2, weather_dim=3, fixed_customers=True, num_buoys=5, obj_lambda=0.7, embedding_dim=128, epochs=100, batch_size=32, lr=0.0001, baseline_lr=0.001, entropy_weight=0.01, max_steps=100, inference='greedy', num_samples=16, beam_width=3, test_size=100, cuda=False, seed=42, save_dir='checkpoints', load_model='checkpoints/model_final', test=True, log_interval=10, save_interval=20, reoptimization=False)
+2025-07-10 17:33:38,346 [INFO] Using device: cpu
+2025-07-10 17:33:38,346 [INFO] Customer features dimension: 14
+2025-07-10 17:33:38,346 [INFO] Vehicle features dimension: 2
+2025-07-10 17:36:59,235 [INFO] Starting SVRP-RL with Namespace(num_nodes=10, num_vehicles=1, capacity=50000.0, a_ratio=0.6, b_ratio=0.2, gamma_ratio=0.2, weather_dim=3, fixed_customers=True, num_buoys=5, obj_lambda=0.7, embedding_dim=128, epochs=100, batch_size=32, lr=0.0001, baseline_lr=0.001, entropy_weight=0.01, max_steps=100, inference='greedy', num_samples=16, beam_width=3, test_size=100, cuda=False, seed=42, save_dir='checkpoints', load_model=None, test=False, log_interval=10, save_interval=20, reoptimization=False)
+2025-07-10 17:36:59,235 [INFO] Using device: cpu
+2025-07-10 17:36:59,235 [INFO] Customer features dimension: 14
+2025-07-10 17:36:59,235 [INFO] Vehicle features dimension: 2
+2025-07-10 17:37:02,002 [INFO] Starting training for 100 epochs
+2025-07-10 17:37:30,729 [INFO] Epoch 10/100 | Reward: -156.8967 | Policy Loss: -1488.8939 | Baseline Loss: 77084.4531 | Time: 2.89s
+2025-07-10 17:37:55,941 [INFO] Epoch 20/100 | Reward: -158.9170 | Policy Loss: -1501.9835 | Baseline Loss: 78271.9141 | Time: 2.58s
+2025-07-10 17:37:55,989 [INFO] Saved model to checkpoints\model_epoch_20
+2025-07-10 17:37:56,134 [INFO] Instance 1: Cost = 24.4164, Routes = [[0, 5, 4, 7, 8, 0]]
+2025-07-10 17:37:58,661 [INFO] Instance 2: Cost = 33.2477, Routes = [[0, 5, 4, 6, 8, 0]]
+2025-07-10 17:37:58,790 [INFO] Instance 3: Cost = 37.6347, Routes = [[0, 5, 8, 7, 2, 0]]
+2025-07-10 17:37:58,912 [INFO] Instance 4: Cost = 36.4906, Routes = [[0, 3, 5, 7, 6, 0]]
+2025-07-10 17:37:59,124 [INFO] Instance 5: Cost = 63.1485, Routes = [[0, 3, 6, 2, 5, 0]]
+2025-07-10 17:37:59,736 [INFO] Evaluation completed. Mean reward: -27.5869
+2025-07-10 17:37:59,736 [INFO] Test reward: -27.5869
+2025-07-10 17:38:26,948 [INFO] Epoch 30/100 | Reward: -154.8668 | Policy Loss: -1505.9071 | Baseline Loss: 76439.8203 | Time: 2.57s
+2025-07-10 17:38:54,101 [INFO] Epoch 40/100 | Reward: -155.4333 | Policy Loss: -1352.7292 | Baseline Loss: 66849.1016 | Time: 2.74s
+2025-07-10 17:38:54,144 [INFO] Saved model to checkpoints\model_epoch_40
+2025-07-10 17:38:54,270 [INFO] Instance 1: Cost = 18.2152, Routes = [[0, 5, 7, 4, 8, 0]]
+2025-07-10 17:38:55,144 [INFO] Instance 2: Cost = 34.3248, Routes = [[0, 5, 6, 7, 8, 0]]
+2025-07-10 17:38:55,272 [INFO] Instance 3: Cost = 34.1432, Routes = [[0, 6, 7, 4, 2, 0]]
+2025-07-10 17:38:55,408 [INFO] Instance 4: Cost = 13.5549, Routes = [[0, 5, 2, 6, 7, 0]]
+2025-07-10 17:38:55,545 [INFO] Instance 5: Cost = 11.5448, Routes = [[0, 5, 2, 4, 6, 0]]
+2025-07-10 17:38:56,160 [INFO] Evaluation completed. Mean reward: -31.3466
+2025-07-10 17:38:56,160 [INFO] Test reward: -31.3466
+2025-07-10 17:39:24,016 [INFO] Epoch 50/100 | Reward: -150.4182 | Policy Loss: -1221.7487 | Baseline Loss: 55180.9883 | Time: 3.03s
+2025-07-10 17:39:51,375 [INFO] Epoch 60/100 | Reward: -159.1380 | Policy Loss: -1235.5872 | Baseline Loss: 55058.7930 | Time: 2.67s
+2025-07-10 17:39:51,383 [INFO] Saved model to checkpoints\model_epoch_60
+2025-07-10 17:39:51,504 [INFO] Instance 1: Cost = 27.1756, Routes = [[0, 5, 6, 2, 8, 0]]
+2025-07-10 17:39:52,295 [INFO] Instance 2: Cost = 46.3130, Routes = [[0, 4, 8, 5, 2, 0]]
+2025-07-10 17:39:52,423 [INFO] Instance 3: Cost = 29.6195, Routes = [[0, 5, 7, 2, 6, 0]]
+2025-07-10 17:39:52,544 [INFO] Instance 4: Cost = 17.0377, Routes = [[0, 5, 7, 8, 4, 0]]
+2025-07-10 17:39:52,680 [INFO] Instance 5: Cost = 21.6205, Routes = [[0, 1, 6, 7, 8, 0]]
+2025-07-10 17:39:53,290 [INFO] Evaluation completed. Mean reward: -25.5688
+2025-07-10 17:39:53,290 [INFO] Test reward: -25.5688
+2025-07-10 17:40:20,350 [INFO] Epoch 70/100 | Reward: -150.7192 | Policy Loss: -1033.8782 | Baseline Loss: 44569.0117 | Time: 2.62s
+2025-07-10 17:40:47,411 [INFO] Epoch 80/100 | Reward: -150.6198 | Policy Loss: -943.2654 | Baseline Loss: 38321.5898 | Time: 2.64s
+2025-07-10 17:40:47,417 [INFO] Saved model to checkpoints\model_epoch_80
+2025-07-10 17:40:47,553 [INFO] Instance 1: Cost = 7.9716, Routes = [[0, 5, 4, 2, 7, 0]]
+2025-07-10 17:40:48,273 [INFO] Instance 2: Cost = 44.7130, Routes = [[0, 5, 7, 8, 4, 0]]
+2025-07-10 17:40:48,386 [INFO] Instance 3: Cost = 9.7221, Routes = [[0, 5, 2, 4, 7, 0]]
+2025-07-10 17:40:48,507 [INFO] Instance 4: Cost = 27.5660, Routes = [[0, 6, 4, 2, 7, 0]]
+2025-07-10 17:40:48,643 [INFO] Instance 5: Cost = 14.2278, Routes = [[0, 5, 2, 7, 4, 0]]
+2025-07-10 17:40:49,295 [INFO] Evaluation completed. Mean reward: -22.4455
+2025-07-10 17:40:49,295 [INFO] Test reward: -22.4455
+2025-07-10 17:41:16,237 [INFO] Epoch 90/100 | Reward: -145.8142 | Policy Loss: -644.4755 | Baseline Loss: 22406.5859 | Time: 2.70s
+2025-07-10 17:41:42,588 [INFO] Epoch 100/100 | Reward: -148.6114 | Policy Loss: -612.3774 | Baseline Loss: 26302.9199 | Time: 2.65s
+2025-07-10 17:41:42,588 [INFO] Saved model to checkpoints\model_epoch_100
+2025-07-10 17:41:42,720 [INFO] Instance 1: Cost = 44.8945, Routes = [[0, 5, 2, 4, 6, 0]]
+2025-07-10 17:41:43,494 [INFO] Instance 2: Cost = 4.6673, Routes = [[0, 4, 2, 7, 8, 0]]
+2025-07-10 17:41:43,631 [INFO] Instance 3: Cost = 27.7661, Routes = [[0, 5, 6, 2, 7, 0]]
+2025-07-10 17:41:43,743 [INFO] Instance 4: Cost = 36.0926, Routes = [[0, 7, 2, 4, 6, 0]]
+2025-07-10 17:41:43,872 [INFO] Instance 5: Cost = 18.9662, Routes = [[0, 5, 7, 4, 6, 0]]
+2025-07-10 17:41:44,452 [INFO] Evaluation completed. Mean reward: -25.9136
+2025-07-10 17:41:44,460 [INFO] Test reward: -25.9136
+2025-07-10 17:41:44,460 [INFO] Saved final model to checkpoints\model_final
+2025-07-10 17:41:45,631 [INFO] Training completed
+2025-07-10 17:41:45,631 [INFO] Evaluating model with greedy inference strategy
+2025-07-10 17:41:45,752 [INFO] Instance 1: Cost = 11.9212, Routes = [[0, 4, 6, 2, 8, 0]]
+2025-07-10 17:41:46,599 [INFO] Instance 2: Cost = 6.7805, Routes = [[0, 4, 6, 7, 2, 0]]
+2025-07-10 17:41:46,728 [INFO] Instance 3: Cost = 33.0108, Routes = [[0, 5, 7, 8, 4, 0]]
+2025-07-10 17:41:46,848 [INFO] Instance 4: Cost = 25.7047, Routes = [[0, 4, 2, 6, 7, 0]]
+2025-07-10 17:41:47,033 [INFO] Instance 5: Cost = 37.6614, Routes = [[0, 5, 8, 6, 7, 0]]
+2025-07-10 17:41:58,425 [INFO] Evaluation completed. Mean reward: -23.9588
+2025-07-10 17:41:58,425 [INFO] Final evaluation - Mean reward: -23.9588
+2025-07-10 17:42:30,997 [INFO] Starting SVRP-RL with Namespace(num_nodes=10, num_vehicles=1, capacity=50000.0, a_ratio=0.6, b_ratio=0.2, gamma_ratio=0.2, weather_dim=3, fixed_customers=True, num_buoys=5, obj_lambda=0.7, embedding_dim=128, epochs=100, batch_size=32, lr=0.0001, baseline_lr=0.001, entropy_weight=0.01, max_steps=100, inference='greedy', num_samples=16, beam_width=3, test_size=100, cuda=False, seed=42, save_dir='checkpoints', load_model='checkpoints/model_final', test=True, log_interval=10, save_interval=20, reoptimization=False)
+2025-07-10 17:42:30,997 [INFO] Using device: cpu
+2025-07-10 17:42:30,997 [INFO] Customer features dimension: 14
+2025-07-10 17:42:31,004 [INFO] Vehicle features dimension: 2
+2025-07-10 17:43:50,340 [INFO] Starting SVRP-RL with Namespace(num_nodes=10, num_vehicles=1, capacity=50000.0, a_ratio=0.6, b_ratio=0.2, gamma_ratio=0.2, weather_dim=3, fixed_customers=True, num_buoys=5, obj_lambda=0.7, embedding_dim=128, epochs=100, batch_size=32, lr=0.0001, baseline_lr=0.001, entropy_weight=0.01, max_steps=100, inference='greedy', num_samples=16, beam_width=3, test_size=100, cuda=False, seed=42, save_dir='checkpoints', load_model='checkpoints/model_final', test=True, log_interval=10, save_interval=20, reoptimization=False)
+2025-07-10 17:43:50,340 [INFO] Using device: cpu
+2025-07-10 17:43:50,340 [INFO] Customer features dimension: 14
+2025-07-10 17:43:50,340 [INFO] Vehicle features dimension: 2
+2025-07-10 17:43:53,196 [INFO] Loaded model from checkpoints/model_final
+2025-07-10 17:43:53,196 [INFO] Evaluating model with greedy inference strategy
+2025-07-10 17:43:53,467 [INFO] Instance 1: Cost = 94.8180, Routes = [[0, 4, 2, 6, 8, 0]]
+2025-07-10 17:43:54,730 [INFO] Instance 2: Cost = 65.6252, Routes = [[0, 4, 8, 2, 3, 0]]
+2025-07-10 17:43:54,867 [INFO] Instance 3: Cost = 47.0841, Routes = [[0, 7, 2, 1, 6, 0]]
+2025-07-10 17:43:55,005 [INFO] Instance 4: Cost = 31.8185, Routes = [[0, 7, 2, 3, 5, 0]]
+2025-07-10 17:43:55,141 [INFO] Instance 5: Cost = 59.7878, Routes = [[0, 8, 5, 2, 4, 0]]
+2025-07-10 17:44:08,015 [INFO] Evaluation completed. Mean reward: -47.2240
+2025-07-10 17:44:08,015 [INFO] Final evaluation - Mean reward: -47.2240
+2025-07-10 17:46:02,256 [INFO] Starting SVRP-RL with Namespace(num_nodes=10, num_vehicles=1, capacity=50000.0, a_ratio=0.6, b_ratio=0.2, gamma_ratio=0.2, weather_dim=3, fixed_customers=False, num_buoys=1, obj_lambda=0.5, embedding_dim=128, epochs=100, batch_size=32, lr=0.0001, baseline_lr=0.001, entropy_weight=0.01, max_steps=100, inference='beam', num_samples=16, beam_width=3, test_size=100, cuda=False, seed=42, save_dir='checkpoints', load_model='checkpoints/model_final', test=True, log_interval=10, save_interval=20, reoptimization=False)
+2025-07-10 17:46:02,256 [INFO] Using device: cpu
+2025-07-10 17:46:02,256 [INFO] Customer features dimension: 14
+2025-07-10 17:46:02,258 [INFO] Vehicle features dimension: 2
+2025-07-10 17:46:06,128 [INFO] Loaded model from checkpoints/model_final
+2025-07-10 17:46:06,128 [INFO] Evaluating model with beam inference strategy
+2025-07-10 17:46:06,386 [INFO] Instance 1: Cost = 2.9489, Routes = [[8, 0]]
+2025-07-10 17:46:07,673 [INFO] Instance 2: Cost = 2.2919, Routes = [[8]]
+2025-07-10 17:46:07,796 [INFO] Instance 3: Cost = 2.2817, Routes = [[5]]
+2025-07-10 17:46:07,912 [INFO] Instance 4: Cost = 2.2689, Routes = [[3]]
+2025-07-10 17:46:08,046 [INFO] Instance 5: Cost = 2.8644, Routes = [[7, 0]]
+2025-07-10 17:46:19,069 [INFO] Evaluation completed. Mean reward: -2.4578
+2025-07-10 17:46:19,069 [INFO] Final evaluation - Mean reward: -2.4578
+2025-07-10 17:49:33,670 [INFO] Starting SVRP-RL with Namespace(num_nodes=10, num_vehicles=1, capacity=50000.0, a_ratio=0.6, b_ratio=0.2, gamma_ratio=0.2, weather_dim=3, fixed_customers=True, num_buoys=5, obj_lambda=0.7, embedding_dim=128, epochs=100, batch_size=32, lr=0.0001, baseline_lr=0.001, entropy_weight=0.01, max_steps=100, inference='greedy', num_samples=16, beam_width=3, test_size=100, cuda=False, seed=42, save_dir='checkpoints', load_model='checkpoints/model_final', test=True, log_interval=10, save_interval=20, reoptimization=False)
+2025-07-10 17:49:33,677 [INFO] Using device: cpu
+2025-07-10 17:49:33,677 [INFO] Customer features dimension: 14
+2025-07-10 17:49:33,677 [INFO] Vehicle features dimension: 2
+2025-07-10 17:49:37,011 [INFO] Loaded model from checkpoints/model_final
+2025-07-10 17:49:37,011 [INFO] Evaluating model with greedy inference strategy
+2025-07-10 17:49:37,236 [INFO] Instance 1: Cost = 94.8180, Routes = [[0, 4, 2, 6, 8, 0]]
+2025-07-10 17:49:38,499 [INFO] Instance 2: Cost = 65.6252, Routes = [[0, 4, 8, 2, 3, 0]]
+2025-07-10 17:49:38,647 [INFO] Instance 3: Cost = 47.0841, Routes = [[0, 7, 2, 1, 6, 0]]
+2025-07-10 17:49:38,768 [INFO] Instance 4: Cost = 31.8185, Routes = [[0, 7, 2, 3, 5, 0]]
+2025-07-10 17:49:38,978 [INFO] Instance 5: Cost = 59.7878, Routes = [[0, 8, 5, 2, 4, 0]]
+2025-07-10 17:49:51,216 [INFO] Evaluation completed. Mean reward: -47.2240
+2025-07-10 17:49:51,217 [INFO] Final evaluation - Mean reward: -47.2240
+2025-07-10 17:50:41,706 [INFO] Starting SVRP-RL with Namespace(num_nodes=10, num_vehicles=1, capacity=50000.0, a_ratio=0.6, b_ratio=0.2, gamma_ratio=0.2, weather_dim=3, fixed_customers=True, num_buoys=5, obj_lambda=0.7, embedding_dim=128, epochs=100, batch_size=32, lr=0.0001, baseline_lr=0.001, entropy_weight=0.01, max_steps=100, inference='greedy', num_samples=5, beam_width=3, test_size=100, cuda=False, seed=42, save_dir='checkpoints', load_model='checkpoints/model_final', test=True, log_interval=10, save_interval=20, reoptimization=False)
+2025-07-10 17:50:41,706 [INFO] Using device: cpu
+2025-07-10 17:50:41,706 [INFO] Customer features dimension: 14
+2025-07-10 17:50:41,706 [INFO] Vehicle features dimension: 2
+2025-07-10 17:50:44,428 [INFO] Loaded model from checkpoints/model_final
+2025-07-10 17:50:44,428 [INFO] Evaluating model with greedy inference strategy
+2025-07-10 17:50:44,585 [INFO] Instance 1: Cost = 94.8180, Routes = [[0, 4, 2, 6, 8, 0]]
+2025-07-10 17:50:45,636 [INFO] Instance 2: Cost = 65.6252, Routes = [[0, 4, 8, 2, 3, 0]]
+2025-07-10 17:50:45,788 [INFO] Instance 3: Cost = 47.0841, Routes = [[0, 7, 2, 1, 6, 0]]
+2025-07-10 17:50:45,900 [INFO] Instance 4: Cost = 31.8185, Routes = [[0, 7, 2, 3, 5, 0]]
+2025-07-10 17:50:46,008 [INFO] Instance 5: Cost = 59.7878, Routes = [[0, 8, 5, 2, 4, 0]]
+2025-07-10 17:50:58,177 [INFO] Evaluation completed. Mean reward: -47.2240
+2025-07-10 17:50:58,177 [INFO] Final evaluation - Mean reward: -47.2240
+2025-07-10 17:51:37,687 [INFO] Starting SVRP-RL with Namespace(num_nodes=10, num_vehicles=1, capacity=50000.0, a_ratio=0.6, b_ratio=0.2, gamma_ratio=0.2, weather_dim=3, fixed_customers=True, num_buoys=5, obj_lambda=0.7, embedding_dim=128, epochs=100, batch_size=32, lr=0.0001, baseline_lr=0.001, entropy_weight=0.01, max_steps=100, inference='greedy', num_samples=5, beam_width=3, test_size=100, cuda=False, seed=42, save_dir='checkpoints', load_model='checkpoints/model_final', test=True, log_interval=10, save_interval=20, reoptimization=False)
+2025-07-10 17:51:37,687 [INFO] Using device: cpu
+2025-07-10 17:51:37,696 [INFO] Customer features dimension: 14
+2025-07-10 17:51:37,696 [INFO] Vehicle features dimension: 2
+2025-07-10 17:51:40,886 [INFO] Loaded model from checkpoints/model_final
+2025-07-10 17:51:40,886 [INFO] Evaluating model with greedy inference strategy
+2025-07-10 17:51:41,032 [INFO] Instance 1: Cost = 94.8180, Routes = [[0, 4, 2, 6, 8, 0]]
+2025-07-10 17:51:42,189 [INFO] Instance 2: Cost = 65.6252, Routes = [[0, 4, 8, 2, 3, 0]]
+2025-07-10 17:51:42,328 [INFO] Instance 3: Cost = 47.0841, Routes = [[0, 7, 2, 1, 6, 0]]
+2025-07-10 17:51:42,446 [INFO] Instance 4: Cost = 31.8185, Routes = [[0, 7, 2, 3, 5, 0]]
+2025-07-10 17:51:42,569 [INFO] Instance 5: Cost = 59.7878, Routes = [[0, 8, 5, 2, 4, 0]]
+2025-07-10 17:51:54,826 [INFO] Evaluation completed. Mean reward: -47.2240
+2025-07-10 17:51:54,826 [INFO] Final evaluation - Mean reward: -47.2240
+2025-07-10 18:06:49,161 [INFO] Starting SVRP-RL with Namespace(num_nodes=20, num_vehicles=1, capacity=50000.0, a_ratio=0.6, b_ratio=0.2, gamma_ratio=0.2, weather_dim=3, fixed_customers=False, num_buoys=1, obj_lambda=0.5, embedding_dim=128, epochs=100, batch_size=32, lr=0.0001, baseline_lr=0.001, entropy_weight=0.01, max_steps=100, inference='beam', num_samples=16, beam_width=3, test_size=100, cuda=False, seed=42, save_dir='checkpoints', load_model=None, test=False, log_interval=10, save_interval=20, reoptimization=False)
+2025-07-10 18:06:49,161 [INFO] Using device: cpu
+2025-07-10 18:06:49,161 [INFO] Customer features dimension: 24
+2025-07-10 18:06:49,161 [INFO] Vehicle features dimension: 2
+2025-07-10 18:06:54,869 [INFO] Starting training for 100 epochs
+2025-07-10 19:28:31,895 [INFO] Starting SVRP-RL with Namespace(num_nodes=10, num_vehicles=1, capacity=50000.0, a_ratio=0.6, b_ratio=0.2, gamma_ratio=0.2, weather_dim=3, fixed_customers=True, num_buoys=5, obj_lambda=0.7, embedding_dim=128, epochs=100, batch_size=32, lr=0.0001, baseline_lr=0.001, entropy_weight=0.01, max_steps=100, inference='greedy', num_samples=5, beam_width=3, test_size=100, cuda=False, seed=42, save_dir='checkpoints', load_model='checkpoints/model_final', test=True, log_interval=10, save_interval=20, reoptimization=False)
+2025-07-10 19:28:31,895 [INFO] Using device: cpu
+2025-07-10 19:28:31,895 [INFO] Customer features dimension: 14
+2025-07-10 19:28:31,895 [INFO] Vehicle features dimension: 2
+2025-07-10 19:28:36,074 [INFO] Loaded model from checkpoints/model_final
+2025-07-10 19:28:36,074 [INFO] Evaluating model with greedy inference strategy
+2025-07-10 19:28:36,329 [INFO] Instance 1: Cost = 94.8180, Routes = [[0, 4, 2, 6, 8, 0]]
+2025-07-10 19:30:20,288 [INFO] Starting SVRP-RL with Namespace(num_nodes=10, num_vehicles=1, capacity=50000.0, a_ratio=0.6, b_ratio=0.2, gamma_ratio=0.2, weather_dim=3, fixed_customers=True, num_buoys=5, obj_lambda=0.7, embedding_dim=128, epochs=100, batch_size=32, lr=0.0001, baseline_lr=0.001, entropy_weight=0.01, max_steps=100, inference='greedy', num_samples=5, beam_width=3, test_size=100, cuda=False, seed=42, save_dir='checkpoints', load_model='checkpoints/model_final', test=True, log_interval=10, save_interval=20, reoptimization=False)
+2025-07-10 19:30:20,289 [INFO] Using device: cpu
+2025-07-10 19:30:20,289 [INFO] Customer features dimension: 14
+2025-07-10 19:30:20,289 [INFO] Vehicle features dimension: 2
+2025-07-10 19:30:22,462 [INFO] Loaded model from checkpoints/model_final
+2025-07-10 19:30:22,463 [INFO] Evaluating model with greedy inference strategy
+2025-07-10 19:45:35,701 [INFO] Starting SVRP-RL with Namespace(num_nodes=10, num_vehicles=1, capacity=50000.0, a_ratio=0.6, b_ratio=0.2, gamma_ratio=0.2, weather_dim=3, fixed_customers=True, num_buoys=5, obj_lambda=0.7, embedding_dim=128, epochs=100, batch_size=32, lr=0.0001, baseline_lr=0.001, entropy_weight=0.01, max_steps=100, inference='greedy', num_samples=5, beam_width=3, test_size=100, cuda=False, seed=42, save_dir='checkpoints', load_model='checkpoints/model_final', test=True, log_interval=10, save_interval=20, reoptimization=False)
+2025-07-10 19:45:35,701 [INFO] Using device: cpu
+2025-07-10 19:45:35,701 [INFO] Customer features dimension: 14
+2025-07-10 19:45:35,701 [INFO] Vehicle features dimension: 2
+2025-07-10 19:45:38,157 [INFO] Loaded model from checkpoints/model_final
+2025-07-10 19:45:38,158 [INFO] Evaluating model with greedy inference strategy
+2025-07-10 19:46:05,836 [INFO] Starting SVRP-RL with Namespace(num_nodes=10, num_vehicles=1, capacity=50000.0, a_ratio=0.6, b_ratio=0.2, gamma_ratio=0.2, weather_dim=3, fixed_customers=True, num_buoys=5, obj_lambda=0.7, embedding_dim=128, epochs=100, batch_size=32, lr=0.0001, baseline_lr=0.001, entropy_weight=0.01, max_steps=100, inference='greedy', num_samples=5, beam_width=3, test_size=100, cuda=False, seed=42, save_dir='checkpoints', load_model='checkpoints/model_final', test=True, log_interval=10, save_interval=20, reoptimization=False)
+2025-07-10 19:46:05,836 [INFO] Using device: cpu
+2025-07-10 19:46:05,836 [INFO] Customer features dimension: 14
+2025-07-10 19:46:05,836 [INFO] Vehicle features dimension: 2
+2025-07-10 19:46:07,835 [INFO] Loaded model from checkpoints/model_final
+2025-07-10 19:46:07,835 [INFO] Evaluating model with greedy inference strategy
+2025-07-10 19:46:08,075 [INFO] Instance 1: Cost = 94.8180, Routes = [[0, 4, 2, 6, 8, 0]]
+2025-07-10 19:46:09,501 [INFO] Instance 2: Cost = 65.6252, Routes = [[0, 4, 8, 2, 3, 0]]
+2025-07-10 19:46:09,607 [INFO] Instance 3: Cost = 47.0841, Routes = [[0, 7, 2, 1, 6, 0]]
+2025-07-10 19:46:09,717 [INFO] Instance 4: Cost = 31.8185, Routes = [[0, 7, 2, 3, 5, 0]]
+2025-07-10 19:46:09,820 [INFO] Instance 5: Cost = 59.7878, Routes = [[0, 8, 5, 2, 4, 0]]
+2025-07-10 19:46:29,554 [INFO] Starting SVRP-RL with Namespace(num_nodes=10, num_vehicles=1, capacity=50000.0, a_ratio=0.6, b_ratio=0.2, gamma_ratio=0.2, weather_dim=3, fixed_customers=True, num_buoys=5, obj_lambda=0.7, embedding_dim=128, epochs=100, batch_size=32, lr=0.0001, baseline_lr=0.001, entropy_weight=0.01, max_steps=100, inference='greedy', num_samples=5, beam_width=3, test_size=100, cuda=False, seed=42, save_dir='checkpoints', load_model='checkpoints/model_final', test=True, log_interval=10, save_interval=20, reoptimization=False)
+2025-07-10 19:46:29,554 [INFO] Using device: cpu
+2025-07-10 19:46:29,555 [INFO] Customer features dimension: 14
+2025-07-10 19:46:29,555 [INFO] Vehicle features dimension: 2
+2025-07-10 19:46:31,388 [INFO] Loaded model from checkpoints/model_final
+2025-07-10 19:46:31,388 [INFO] Evaluating model with greedy inference strategy
+2025-07-10 19:46:31,500 [INFO] Instance 1: Cost = 94.8180, Routes = [[0, 4, 2, 6, 8, 0]]
+2025-07-10 19:54:44,947 [INFO] Starting SVRP-RL with Namespace(num_nodes=20, num_vehicles=1, capacity=50000.0, a_ratio=0.6, b_ratio=0.2, gamma_ratio=0.2, weather_dim=3, fixed_customers=False, num_buoys=1, obj_lambda=0.5, embedding_dim=128, epochs=100, batch_size=32, lr=0.0001, baseline_lr=0.001, entropy_weight=0.01, max_steps=100, inference='beam', num_samples=16, beam_width=3, test_size=100, cuda=False, seed=42, save_dir='checkpoints', load_model=None, test=False, log_interval=10, save_interval=20, reoptimization=False)
+2025-07-10 19:54:44,948 [INFO] Using device: cpu
+2025-07-10 19:54:44,949 [INFO] Customer features dimension: 24
+2025-07-10 19:54:44,949 [INFO] Vehicle features dimension: 2
+2025-07-10 19:54:48,646 [INFO] Starting training for 100 epochs
+2025-07-10 20:06:31,408 [INFO] Starting SVRP-RL with Namespace(num_nodes=10, num_vehicles=1, capacity=50000.0, a_ratio=0.6, b_ratio=0.2, gamma_ratio=0.2, weather_dim=3, fixed_customers=True, num_buoys=5, obj_lambda=0.7, embedding_dim=128, epochs=100, batch_size=32, lr=0.0001, baseline_lr=0.001, entropy_weight=0.01, max_steps=100, inference='greedy', num_samples=16, beam_width=3, test_size=100, cuda=False, seed=42, save_dir='checkpoints', load_model='checkpoints/model_final', test=True, log_interval=10, save_interval=20, reoptimization=False)
+2025-07-10 20:06:31,409 [INFO] Using device: cpu
+2025-07-10 20:06:31,409 [INFO] Customer features dimension: 14
+2025-07-10 20:06:31,409 [INFO] Vehicle features dimension: 2
+2025-07-10 20:06:33,514 [INFO] Loaded model from checkpoints/model_final
+2025-07-10 20:06:33,514 [INFO] Evaluating model with greedy inference strategy
+2025-07-10 20:10:52,347 [INFO] Starting SVRP-RL with Namespace(num_nodes=10, num_vehicles=1, capacity=50000.0, a_ratio=0.6, b_ratio=0.2, gamma_ratio=0.2, weather_dim=3, fixed_customers=True, num_buoys=5, obj_lambda=0.7, embedding_dim=128, epochs=100, batch_size=32, lr=0.0001, baseline_lr=0.001, entropy_weight=0.01, max_steps=100, inference='greedy', num_samples=16, beam_width=3, test_size=100, cuda=False, seed=42, save_dir='checkpoints', load_model='checkpoints/model_final', test=True, log_interval=10, save_interval=20, reoptimization=False)
+2025-07-10 20:10:52,347 [INFO] Using device: cpu
+2025-07-10 20:10:52,347 [INFO] Customer features dimension: 14
+2025-07-10 20:10:52,347 [INFO] Vehicle features dimension: 2
+2025-07-10 20:10:54,235 [INFO] Loaded model from checkpoints/model_final
+2025-07-10 20:10:54,236 [INFO] Evaluating model with greedy inference strategy
+2025-07-10 20:11:09,120 [INFO] Starting SVRP-RL with Namespace(num_nodes=10, num_vehicles=1, capacity=50000.0, a_ratio=0.6, b_ratio=0.2, gamma_ratio=0.2, weather_dim=3, fixed_customers=True, num_buoys=5, obj_lambda=0.7, embedding_dim=128, epochs=100, batch_size=32, lr=0.0001, baseline_lr=0.001, entropy_weight=0.01, max_steps=100, inference='greedy', num_samples=16, beam_width=3, test_size=100, cuda=False, seed=42, save_dir='checkpoints', load_model='checkpoints/model_final', test=True, log_interval=10, save_interval=20, reoptimization=False)
+2025-07-10 20:11:09,121 [INFO] Using device: cpu
+2025-07-10 20:11:09,121 [INFO] Customer features dimension: 14
+2025-07-10 20:11:09,121 [INFO] Vehicle features dimension: 2
+2025-07-10 20:11:10,900 [INFO] Loaded model from checkpoints/model_final
+2025-07-10 20:11:10,901 [INFO] Evaluating model with greedy inference strategy
+2025-07-10 20:12:43,800 [INFO] Starting SVRP-RL with Namespace(num_nodes=10, num_vehicles=1, capacity=50000.0, a_ratio=0.6, b_ratio=0.2, gamma_ratio=0.2, weather_dim=3, fixed_customers=True, num_buoys=5, obj_lambda=0.7, embedding_dim=128, epochs=100, batch_size=32, lr=0.0001, baseline_lr=0.001, entropy_weight=0.01, max_steps=100, inference='greedy', num_samples=16, beam_width=3, test_size=100, cuda=False, seed=42, save_dir='checkpoints', load_model='checkpoints/model_final', test=True, log_interval=10, save_interval=20, reoptimization=False)
+2025-07-10 20:12:43,810 [INFO] Using device: cpu
+2025-07-10 20:12:43,810 [INFO] Customer features dimension: 14
+2025-07-10 20:12:43,810 [INFO] Vehicle features dimension: 2
+2025-07-10 20:12:45,548 [INFO] Loaded model from checkpoints/model_final
+2025-07-10 20:12:45,548 [INFO] Evaluating model with greedy inference strategy
+2025-07-10 20:12:58,190 [INFO] Starting SVRP-RL with Namespace(num_nodes=10, num_vehicles=1, capacity=50000.0, a_ratio=0.6, b_ratio=0.2, gamma_ratio=0.2, weather_dim=3, fixed_customers=True, num_buoys=5, obj_lambda=0.7, embedding_dim=128, epochs=100, batch_size=32, lr=0.0001, baseline_lr=0.001, entropy_weight=0.01, max_steps=100, inference='greedy', num_samples=16, beam_width=3, test_size=100, cuda=False, seed=42, save_dir='checkpoints', load_model='checkpoints/model_final', test=True, log_interval=10, save_interval=20, reoptimization=False)
+2025-07-10 20:12:58,191 [INFO] Using device: cpu
+2025-07-10 20:12:58,191 [INFO] Customer features dimension: 14
+2025-07-10 20:12:58,191 [INFO] Vehicle features dimension: 2
+2025-07-10 20:12:59,930 [INFO] Loaded model from checkpoints/model_final
+2025-07-10 20:12:59,930 [INFO] Evaluating model with greedy inference strategy
+2025-07-10 20:13:41,528 [INFO] Starting SVRP-RL with Namespace(num_nodes=10, num_vehicles=1, capacity=50000.0, a_ratio=0.6, b_ratio=0.2, gamma_ratio=0.2, weather_dim=3, fixed_customers=True, num_buoys=5, obj_lambda=0.7, embedding_dim=128, epochs=100, batch_size=32, lr=0.0001, baseline_lr=0.001, entropy_weight=0.01, max_steps=100, inference='greedy', num_samples=16, beam_width=3, test_size=100, cuda=False, seed=42, save_dir='checkpoints', load_model='checkpoints/model_final', test=True, log_interval=10, save_interval=20, reoptimization=False)
+2025-07-10 20:13:41,529 [INFO] Using device: cpu
+2025-07-10 20:13:41,529 [INFO] Customer features dimension: 14
+2025-07-10 20:13:41,529 [INFO] Vehicle features dimension: 2
+2025-07-10 20:13:43,235 [INFO] Loaded model from checkpoints/model_final
+2025-07-10 20:13:43,235 [INFO] Evaluating model with greedy inference strategy
+2025-07-10 20:16:59,578 [INFO] Starting SVRP-RL with Namespace(num_nodes=10, num_vehicles=1, capacity=50000.0, a_ratio=0.6, b_ratio=0.2, gamma_ratio=0.2, weather_dim=3, fixed_customers=True, num_buoys=5, obj_lambda=0.7, embedding_dim=128, epochs=100, batch_size=32, lr=0.0001, baseline_lr=0.001, entropy_weight=0.01, max_steps=100, inference='greedy', num_samples=16, beam_width=3, test_size=100, cuda=False, seed=42, save_dir='checkpoints', load_model='checkpoints/model_final', test=True, log_interval=10, save_interval=20, reoptimization=False)
+2025-07-10 20:16:59,579 [INFO] Using device: cpu
+2025-07-10 20:16:59,579 [INFO] Customer features dimension: 14
+2025-07-10 20:16:59,579 [INFO] Vehicle features dimension: 2
+2025-07-10 20:17:01,368 [INFO] Loaded model from checkpoints/model_final
+2025-07-10 20:17:01,368 [INFO] Evaluating model with greedy inference strategy
+2025-07-10 20:17:01,580 [INFO] Instance 1: Cost = 38.2025, Routes = [[0, 5, 2, 4, 9, 0]]
+2025-07-10 20:17:02,484 [INFO] Instance 2: Cost = 15.9362, Routes = [[0, 8, 9, 7, 3, 0]]
+2025-07-10 20:17:02,590 [INFO] Instance 3: Cost = 24.4759, Routes = [[0, 7, 6, 2, 8, 0]]
+2025-07-10 20:17:02,692 [INFO] Instance 4: Cost = 30.4897, Routes = [[0, 5, 7, 2, 8, 0]]
+2025-07-10 20:17:02,796 [INFO] Instance 5: Cost = 21.2130, Routes = [[0, 5, 2, 8, 9, 0]]
+2025-07-10 20:17:13,985 [INFO] Evaluation completed. Mean reward: -42.4611
+2025-07-10 20:17:13,985 [INFO] Final evaluation - Mean reward: -42.4611
+2025-07-10 20:19:26,554 [INFO] Starting SVRP-RL with Namespace(num_nodes=10, num_vehicles=1, capacity=50000.0, a_ratio=0.6, b_ratio=0.2, gamma_ratio=0.2, weather_dim=3, fixed_customers=True, num_buoys=5, obj_lambda=0.7, embedding_dim=128, epochs=100, batch_size=32, lr=0.0001, baseline_lr=0.001, entropy_weight=0.01, max_steps=100, inference='greedy', num_samples=16, beam_width=3, test_size=100, cuda=False, seed=42, save_dir='checkpoints', load_model='checkpoints/model_final', test=True, log_interval=10, save_interval=20, reoptimization=False)
+2025-07-10 20:19:26,554 [INFO] Using device: cpu
+2025-07-10 20:19:26,554 [INFO] Customer features dimension: 14
+2025-07-10 20:19:26,554 [INFO] Vehicle features dimension: 2
+2025-07-10 20:19:28,491 [INFO] Loaded model from checkpoints/model_final
+2025-07-10 20:19:28,491 [INFO] Evaluating model with greedy inference strategy
+2025-07-10 20:20:44,167 [INFO] Starting SVRP-RL with Namespace(num_nodes=10, num_vehicles=1, capacity=50000.0, a_ratio=0.6, b_ratio=0.2, gamma_ratio=0.2, weather_dim=3, fixed_customers=True, num_buoys=5, obj_lambda=0.7, embedding_dim=128, epochs=100, batch_size=32, lr=0.0001, baseline_lr=0.001, entropy_weight=0.01, max_steps=100, inference='greedy', num_samples=16, beam_width=3, test_size=100, cuda=False, seed=42, save_dir='checkpoints', load_model='checkpoints/model_final', test=True, log_interval=10, save_interval=20, reoptimization=False)
+2025-07-10 20:20:44,167 [INFO] Using device: cpu
+2025-07-10 20:20:44,167 [INFO] Customer features dimension: 14
+2025-07-10 20:20:44,167 [INFO] Vehicle features dimension: 2
+2025-07-10 20:20:46,001 [INFO] Loaded model from checkpoints/model_final
+2025-07-10 20:20:46,001 [INFO] Evaluating model with greedy inference strategy
+2025-07-10 20:21:06,837 [INFO] Starting SVRP-RL with Namespace(num_nodes=10, num_vehicles=1, capacity=50000.0, a_ratio=0.6, b_ratio=0.2, gamma_ratio=0.2, weather_dim=3, fixed_customers=True, num_buoys=5, obj_lambda=0.7, embedding_dim=128, epochs=100, batch_size=32, lr=0.0001, baseline_lr=0.001, entropy_weight=0.01, max_steps=100, inference='greedy', num_samples=16, beam_width=3, test_size=100, cuda=False, seed=42, save_dir='checkpoints', load_model='checkpoints/model_final', test=True, log_interval=10, save_interval=20, reoptimization=False)
+2025-07-10 20:21:06,838 [INFO] Using device: cpu
+2025-07-10 20:21:06,838 [INFO] Customer features dimension: 14
+2025-07-10 20:21:06,838 [INFO] Vehicle features dimension: 2
+2025-07-10 20:21:08,973 [INFO] Loaded model from checkpoints/model_final
+2025-07-10 20:21:08,973 [INFO] Evaluating model with greedy inference strategy
+2025-07-10 20:21:09,196 [INFO] Instance 1: Cost = 38.2025, Routes = [[0, 5, 2, 4, 9, 0]]
+2025-07-10 20:21:10,027 [INFO] Instance 2: Cost = 15.9362, Routes = [[0, 8, 9, 7, 3, 0]]
+2025-07-10 20:21:10,139 [INFO] Instance 3: Cost = 24.4759, Routes = [[0, 7, 6, 2, 8, 0]]
+2025-07-10 20:21:10,329 [INFO] Instance 4: Cost = 30.4897, Routes = [[0, 5, 7, 2, 8, 0]]
+2025-07-10 20:21:10,437 [INFO] Instance 5: Cost = 21.2130, Routes = [[0, 5, 2, 8, 9, 0]]
+2025-07-10 20:21:20,619 [INFO] Evaluation completed. Mean reward: -42.4611
+2025-07-10 20:21:20,619 [INFO] Final evaluation - Mean reward: -42.4611
