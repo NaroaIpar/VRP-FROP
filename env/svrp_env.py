@@ -68,7 +68,7 @@ class SVRPEnvironment:
             demands: Remaining demand tensor
         """
         # Generate weather, demands, and travel costs
-        self.weather, self.demands, self.travel_costs = self.weather_sim.generate(
+        self.weather, self.demands, self.travel_costs = self.weather_sim.generate_decided(
             batch_size=batch_size,
             num_nodes=self.num_nodes,
             fixed_customers=fixed_customers,
@@ -310,14 +310,3 @@ class SVRPEnvironment:
         vehicle_features[:, :, 1] = self.vehicle_loads / self.capacity  # Normalize load
         
         return customer_features, vehicle_features
-    
-
-    def decide_evaluation_environment(self, batch_size=1, fixed_customers=True):
-        
-        # Generate weather, demands, and travel costs
-        self.weather, self.demands, self.travel_costs, self.fixed_customer_positions = self.weather_sim.decide_evaluation_environment(
-            batch_size=batch_size,
-            num_nodes=self.num_nodes,
-            fixed_customers=fixed_customers,
-            device=self.device
-        )

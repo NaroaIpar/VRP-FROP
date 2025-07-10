@@ -252,7 +252,7 @@ class WeatherSimulation:
             'travel_costs': travel_costs
         }
     
-    def decide_evaluation_environment(self, batch_size, num_nodes, fixed_customers=True, device='cpu'):
+    def generate_decided(self, batch_size, num_nodes, fixed_customers=True, device='cpu'):
         """
         Decide the evaluation environment based on the model state.
         
@@ -266,9 +266,20 @@ class WeatherSimulation:
         # Generate weather variables --> ex: always sunny
         weather = torch.ones(batch_size, self.weather_dim, device=device)
 
-        depot = [0.5, 0.5]  # Fixed depot position
-        customer_positions = load_customer_positions_from_txt("positions.txt", batch_size, num_nodes, depot)
-        fixed_customer_positions = customer_positions[0].unsqueeze(0)
+        # Generate or reuse customer positions
+        if fixed_customers and self.fixed_customer_positions is not None:
+            customer_positions = self.fixed_customer_positions.repeat(batch_size, 1, 1)
+        else:
+            # Create random customer positions with depot at (0.5, 0.5)
+            depot = [0.5, 0.5]  # Fixed depot position
+
+            # customer_positions = create_random_customer_positions(batch_size, num_nodes, depot, device)
+            customer_positions = load_customer_positions_from_txt("positions.txt", batch_size, num_nodes, depot)
+            
+            # Save positions if fixed_customers
+            if fixed_customers:
+                self.fixed_customer_positions = customer_positions[0].unsqueeze(0)
+                print("Fixed customer positions set for future use:", self.fixed_customer_positions)
 
         # Generate demands (node 0 is depot, has no demand) --> ex: these aleatory demands
         demands = load_demands_from_txt("demands.txt", batch_size, num_nodes, device)
@@ -309,7 +320,7 @@ class WeatherSimulation:
                                                           torch.tensor(0.1, device=device))
                         
 
-        return weather, demands, travel_costs, fixed_customer_positions
+        return weather, demands, travel_costs
 
 
         

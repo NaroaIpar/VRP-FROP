@@ -302,9 +302,9 @@ def evaluate(args, env, policy_model, num_instances=100, logger=None):
     Evaluate the model on multiple instances.
     """
     total_reward = 0.0
+    best_cost = float('inf')
+    best_routes = None
 
-    env.decide_evaluation_environment(batch_size=1, fixed_customers=True)
-    
     # Create inference strategy
     if args.inference == 'greedy':
         inference_strategy = GreedyInference(policy_model, device=next(policy_model.parameters()).device)
@@ -312,7 +312,7 @@ def evaluate(args, env, policy_model, num_instances=100, logger=None):
         inference_strategy = RandomSamplingInference(policy_model, device=next(policy_model.parameters()).device)
     else:  # beam
         inference_strategy = BeamSearchInference(policy_model, device=next(policy_model.parameters()).device)
-    
+
     # Evaluate on multiple instances
     for i in tqdm(range(num_instances), desc="Evaluating"):
 
@@ -323,9 +323,14 @@ def evaluate(args, env, policy_model, num_instances=100, logger=None):
             routes, cost = inference_strategy.solve(env=env, beam_width=args.beam_width)
         else:  # greedy
             routes, cost = inference_strategy.solve(env=env)
-        
+
         total_reward -= cost  # Reward is negative cost
-        
+
+        # Track best route
+        if cost < best_cost:
+            best_cost = cost
+            best_routes = routes
+                
         # Log instance results
         if logger and i < 5:  # Only log first 5 instances
             logger.info(f"Instance {i+1}: Cost = {cost:.4f}, Routes = {routes}")
@@ -338,6 +343,20 @@ def evaluate(args, env, policy_model, num_instances=100, logger=None):
                     title=f"Routes (Cost: {cost:.4f})",
                     save_path=os.path.join(args.save_dir, f"route_{args.inference}.png")
                 )
+
+    # Track best route
+    # Log instance results
+    if  best_routes is not None and logger:
+        logger.info(f"BEST Instance {i+1}: Cost = {best_cost:.4f}, Routes = {best_routes}")
+        
+        # Visualize route for first instance
+        visualize_route(
+            env=env,
+            routes=best_routes,
+            title=f"BEST Routes (Cost: {best_cost:.4f})",
+            save_path=os.path.join(args.save_dir, f"route_{args.inference}.png")
+        )
+                
     
     # Calculate mean reward
     mean_reward = total_reward / num_instances
