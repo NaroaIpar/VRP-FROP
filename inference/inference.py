@@ -214,6 +214,13 @@ class GreedyInference(InferenceStrategy):
                         if node != 0:
                             mask[node] = False
 
+                    # Evitar visitar nodos que otros vehiculos ya han visitado
+                    for other_v in range(env.num_vehicles):
+                        if other_v != v:
+                            for node in routes[other_v]:
+                                if node != 0:
+                                    mask[node] = False
+
                     # No volver al depot inmediatamente después de salir
                     if current_node == 0:
                         mask[0] = False
