@@ -5,9 +5,9 @@
   "program": "${workspaceFolder}/main.py",
 "args": [
     "--num_nodes",
-    "20",
+    "10",
     "--num_vehicles",
-    "1",
+    "2",
     "--inference",
     "greedy",
     "--num_buoys",

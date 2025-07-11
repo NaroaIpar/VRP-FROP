@@ -7,6 +7,9 @@ import os
 import logging
 from tqdm import tqdm
 
+import matplotlib.gridspec as gridspec
+import textwrap
+
 from models.policy import SVRPPolicy
 from env.svrp_env import SVRPEnvironment
 from training.reinforce import ReinforceTrainer
@@ -124,9 +127,6 @@ def visualize_route(env, routes, title=None, save_path=None):
     else:
         final_path = None
 
-    import matplotlib.gridspec as gridspec
-    import textwrap
-
     fig = plt.figure(figsize=(14, 10))
     gs = gridspec.GridSpec(1, 2, width_ratios=[1.5, 2], wspace=0.3)
     fig.subplots_adjust(left=0.05, right=0.95, top=0.95, bottom=0.05)
@@ -155,7 +155,10 @@ def visualize_route(env, routes, title=None, save_path=None):
     for idx in range(1, len(customer_positions)):
         x, y = customer_positions[idx]
         ax_plot.scatter(x, y, c='blue', s=50)
-        ax_plot.text(x, y + 0.01, str(idx), fontsize=9, ha='center', va='bottom')
+        # ax_plot.text(x, y + 0.01, str(idx), fontsize=9, ha='center', va='bottom')
+        demand = env.demands[0][idx].item() 
+        ax_plot.text(x, y + 0.01, f"{idx} ({demand:.1f})", fontsize=9, ha='center', va='bottom')
+
 
     x0, y0 = customer_positions[0]
     ax_plot.scatter(x0, y0, c='red', s=100, marker='*', label='Depot')
