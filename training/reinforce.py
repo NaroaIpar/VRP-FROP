@@ -118,7 +118,7 @@ class ReinforceTrainer:
             baseline_value = self.baseline_model(customer_features, vehicle_features)
             
             # Execute actions in environment
-            next_customer_features, next_vehicle_features, next_demands, rewards, done = env.step(actions)
+            next_customer_features, next_vehicle_features, next_demands, rewards, done, _, _ = env.step(actions)
             
             # Update done mask
             done_mask = done_mask | done

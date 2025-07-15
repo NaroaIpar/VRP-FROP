@@ -197,12 +197,8 @@ class SVRPEnvironment:
         batch_size = actions.size(0)
         rewards = torch.zeros(batch_size, device=self.device)
 
-        # Variables for the objective function
-        c_min = (self.travel_costs).min()  # Minimum cost for the objective function
-        non_zero_c_min = self.travel_costs[self.travel_costs != 0.0].min()
-        er_max = (self.demands).max()  # Maximum remaining demand for the objective function
-
-        # print("c_min:", c_min, " non_zero_c_min:", non_zero_c_min, "y er_max:", er_max)
+        travel_costs_contribution = 0
+        expected_reward_contribution = 0
 
         # For each vehicle, compute travel costs and update states
         for v in range(self.num_vehicles):
@@ -216,7 +212,9 @@ class SVRPEnvironment:
                 next_node = next_positions[b].item()
                 
                 # Add travel cost
-                rewards[b] -= (self.obj_lambda / non_zero_c_min)  * self.travel_costs[b, current, next_node]
+                
+                rewards[b] -= self.obj_lambda  * self.travel_costs[b, current, next_node]
+                travel_costs_contribution += self.obj_lambda  * self.travel_costs[b, current, next_node]
                 
                 # Update vehicle load and remaining demand
                 if next_node > 0:  # Not depot
@@ -231,13 +229,16 @@ class SVRPEnvironment:
                     self.remaining_demands[b, next_node] -= delivery
 
                     # Add delivery cost to rewards
-                    rewards[b] -= ((1 - self.obj_lambda) / er_max) * -delivery
+                    rewards[b] -= (1 - self.obj_lambda) * -delivery
+                    expected_reward_contribution += (1 - self.obj_lambda) * -delivery
                     
                     # If vehicle cannot fulfill demand, record failure
                     if self.remaining_demands[b, next_node] > 0 and self.vehicle_loads[b, v] <= 0:
                         # Vehicle needs to return to depot for refill
                         # Add recourse cost (depot to customer and back)
-                        rewards[b] -= 2 * self.travel_costs[b, 0, next_node]
+                        # rewards[b] -= 2 * self.travel_costs[b, 0, next_node]
+                        rewards[b] -= 2 * self.obj_lambda * self.travel_costs[b, 0, next_node] 
+                        travel_costs_contribution += 2 * self.travel_costs[b, 0, next_node]
                         
                         # Refill vehicle
                         self.vehicle_loads[b, v] = self.capacity
@@ -265,10 +266,11 @@ class SVRPEnvironment:
                     final_pos = self.vehicle_positions[b, v].item()
                     if final_pos != 0:
                         # Penalización por no terminar en el depot
-                        rewards[b] -= self.travel_costs[b, final_pos, 0]  # penaliza el coste de volver
+                        rewards[b] -= self.obj_lambda  * self.travel_costs[b, current, next_node]  # penaliza el coste de volver
+                        travel_costs_contribution += self.obj_lambda  * self.travel_costs[b, current, next_node]
 
         
-        return customer_features, vehicle_features, self.remaining_demands, rewards, done
+        return customer_features, vehicle_features, self.remaining_demands, rewards, done, travel_costs_contribution, expected_reward_contribution
     
 
     def _get_features(self):

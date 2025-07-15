@@ -183,6 +183,9 @@ class GreedyInference(InferenceStrategy):
         # Initialize routes and cost
         routes = [[] for _ in range(env.num_vehicles)]
         total_cost = 0.0
+
+        total_travel_costs_contribution = 0.0
+        total_expected_reward_contribution = 0.0
         
         # Track visited customers
         done = False
@@ -239,7 +242,10 @@ class GreedyInference(InferenceStrategy):
 
             # Ejecutar paso en el entorno
             actions_tensor = torch.tensor([actions], device=self.device)
-            next_customer_features, next_vehicle_features, next_demands, rewards, done_tensor = env.step(actions_tensor)
+            next_customer_features, next_vehicle_features, next_demands, rewards, done_tensor, travel_costs_contribution, expected_reward_contribution = env.step(actions_tensor)
+            total_travel_costs_contribution += travel_costs_contribution
+            total_expected_reward_contribution += expected_reward_contribution
+            print(f"step {step}--> travel_costs_contribution: {travel_costs_contribution}, expected_reward_contribution: {expected_reward_contribution}")
 
             # Actualizar estado
             total_cost -= rewards.item()
@@ -257,7 +263,7 @@ class GreedyInference(InferenceStrategy):
             if routes[v][-1] != 0:
                 routes[v].append(0)
                 
-        return routes, total_cost
+        return routes, total_cost, total_travel_costs_contribution, total_expected_reward_contribution
 
 
 class RandomSamplingInference(InferenceStrategy):
@@ -327,7 +333,7 @@ class RandomSamplingInference(InferenceStrategy):
                 actions_tensor = torch.tensor([actions], device=self.device)
                 
                 # Execute actions in environment
-                next_customer_features, next_vehicle_features, next_demands, rewards, done_tensor = env.step(actions_tensor)
+                next_customer_features, next_vehicle_features, next_demands, rewards, done_tensor, travel_costs_contribution, expected_reward_contribution = env.step(actions_tensor)
                 
                 # Update cost
                 total_cost -= rewards.item()  # Rewards are negative costs
@@ -449,7 +455,7 @@ class BeamSearchInference(InferenceStrategy):
                         action_tensor[0, v] = a
                     
                     # Execute step
-                    next_c_features, next_v_features, next_dem, rewards, done = clone_env.step(action_tensor)
+                    next_c_features, next_v_features, next_dem, rewards, done, travel_costs_contribution, expected_reward_contribution = clone_env.step(action_tensor)
                     
                     # Add to next beam
                     next_beam.append((
