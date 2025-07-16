@@ -56,6 +56,41 @@ def load_customer_positions_from_txt(file_name, batch_size, num_nodes, depot = [
 
     return customer_positions
 
+def create_random_demands(batch_size, num_nodes, device='cpu', weather_dim = 3 , a_ratio = 0.6, b_ratio = 0.2, gamma_ratio = 0.2, weather = []):
+    # Generate demands (node 0 is depot, has no demand)
+    demands = torch.zeros(batch_size, num_nodes, device=device)
+    
+    # Generate base demands (constant component)
+    base_demands = torch.ones(num_nodes, device=device) * 10
+    base_demands[0] = 0  # No demand at depot
+    
+    # Generate demands for each node
+    for b in range(batch_size):
+        for i in range(1, num_nodes):  # Skip depot
+            # Constant component
+            constant = base_demands[i] * a_ratio
+            
+            # Weather component (interaction terms)
+            weather_effect = 0
+            for j in range(weather_dim):
+                for k in range(weather_dim):
+                    # Random coefficient for weather interaction
+                    alpha = torch.randn(1, device=device) * 0.5
+                    weather_effect += alpha * weather[b, j] * weather[b, k]
+            
+            weather_effect *= b_ratio * base_demands[i]
+            
+            # Noise component
+            noise = torch.randn(1, device=device) * gamma_ratio * base_demands[i]
+            
+            # Combine components
+            demands[b, i] = constant + weather_effect + noise
+            
+            # Ensure demand is positive
+            demands[b, i] = torch.max(demands[b, i], torch.tensor(1.0, device=device))
+
+    return demands
+
 def load_demands_from_txt(file_name, batch_size, num_nodes, device='cpu'):
     """
     Carga demandas desde un archivo .txt y las replica para un batch.
@@ -117,6 +152,10 @@ class WeatherSimulation:
         
         # Fixed customer positions for deterministic scenarios
         self.fixed_customer_positions = None
+
+        # Load data from files
+        self.load_customer_positions = False
+        self.load_demands = False
         
     def generate(self, batch_size, num_nodes, fixed_customers=True, device='cpu'):
         """
@@ -145,8 +184,10 @@ class WeatherSimulation:
             # Create random customer positions with depot at (0.5, 0.5)
             depot = [0.5, 0.5]  # Fixed depot position
 
-            customer_positions = create_random_customer_positions(batch_size, num_nodes, depot, device)
-            # customer_positions = load_customer_positions_from_txt("positions.txt", batch_size, num_nodes, depot)
+            if not self.load_customer_positions:
+                customer_positions = create_random_customer_positions(batch_size, num_nodes, depot, device)
+            else:
+                customer_positions = load_customer_positions_from_txt("positions.txt", batch_size, num_nodes, depot)
 
             # print("Customer positions:", customer_positions)
             # print("Shape of customer positions:", customer_positions.shape)
@@ -157,37 +198,19 @@ class WeatherSimulation:
                 self.fixed_customer_positions = customer_positions[0].unsqueeze(0)
                 print("Fixed customer positions set for future use:", self.fixed_customer_positions)
         
-        # Generate demands (node 0 is depot, has no demand)
-        demands = torch.zeros(batch_size, num_nodes, device=device)
+        if self.load_demands:
+            # Generate demands (node 0 is depot, has no demand) --> ex: these aleatory demands
+            demands = load_demands_from_txt("demands.txt", batch_size, num_nodes, device)
+        else:
+            demands = create_random_demands(
+                batch_size, num_nodes, device, 
+                weather_dim=self.weather_dim, 
+                a_ratio=self.a_ratio, 
+                b_ratio=self.b_ratio, 
+                gamma_ratio=self.gamma_ratio, 
+                weather=weather
+            )
         
-        # Generate base demands (constant component)
-        base_demands = torch.ones(num_nodes, device=device) * 10
-        base_demands[0] = 0  # No demand at depot
-        
-        # Generate demands for each node
-        for b in range(batch_size):
-            for i in range(1, num_nodes):  # Skip depot
-                # Constant component
-                constant = base_demands[i] * self.a_ratio
-                
-                # Weather component (interaction terms)
-                weather_effect = 0
-                for j in range(self.weather_dim):
-                    for k in range(self.weather_dim):
-                        # Random coefficient for weather interaction
-                        alpha = torch.randn(1, device=device) * 0.5
-                        weather_effect += alpha * weather[b, j] * weather[b, k]
-                
-                weather_effect *= self.b_ratio * base_demands[i]
-                
-                # Noise component
-                noise = torch.randn(1, device=device) * self.gamma_ratio * base_demands[i]
-                
-                # Combine components
-                demands[b, i] = constant + weather_effect + noise
-                
-                # Ensure demand is positive
-                demands[b, i] = torch.max(demands[b, i], torch.tensor(1.0, device=device))
         
         # Generate travel costs
         travel_costs = torch.zeros(batch_size, num_nodes, num_nodes, device=device)

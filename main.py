@@ -31,6 +31,10 @@ def parse_args():
     parser.add_argument('--num_buoys', type=int, default=1, help='Number of buoys to visit')
     parser.add_argument('--obj_lambda', type=float, default=0.5, help='Objective function weight for costs and delivery')
     
+    parser.add_argument('--load_customer_positions', action='store_true', help='Load fixed customer positions from file')
+    parser.add_argument('--load_demands', action='store_true', help='Load fixed customer positions from file')
+
+    
     # Model settings
     parser.add_argument('--embedding_dim', type=int, default=128, help='Embedding dimension')
     
@@ -57,6 +61,7 @@ def parse_args():
     parser.add_argument('--log_interval', type=int, default=10, help='Log interval for training')
     parser.add_argument('--save_interval', type=int, default=20, help='Save interval for models')
     parser.add_argument('--reoptimization', action='store_true', help='Use reoptimization strategy')
+
     
     return parser.parse_args()
 
@@ -360,7 +365,7 @@ def evaluate(args, env, policy_model, num_instances=100, logger=None):
         visualize_route(
             env=env,
             routes=best_routes,
-            title=f"Routes (Objective function value: {cost:.4f})(travel_cost: {total_travel_costs:.4f}, expected reward: {total_expected_reward:.4f})",
+            title=f"BEST (Objective function value: {cost:.4f})(travel_cost: {total_travel_costs:.4f}, expected reward: {total_expected_reward:.4f})",
             save_path=os.path.join(args.save_dir, f"route_{args.inference}.png")
         )
                 
@@ -402,6 +407,12 @@ def main():
         gamma_ratio=args.gamma_ratio,
         device=device
     )
+
+    if args.load_customer_positions: 
+        env.weather_sim.load_customer_positions = True
+
+    if args.load_demands:
+        env.weather_sim.load_demands = True
     
     # Determine input dimensions
     customer_input_dim = env.customer_features_dim
