@@ -76,7 +76,7 @@ def create_random_demands(batch_size, num_nodes, device='cpu', weather_dim = 3 ,
                 for k in range(weather_dim):
                     # Random coefficient for weather interaction
                     alpha = torch.randn(1, device=device) * 0.5
-                    weather_effect += alpha * weather[b, j] * weather[b, k]
+                    weather_effect += alpha * ( weather[b,j] * weather[b, k] )
             
             weather_effect *= b_ratio * base_demands[i]
             
@@ -156,7 +156,7 @@ class WeatherSimulation:
         # Load data from files
         self.load_customer_positions = False
         self.load_demands = False
-        
+                
     def generate(self, batch_size, num_nodes, fixed_customers=True, device='cpu'):
         """
         Generate weather, demands, and travel costs for a batch of scenarios.
@@ -176,6 +176,7 @@ class WeatherSimulation:
         weather = torch.zeros(batch_size, self.weather_dim, device=device)
         for i in range(self.weather_dim):
             weather[:, i] = torch.distributions.Uniform(-1, 1).sample([batch_size])
+        # print("Generated weather variables:", weather)
         
         # Generate or reuse customer positions
         if fixed_customers and self.fixed_customer_positions is not None:
@@ -233,9 +234,9 @@ class WeatherSimulation:
                             for l in range(self.weather_dim):
                                 # Random coefficient for weather interaction
                                 alpha = torch.randn(1, device=device) * 0.5
-                                weather_effect += alpha * weather[b, k] * weather[b, l]
+                                weather_effect += alpha * ( weather[b,k] * weather[b, l] )
                         
-                        weather_effect *= self.b_ratio * base_cost
+                        weather_effect *= - self.b_ratio * base_cost
                         
                         # Noise component
                         noise = torch.randn(1, device=device) * self.gamma_ratio * base_cost
@@ -274,76 +275,3 @@ class WeatherSimulation:
             'demands': demands,
             'travel_costs': travel_costs
         }
-    
-    def generate_decided(self, batch_size, num_nodes, fixed_customers=True, device='cpu'):
-        """
-        Decide the evaluation environment based on the model state.
-        
-        Args:
-            batch_size: Number of scenarios to generate
-            fixed_customers: If True, use fixed customer positions
-            
-        Returns:
-            None
-        """
-        # Generate weather variables --> ex: always sunny
-        weather = torch.ones(batch_size, self.weather_dim, device=device)
-
-        # Generate or reuse customer positions
-        if fixed_customers and self.fixed_customer_positions is not None:
-            customer_positions = self.fixed_customer_positions.repeat(batch_size, 1, 1)
-        else:
-            # Create random customer positions with depot at (0.5, 0.5)
-            depot = [0.5, 0.5]  # Fixed depot position
-
-            # customer_positions = create_random_customer_positions(batch_size, num_nodes, depot, device)
-            customer_positions = load_customer_positions_from_txt("positions.txt", batch_size, num_nodes, depot)
-            
-            # Save positions if fixed_customers
-            if fixed_customers:
-                self.fixed_customer_positions = customer_positions[0].unsqueeze(0)
-                print("Fixed customer positions set for future use:", self.fixed_customer_positions)
-
-        # Generate demands (node 0 is depot, has no demand) --> ex: these aleatory demands
-        demands = load_demands_from_txt("demands.txt", batch_size, num_nodes, device)
-        
-        # Generate travel costs
-        travel_costs = torch.zeros(batch_size, num_nodes, num_nodes, device=device)
-        
-        # Calculate Euclidean distances between nodes
-        for b in range(batch_size):
-            for i in range(num_nodes):
-                for j in range(num_nodes):
-                    if i != j:
-                        # Base cost is Euclidean distance
-                        dist = torch.norm(customer_positions[b, i] - customer_positions[b, j])
-                        base_cost = dist * 10  # Scale for better numerical properties
-                        
-                        # Constant component
-                        constant = base_cost * self.a_ratio
-                        
-                        # Weather component
-                        weather_effect = 0
-                        for k in range(self.weather_dim):
-                            for l in range(self.weather_dim):
-                                # Random coefficient for weather interaction
-                                alpha = torch.randn(1, device=device) * 0.5
-                                weather_effect += alpha * weather[b, k] * weather[b, l]
-                        
-                        weather_effect *= self.b_ratio * base_cost
-                        
-                        # Noise component
-                        noise = torch.randn(1, device=device) * self.gamma_ratio * base_cost
-                        
-                        # Combine components
-                        travel_costs[b, i, j] = constant + weather_effect + noise
-                        
-                        # Ensure cost is positive
-                        travel_costs[b, i, j] = torch.max(travel_costs[b, i, j], 
-                                                          torch.tensor(0.1, device=device))
-                        
-
-        return weather, demands, travel_costs
-
-
-        

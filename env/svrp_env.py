@@ -68,7 +68,7 @@ class SVRPEnvironment:
             demands: Remaining demand tensor
         """
         # Generate weather, demands, and travel costs
-        self.weather, self.demands, self.travel_costs = self.weather_sim.generate_decided(
+        self.weather, self.demands, self.travel_costs = self.weather_sim.generate(
             batch_size=batch_size,
             num_nodes=self.num_nodes,
             fixed_customers=fixed_customers,
