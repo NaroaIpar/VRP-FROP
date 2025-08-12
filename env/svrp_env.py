@@ -212,7 +212,6 @@ class SVRPEnvironment:
                 next_node = next_positions[b].item()
                 
                 # Add travel cost
-                
                 rewards[b] -= self.obj_lambda  * self.travel_costs[b, current, next_node]
                 travel_costs_contribution += self.obj_lambda  * self.travel_costs[b, current, next_node]
                 

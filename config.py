@@ -16,7 +16,6 @@ ENV_CONFIG = {
     'fixed_customers': True,   # Use fixed customer positions
     'num_buoys': 1,            # Number of buoys to visit
     'obj_lambda': 0.5,         # Objective function weight for delivery
-
 }
 
 # Model settings
@@ -38,7 +37,7 @@ TRAIN_CONFIG = {
 
 # Inference settings
 INFERENCE_CONFIG = {
-    'strategy': 'beam',        # Inference strategy: 'greedy', 'random', or 'beam'
+    'strategy': 'greedy',        # Inference strategy: 'greedy', 'random', or 'beam'
     'num_samples': 16,         # Number of samples for random sampling
     'beam_width': 3,           # Beam width for beam search
     'test_size': 100,          # Number of test instances

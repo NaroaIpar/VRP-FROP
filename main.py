@@ -47,7 +47,7 @@ def parse_args():
     parser.add_argument('--max_steps', type=int, default=100, help='Maximum steps per episode')
     
     # Inference settings
-    parser.add_argument('--inference', type=str, default='beam', choices=['greedy', 'random', 'beam'], help='Inference strategy')
+    parser.add_argument('--inference', type=str, default='greedy', choices=['greedy', 'random', 'beam'], help='Inference strategy')
     parser.add_argument('--num_samples', type=int, default=16, help='Number of samples for random sampling')
     parser.add_argument('--beam_width', type=int, default=3, help='Beam width for beam search')
     parser.add_argument('--test_size', type=int, default=100, help='Number of test instances')
@@ -85,7 +85,7 @@ def setup_logger(save_dir):
     
     return logging.getLogger()
 
-def visualize_route(env, routes, title=None, save_path=None):
+def visualize_route(env, routes, title=None, save_path=None, save = True):
     """
     Visualize routes with customer layout and written route text.
     Auto-saves image with incrementing ID in {args.save_dir}/{args.inference}/.
@@ -180,13 +180,17 @@ def visualize_route(env, routes, title=None, save_path=None):
     ax_plot.legend()
     plt.tight_layout()
 
-    if final_path:
+    if final_path and save:
         plt.savefig(final_path)
         print(f"Saved route image to: {final_path}")
     else:
-        plt.show()
-
+        # show only if user asked to save but no path provided
+        if (not final_path) and save:
+            plt.show()
+        # if save is False -> do nothing (headless)
+        
     plt.close()
+    return fig
 
 
 def plot_training_metrics(args, rewards_history, policy_losses, baseline_losses):
@@ -292,7 +296,7 @@ def train(args, env, trainer, logger):
             logger.info(f"Saved model to {save_path}")
             
             # Evaluate on test set
-            test_reward = evaluate(args, env, trainer.policy_model, 10, logger)
+            test_reward, _ = evaluate(args, env, trainer.policy_model, 10, logger, save_figs=False)
             logger.info(f"Test reward: {test_reward:.4f}")
     
     # Save final model
@@ -305,7 +309,7 @@ def train(args, env, trainer, logger):
     logger.info("Training completed")
 
 
-def evaluate(args, env, policy_model, num_instances=100, logger=None):
+def evaluate(args, env, policy_model, num_instances=100, logger=None, save_figs=True):
     """
     Evaluate the model on multiple instances.
     """
@@ -313,8 +317,9 @@ def evaluate(args, env, policy_model, num_instances=100, logger=None):
     best_cost = float('inf')
     best_routes = None
 
-    total_travel_costs = 0.0
-    total_expected_reward = 0.0
+    best_travel_cost = None
+    best_expected_reward = None
+    best_fig = None   # ensure defined even if we don't save
 
     # Create inference strategy
     if args.inference == 'greedy':
@@ -341,6 +346,8 @@ def evaluate(args, env, policy_model, num_instances=100, logger=None):
         if cost < best_cost:
             best_cost = cost
             best_routes = routes
+            best_travel_cost = total_travel_costs
+            best_expected_reward = total_expected_reward
                 
         # Log instance results
         if logger and i < 5:  # Only log first 5 instances
@@ -348,7 +355,7 @@ def evaluate(args, env, policy_model, num_instances=100, logger=None):
             logger.info(f"Instance {i+1}: Cost = {cost:.4f}, Travel cost contribution {total_travel_costs:.4f}, Expected reward contribution = {total_expected_reward:.4f}, Routes = {routes}")
             
             # Visualize route for first instance
-            if i == 0:
+            if save_figs and i == 0:
                 visualize_route(
                     env=env,
                     routes=routes,
@@ -358,16 +365,18 @@ def evaluate(args, env, policy_model, num_instances=100, logger=None):
 
     # Track best route
     # Log instance results
-    if  best_routes is not None and logger:
-        logger.info(f"BEST Instance {i+1}: Cost = {best_cost:.4f}, Routes = {best_routes}")
+    if  best_routes is not None:
+        if logger:
+            logger.info(f"BEST (Objective function value: {best_cost:.4f})(travel_cost: {best_travel_cost:.4f}, expected reward: {best_expected_reward:.4f})")
         
-        # Visualize route for first instance
-        visualize_route(
-            env=env,
-            routes=best_routes,
-            title=f"BEST (Objective function value: {cost:.4f})(travel_cost: {total_travel_costs:.4f}, expected reward: {total_expected_reward:.4f})",
-            save_path=os.path.join(args.save_dir, f"route_{args.inference}.png")
-        )
+        if save_figs:
+            # Visualize route
+            best_fig = visualize_route(
+                env=env,
+                routes=best_routes,
+                title=f"BEST (Objective function value: {best_cost:.4f})(travel_cost: {best_travel_cost:.4f}, expected reward: {best_expected_reward:.4f})",
+                save_path=os.path.join(args.save_dir, f"route_{args.inference}.png")
+            )
                 
     
     # Calculate mean reward
@@ -375,8 +384,16 @@ def evaluate(args, env, policy_model, num_instances=100, logger=None):
     
     if logger:
         logger.info(f"Evaluation completed. Mean reward: {mean_reward:.4f}")
+
+    best_evaluation = {
+        'best_cost': best_cost,
+        'best_routes': best_routes,
+        'best_travel_cost': best_travel_cost,
+        'best_expected_reward': best_expected_reward,
+        'best_fig': best_fig
+    }
     
-    return mean_reward
+    return mean_reward, best_evaluation
 
 
 def main():
@@ -447,11 +464,16 @@ def main():
     if not args.test:
         # Train model
         train(args, env, trainer, logger)
-    
+
     # Evaluate model
     logger.info(f"Evaluating model with {args.inference} inference strategy")
-    mean_reward = evaluate(args, env, policy_model, args.test_size, logger)
+    mean_reward, best_evaluation = evaluate(args, env, policy_model, args.test_size, logger)
     logger.info(f"Final evaluation - Mean reward: {mean_reward:.4f}")
+
+    logger.info(f"Best evaluation - Cost: {best_evaluation['best_cost']:.4f}, "
+                f"Routes: {best_evaluation['best_routes']}, "
+                f"Travel cost: {best_evaluation['best_travel_cost']}, "
+                f"Expected reward: {best_evaluation['best_expected_reward']}")
 
 
 if __name__ == "__main__":
