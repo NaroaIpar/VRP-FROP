@@ -3909,3 +3909,8 @@
 2025-08-12 17:56:21,847 [INFO] Evaluation completed. Mean reward: 21.0978
 2025-08-12 17:56:21,847 [INFO] Final evaluation - Mean reward: 21.0978
 2025-08-12 17:56:21,847 [INFO] Best evaluation - Cost: -43.1762, Routes: [[0, 7, 2, 5, 9, 6, 15, 18, 13, 19, 0]], Travel cost: 6.743093490600586, Expected reward: -49.91929244995117
+2025-08-12 22:54:48,421 [INFO] Starting SVRP-RL with Namespace(num_nodes=20, num_vehicles=1, capacity=50000.0, a_ratio=0.1, b_ratio=0.1, gamma_ratio=0.8, weather_dim=3, fixed_customers=True, num_buoys=10, obj_lambda=0.1, load_customer_positions=False, load_demands=True, embedding_dim=128, epochs=100, batch_size=32, lr=0.0001, baseline_lr=0.001, entropy_weight=0.01, max_steps=100, inference='greedy', num_samples=16, beam_width=3, test_size=100, cuda=False, seed=42, save_dir='checkpoints', load_model=None, test=False, log_interval=10, save_interval=20, reoptimization=False, load_customers=True)
+2025-08-12 22:54:48,423 [INFO] Using device: cpu
+2025-08-12 22:54:48,423 [INFO] Customer features dimension: 24
+2025-08-12 22:54:48,423 [INFO] Vehicle features dimension: 2
+2025-08-12 22:54:54,989 [INFO] Starting training for 100 epochs
