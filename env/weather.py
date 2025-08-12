@@ -188,6 +188,7 @@ class WeatherSimulation:
             if not self.load_customer_positions:
                 customer_positions = create_random_customer_positions(batch_size, num_nodes, depot, device)
             else:
+                filename = f"positions{num_nodes}.txt"
                 customer_positions = load_customer_positions_from_txt("positions.txt", batch_size, num_nodes, depot)
 
             # print("Customer positions:", customer_positions)
@@ -201,7 +202,9 @@ class WeatherSimulation:
         
         if self.load_demands:
             # Generate demands (node 0 is depot, has no demand) --> ex: these aleatory demands
-            demands = load_demands_from_txt("demands.txt", batch_size, num_nodes, device)
+            filename = f"demands{num_nodes}.txt"
+            demands = load_demands_from_txt(filename, batch_size, num_nodes, device)
+
         else:
             demands = create_random_demands(
                 batch_size, num_nodes, device, 

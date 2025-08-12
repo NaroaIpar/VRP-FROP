@@ -31,7 +31,7 @@ results_table = []
     
 for params in itertools.product(
     [1, 2, 5, 10],          # num_vehicles
-    [10, 15],           # num_buoys
+    [10, 15],               # num_buoys
     [20],                   # num_nodes
     [True, False],          # fixed_customers
     [True, False],          # load_customers
