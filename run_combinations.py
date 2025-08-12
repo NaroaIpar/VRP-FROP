@@ -30,14 +30,14 @@ results_table = []
 # ):
     
 for params in itertools.product(
-    [1],          # num_vehicles
-    [10],           # num_buoys
-    [20],          # num_nodes
-    [True],          # fixed_customers
-    [False],          # load_customers
-    [False],          # load_demands
-    [(0.1, 0.1, 0.8)],  # ratios
-    [0.5]         # obj_lambda
+    [1, 2, 5, 10],          # num_vehicles
+    [10, 15],           # num_buoys
+    [20],                   # num_nodes
+    [True, False],          # fixed_customers
+    [True, False],          # load_customers
+    [True, False],          # load_demands
+    [(0.1, 0.1, 0.8), (0.1, 0.7, 0.2), (0.6, 0.3, 0.1)],  # ratios
+    [0.1, 0.5, 0.7]         # obj_lambda
 ):
     num_vehicles, num_buoys, num_nodes, fixed_customers, load_customers, load_demands, ratios, obj_lambda = params
     a_ratio, b_ratio, gamma_ratio = ratios
