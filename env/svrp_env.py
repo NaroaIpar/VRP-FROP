@@ -212,8 +212,8 @@ class SVRPEnvironment:
                 next_node = next_positions[b].item()
                 
                 # Add travel cost
-                rewards[b] -= self.obj_lambda  * self.travel_costs[b, current, next_node]
-                travel_costs_contribution += self.obj_lambda  * self.travel_costs[b, current, next_node]
+                rewards[b] -= 10 * self.obj_lambda  * self.travel_costs[b, current, next_node]
+                travel_costs_contribution += 10 * self.obj_lambda  * self.travel_costs[b, current, next_node]
                 
                 # Update vehicle load and remaining demand
                 if next_node > 0:  # Not depot
@@ -236,8 +236,8 @@ class SVRPEnvironment:
                         # Vehicle needs to return to depot for refill
                         # Add recourse cost (depot to customer and back)
                         # rewards[b] -= 2 * self.travel_costs[b, 0, next_node]
-                        rewards[b] -= 2 * self.obj_lambda * self.travel_costs[b, 0, next_node] 
-                        travel_costs_contribution += 2 * self.travel_costs[b, 0, next_node]
+                        rewards[b] -= 2 * 10 * self.obj_lambda * self.travel_costs[b, 0, next_node] 
+                        travel_costs_contribution += 2 * 10 * self.travel_costs[b, 0, next_node]
                         
                         # Refill vehicle
                         self.vehicle_loads[b, v] = self.capacity
@@ -265,8 +265,8 @@ class SVRPEnvironment:
                     final_pos = self.vehicle_positions[b, v].item()
                     if final_pos != 0:
                         # Penalización por no terminar en el depot
-                        rewards[b] -= self.obj_lambda  * self.travel_costs[b, current, next_node]  # penaliza el coste de volver
-                        travel_costs_contribution += self.obj_lambda  * self.travel_costs[b, current, next_node]
+                        rewards[b] -= 10 * self.obj_lambda  * self.travel_costs[b, current, next_node]  # penaliza el coste de volver
+                        travel_costs_contribution += 10 * self.obj_lambda  * self.travel_costs[b, current, next_node]
 
         
         return customer_features, vehicle_features, self.remaining_demands, rewards, done, travel_costs_contribution, expected_reward_contribution

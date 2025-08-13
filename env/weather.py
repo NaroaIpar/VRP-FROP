@@ -189,7 +189,7 @@ class WeatherSimulation:
                 customer_positions = create_random_customer_positions(batch_size, num_nodes, depot, device)
             else:
                 filename = f"positions{num_nodes}.txt"
-                customer_positions = load_customer_positions_from_txt("positions.txt", batch_size, num_nodes, depot)
+                customer_positions = load_customer_positions_from_txt(filename, batch_size, num_nodes, depot)
 
             # print("Customer positions:", customer_positions)
             # print("Shape of customer positions:", customer_positions.shape)

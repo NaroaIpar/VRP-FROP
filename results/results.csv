@@ -1,2 +1,1 @@
 num_vehicles,num_buoys,num_nodes,fixed_customers,load_customers,load_demands,a_ratio,b_ratio,gamma_ratio,obj_lambda,train_time_secs,train_time_human,evaluate_time_secs,evaluate_time_human,mean_reward,best_cost,best_routes,best_travel_cost,best_expected_reward,best_fig_path
-1,10,20,True,False,False,0.1,0.1,0.8,0.5,1350.862136,0:22:30.862136,51.580668,0:00:51.580668,21.097789944782853,-43.176201939582825,"[[0, 7, 2, 5, 9, 6, 15, 18, 13, 19, 0]]",6.743093490600586,-49.91929244995117,results/figs\best_1755014181.png
