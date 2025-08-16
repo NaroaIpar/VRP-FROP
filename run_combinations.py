@@ -38,9 +38,9 @@ with open(csv_path, 'a', newline='') as f:
         dict_writer.writeheader()
 
     for params in itertools.product(
-        [1, 2, 5, 10],
-        [10, 15],
-        [20, 50],
+        [1],
+        [15],
+        [20],
         [True],
         [True, False],
         [True, False],
@@ -116,7 +116,9 @@ with open(csv_path, 'a', newline='') as f:
         fig_path = None
         if best_evaluation.get('best_fig') is not None:
             os.makedirs('results/figs', exist_ok=True)
-            fig_path = os.path.join('results/figs', f"best_{int(time.time())}.png")
+            current_time = datetime.datetime.now()
+            timestamp_str = current_time.strftime("%Y_%m_%d_%H_%M_%S")
+            fig_path = os.path.join('results/figs', f"best_{timestamp_str}.png")
             best_evaluation['best_fig'].savefig(fig_path)
             plt.close(best_evaluation['best_fig'])
 

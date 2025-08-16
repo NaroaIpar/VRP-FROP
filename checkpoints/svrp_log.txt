@@ -3929,3 +3929,4 @@
 2025-08-13 21:16:48,061 [INFO] Customer features dimension: 54
 2025-08-13 21:16:48,061 [INFO] Vehicle features dimension: 2
 2025-08-13 21:16:49,758 [INFO] Starting training for 100 epochs
+2025-08-16 10:42:51,912 [INFO] Starting SVRP-RL with Namespace(num_nodes=20, num_vehicles=1, capacity=50000.0, a_ratio=0.1, b_ratio=0.1, gamma_ratio=0.8, weather_dim=3, fixed_customers=True, num_buoys=10, obj_lambda=0.1, load_customer_positions=False, load_demands=True, embedding_dim=128, epochs=100, batch_size=32, lr=0.0001, baseline_lr=0.001, entropy_weight=0.01, max_steps=100, inference='greedy', num_samples=16, beam_width=3, test_size=100, cuda=False, seed=42, save_dir='checkpoints', load_model=None, test=False, log_interval=10, save_interval=20, reoptimization=False, load_customers=True)
