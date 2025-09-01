@@ -1,10 +1,10 @@
-# SVRP-RL: Reinforcement Learning for Stochastic Vehicle Routing Problem
+# SFROP-RL: Reinforcement Learning for Stochastic Fishing Routing Optimization Problem
 
-This repository contains an implementation of the paper "Reinforcement Learning for Solving Stochastic Vehicle Routing Problem" by Iklassov, Sobirov, Solozabal, and Takáč.
+This repository contains an implementation of my bachelor thesis.
 
 ## Overview
 
-The Stochastic Vehicle Routing Problem (SVRP) extends the classic Vehicle Routing Problem by introducing uncertainty in customer demands and travel costs. This implementation uses a Reinforcement Learning approach to tackle this challenging optimization problem.
+The Stochastic Fishing Routing Optimization Problem (SVRP) extends the classic Fishing Routing Problem by introducing uncertainty in customer demands and travel costs. This implementation uses a Reinforcement Learning approach to tackle this challenging optimization problem.
 
 Key features:
 - Neural network architecture with state and memory embeddings
@@ -27,7 +27,11 @@ svrp_rl/
 ├── env/
 │   ├── __init__.py
 │   ├── svrp_env.py       # SVRP environment implementation
-│   └── weather.py        # Weather simulation for stochastic variables
+│   ├── weather.py        # Weather simulation for stochastic variables
+│   ├── demands20.txt     # Text file to read from for the demands when num_nodes = 20
+│   ├── demands50.txt     # Text file to read from for the demands when num_nodes = 50
+│   ├── positions20.txt   # Text file to read from for the buoys' positons when num_nodes = 20
+│   └── positions50.txt   # Text file to read from for the buoys' positons when num_nodes = 50
 ├── training/
 │   ├── __init__.py
 │   ├── reinforce.py      # REINFORCE algorithm implementation
@@ -57,6 +61,7 @@ To customize training parameters:
 
 ```bash
 python main.py --num_nodes 50 --num_vehicles 2 --embedding_dim 256 --epochs 200 --batch_size 16
+python main.py --num_nodes 50 --num_vehicles 2 --num_buoys 10 --embedding_dim 256 --epochs 200 --batch_size 16 --load_customers --load_demads --obj_lambda 0.1 --inference greedy
 ```
 
 ### Testing
@@ -77,9 +82,10 @@ python main.py --test --load_model checkpoints/model_final --inference beam --be
 
 ## Key Parameters
 
-- `--num_nodes`: Number of customer nodes plus depot
-- `--num_vehicles`: Number of vehicles available
-- `--capacity`: Maximum vehicle capacity
+- `--num_nodes`: Number of dFADs nodes plus depot
+- `--num_vehicles`: Number of vessels available
+- `--num_buoys`: Number of maximun buoys each vessel can visit
+- `--capacity`: Maximum vessel capacity
 - `--a_ratio`, `--b_ratio`, `--gamma_ratio`: Signal ratios for stochastic components
 - `--embedding_dim`: Dimension of state and memory embeddings
 - `--epochs`: Number of training epochs
@@ -95,24 +101,3 @@ The SVRP environment models stochasticity through three components:
 3. **Noise component (gamma_ratio)**: Random noise
 
 The model learns to leverage weather information to predict stochastic variables and make better routing decisions.
-
-## Results
-
-The implementation achieves competitive results compared to classical methods:
-
-- 3.43% improvement over Ant Colony Optimization
-- Superior performance in correlated environments where weather affects both demand and travel costs
-- Efficient inference suitable for real-time industrial applications
-
-## Citation
-
-If you use this code in your research, please cite the original paper:
-
-```
-@article{iklassov2023reinforcement,
-  title={Reinforcement Learning for Solving Stochastic Vehicle Routing Problem},
-  author={Iklassov, Zangir and Sobirov, Ikboljon and Solozabal, Ruben and Tak{\'a}{\v{c}}, Martin},
-  journal={arXiv preprint arXiv:2311.07708},
-  year={2023}
-}
-```
